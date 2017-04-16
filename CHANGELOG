@@ -1,0 +1,9 @@
+1.0.1 - 2017-04-16
+------------------------------------------------
+* Adds `CHANGELOG`
+* Adds `README.md`
+* Adds `process.env.NODE_ENV === 'production'` to server Webpack config, for SSR minification (React in particular)
+
+1.0.0 - 2017-04-16
+------------------------------------------------
+* Initial kit -- all starter kit code provided up to CLI version 2.2.0

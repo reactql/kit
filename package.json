@@ -1,8 +1,9 @@
 {
   "name": "reactql-app",
   "version": "0.1.0",
-  "description": "",
-  "license": "MIT",
+  "description": "ReactQL starter kit app",
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --colors",
