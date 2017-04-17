@@ -15,7 +15,8 @@ import PATHS from '../../config/paths';
 
 // Host and port settings to spawn the dev server on
 const HOST = 'localhost';
-const LOCAL = `http://${HOST}:8080`;
+const PORT = 8080;
+const LOCAL = `http://${HOST}:${PORT}`;
 
 // CSS loader options.  We want local modules, for all imports to be
 // recognised, and source maps enabled
@@ -49,17 +50,22 @@ export default new WebpackConfig().extend({
 }).merge({
 
   // Add source maps
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
 
   // Dev server configuration
   devServer: {
 
     // bind our dev server to `localhost`
     host: HOST,
+    // on port: 3000
+    port: PORT,
 
     // link HTTP -> app/public, so static assets are being pulled from
     // our source directory and not the not-yet-existent 'dist' folder
     contentBase: PATHS.static,
+
+    // Enables compression to better represent build sizes
+    compress: true,
 
     // Assume app/public is the root of our dev server
     publicPath: '/',
@@ -71,13 +77,24 @@ export default new WebpackConfig().extend({
     // with no refreshes
     hot: true,
 
-    // Statistics on the build
-    stats: false,
+    // Disable build's information
+    noInfo: false,
 
     // We're using React Router for all routes, so redirect 404s
     // back to the webpack-dev-server bootstrap HTML
     historyApiFallback: {
       index: '/webpack.html',
+    },
+
+    // Displays neater and more compact statistics
+    stats: {
+      chunks: false,
+      colors: true,
+      errors: true,
+      hash: true,
+      performance: true,
+      version: true,
+      warnings: true,
     },
   },
 
