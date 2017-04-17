@@ -1,0 +1,19 @@
+// Customize Bootstrap variables that get imported before the original Bootstrap variables.
+// Thus original Bootstrap variables can depend on values from here.
+$brand-primary: #5cb85c;
+
+$font-family-sans-serif: 'OpenSans-Light', Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// This path is relative to this file!
+$fonts-url-path: '../../fonts';
+
+@font-face {
+  font-family: 'OpenSans-Light';
+  src: url('#{$fonts-url-path}/OpenSans-Light.ttf') format('truetype');
+
+}
+
+// If you're using a custom icon font path, specify it as follows
+// $icon-font-path: ../fonts // This path is relative to this file
+// $icon-font-name: 'glyphicons' // The name of the font you want to use
+// And be sure to set useCustomIconFontPath to true in .bootstraprc.
