@@ -13,6 +13,10 @@ import PATHS from '../../config/paths';
 
 // ----------------------
 
+// Bootstrap 4 / loader + autoprefixer
+const autoprefixer = require('autoprefixer');
+const bootstrapEntryPoints = require('./bootstrap.js');
+
 // Host and port settings to spawn the dev server on
 const HOST = 'localhost';
 const LOCAL = `http://${HOST}:8080`;
@@ -36,6 +40,9 @@ export default new WebpackConfig().extend({
       'react-hot-loader/patch',
       `webpack-dev-server/client?${LOCAL}`,
       'webpack/hot/only-dev-server',
+      'tether',
+      'font-awesome-loader',
+      bootstrapEntryPoints.dev,
     );
 
     // Add React-specific hot loading
@@ -135,6 +142,16 @@ export default new WebpackConfig().extend({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
       },
+    }),
+
+    // Bootstrap 4
+    new webpack.ProvidePlugin({
+      'window.Tether': 'tether',
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      postcss: [autoprefixer]
     }),
   ],
 });

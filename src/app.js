@@ -17,6 +17,9 @@ import Helmet from 'react-helmet';
 // Helper to merge expected React PropTypes to Apollo-enabled component
 import { mergeData } from 'kit/lib/apollo';
 
+// Import Bootstrap 4 example
+import Layout from './layout/Layout';
+
 // Styles
 import css from './styles.css';
 import sass from './styles.scss';
@@ -142,6 +145,7 @@ export default () => (
     <hr />
     <p>Runtime info:</p>
     <Stats />
+    <Layout />
     <hr />
     <p>Stylesheet examples:</p>
     <Styles />

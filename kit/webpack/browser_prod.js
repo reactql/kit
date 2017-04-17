@@ -40,6 +40,10 @@ import { BUNDLE_ANALYZER } from '../../config/project';
 
 // ----------------------
 
+// Bootstrap 4 / loader + autoprefixer
+const autoprefixer = require('autoprefixer');
+const bootstrapEntryPoints = require('./bootstrap.js');
+
 // The final CSS file will wind up in `dist/assets/css/style.[contenthash].css`
 const extractCSS = new ExtractTextPlugin({
   filename: 'assets/css/style.[contenthash].css',
@@ -59,6 +63,12 @@ const cssLoader = {
 // Extend the `browser.js` config
 export default new WebpackConfig().extend({
   '[root]/browser.js': config => {
+    // Bootstrap 4
+    config.entry.browser.unshift(
+      'tether',
+      'font-awesome-loader',
+      bootstrapEntryPoints.prod,
+    );
     // Optimise images
     config.module.loaders.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
       .loaders.push({
@@ -135,6 +145,16 @@ export default new WebpackConfig().extend({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
+    }),
+
+    // Bootstrap 4
+    new webpack.ProvidePlugin({
+      'window.Tether': 'tether',
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      postcss: [autoprefixer]
     }),
 
     // Check for errors, and refuse to emit anything with issues

@@ -1,0 +1,91 @@
+---
+# Output debugging info
+# loglevel: debug
+
+# Major version of Bootstrap: 3 or 4
+bootstrapVersion: 4
+
+# If Bootstrap version 4 is used - turn on/off flexbox model
+useFlexbox: true
+
+# Webpack loaders, order matters
+styleLoaders:
+  - style-loader
+  - css-loader
+  - postcss-loader
+  - sass-loader
+
+# Extract styles to stand-alone css file
+# Different settings for different environments can be used,
+# It depends on value of NODE_ENV environment variable
+# This param can also be set in webpack config:
+#   entry: 'bootstrap-loader/extractStyles'
+#   extractStyles: false
+env:
+ development:
+  extractStyles: false
+ production:
+  extractStyles: true
+
+# Customize Bootstrap variables that get imported before the original Bootstrap variables.
+# Thus original Bootstrap variables can depend on values from here.
+preBootstrapCustomizations: ./src/assets/styles/bootstrap/pre-customizations.scss
+
+# This gets loaded after bootstrap/variables is loaded
+# So you can refer to bootstrap variables
+bootstrapCustomizations: ./src/assets/styles/bootstrap/customizations.scss
+
+# With CSS Modules we load all application styles directly in React components
+# appStyles: ./src/styles/app.scss
+
+### Bootstrap styles
+styles:
+
+  # Mixins
+  mixins: true
+
+  # Reset and dependencies
+  normalize: true
+  print: true
+
+  # Core CSS
+  buttons: true
+  code: true
+  forms: true
+  grid: true
+  images: true
+  reboot: true
+  tables: true
+  type: true
+
+  # Components
+  alert: true
+  badge: true
+  breadcrumb: true
+  button-group: true
+  card: true
+  close: true
+  custom-forms: true
+  dropdown: true
+  input-group: true
+  jumbotron: true
+  list-group: true
+  media: true
+  nav: true
+  navbar: true
+  pagination: true
+  progress: true
+  responsive-embed: true
+  transitions: true
+
+  # Components w/ JavaScript
+  carousel: true
+  modal: true
+  popover: true
+  tooltip: true
+
+  # Utility classes
+  utilities: true
+
+### Bootstrap scripts
+scripts: false
