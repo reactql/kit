@@ -122,6 +122,8 @@ export default new WebpackConfig().extend({
           plugins: [
             'transform-object-rest-spread',
             'syntax-dynamic-import',
+            'transform-class-properties',
+            'transform-decorators-legacy',
           ],
         },
       },

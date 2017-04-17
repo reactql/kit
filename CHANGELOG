@@ -1,3 +1,10 @@
+1.0.4 - 2017-04-17
+------------------------------------------------
+* Adds decorator syntax via [transform-decorators-legacy](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)
+* Adds static class properties [transform-class-properties](https://babeljs.io/docs/plugins/transform-class-properties/)
+* Adds support for extending `React.PureComponent` without generating linting errors (when using props/context)
+* Modifies sample `<GraphQLMessage>` component in `src/app.js` to use `@graphql` as a decorator and static `propTypes`
+
 1.0.3 - 2017-04-17
 ------------------------------------------------
 * Merges #8 - removes deprecation warning related to loaderUtils.parseQuery()

@@ -78,32 +78,33 @@ const query = gql`
   }
 `;
 
-// ... then, let's create the component to display the message
-const Message = ({ data }) => {
-  const message = data.allMessages && data.allMessages[0].text;
-  const isLoading = data.loading ? 'yes' : 'nope';
-  return (
-    <div>
-      <h2>Message from GraphQL server: <em>{message}</em></h2>
-      <h2>Currently loading?: {isLoading}</h2>
-    </div>
-  );
-};
+// ... then, let's create the component and decorate it with the `graphql`
+// HOC that will automatically populate `this.props` with the query data
+// once the GraphQL API request has been completed
+@graphql(query)
+class GraphQLMessage extends React.PureComponent {
+  static propTypes = {
+    data: mergeData({
+      allMessages: PropTypes.arrayOf(
+        PropTypes.shape({
+          text: PropTypes.string.isRequired,
+        }),
+      ),
+    }),
+  }
 
-// Add propTypes for React to expect data from GraphQL
-Message.propTypes = {
-  data: mergeData({
-    allMessages: PropTypes.arrayOf(
-      PropTypes.shape({
-        text: PropTypes.string.isRequired,
-      }).isRequired,
-    ),
-  }),
-};
-
-// Finally, wrap the component in the GraphQL HOC 'listener' which will
-// inject props data down once the GraphQL API request has been completed
-const GraphQLMessage = graphql(query)(Message);
+  render() {
+    const { data } = this.props;
+    const message = data.allMessages && data.allMessages[0].text;
+    const isLoading = data.loading ? 'yes' : 'nope';
+    return (
+      <div>
+        <h2>Message from GraphQL server: <em>{message}</em></h2>
+        <h2>Currently loading?: {isLoading}</h2>
+      </div>
+    );
+  }
+}
 
 // Example of CSS, SASS and LESS styles being used together
 const Styles = () => (

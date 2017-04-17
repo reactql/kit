@@ -33,7 +33,7 @@ function createClient(opt = {}) {
 export function mergeData(toMerge) {
   return PropTypes.shape(Object.assign({
     loading: PropTypes.bool.isRequired,
-  }, toMerge)).isRequired;
+  }, toMerge));
 }
 
 // Creates a new browser client
