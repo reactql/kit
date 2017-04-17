@@ -93,6 +93,12 @@ const PORT = process.env.PORT || 4000;
       ctx.body = 'pong';
     })
 
+    // Favicon.ico.  By default, we'll serve this as a 204 No Content.
+    // If /favicon.ico is available as a static file, it'll try that first
+    .get('/favicon.ico', async ctx => {
+      ctx.res.statusCode = 204;
+    })
+
     // Everything else is React
     .get('/*', async ctx => {
       const route = {};
@@ -166,7 +172,8 @@ const PORT = process.env.PORT || 4000;
     })
 
     // Serve static files from our dist/public directory, which is where
-    // the compiled JS, images, etc will wind up
+    // the compiled JS, images, etc will wind up.  Note this is being checked
+    // FIRST before any routes -- static files always take priority
     .use(koaStatic(PATHS.public, {
       // All asset names contain the hashes of their contents so we can
       // assume they are immutable for caching

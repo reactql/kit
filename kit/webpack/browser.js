@@ -16,9 +16,6 @@ import webpack from 'webpack';
 // We'll use `webpack-config` to extend the base config we've already created
 import WebpackConfig from 'webpack-config';
 
-// other plug-ins
-// import CopyWebpackPlugin from 'copy-webpack-plugin';
-
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
 
@@ -101,16 +98,5 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
     new webpack.DefinePlugin({
       SERVER: false,
     }),
-
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: PATHS.public,
-    //     force: true, // This flag forces overwrites
-    //   },
-    // ], {
-    //   ignore: [
-    //     '*.html', // Ignore static HTML (which we'll use to bootstrap webpack)
-    //   ],
-    // }),
   ],
 });

@@ -23,6 +23,9 @@ module.exports = {
   // Webpack configuration files
   webpack: path.join(root, 'kit', 'webpack'),
 
+  // Views for internal use
+  views: path.join(root, 'kit', 'views'),
+
   // Source path; where we'll put our application files
   src: path.join(root, 'src'),
 

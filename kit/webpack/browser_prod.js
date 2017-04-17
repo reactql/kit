@@ -32,6 +32,9 @@ import ManifestPlugin from 'webpack-manifest-plugin';
 // Bundle Analyzer plugin for viewing interactive treemap of bundle
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
+// Copy files from `PATH.static` to `PATHS.public`
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
 
@@ -187,5 +190,14 @@ export default new WebpackConfig().extend({
       reportFilename: join(PATHS.dist, 'report.html'),
       openAnalyzer: BUNDLE_ANALYZER.openAnalyzer,
     }),
+
+    // Copy files from `PATHS.static` to `dist/public`.  No transformations
+    // will be performed on the files-- they'll be copied as-is
+    new CopyWebpackPlugin([
+      {
+        from: PATHS.static,
+        force: true, // This flag forces overwrites between versions
+      },
+    ]),
   ],
 });

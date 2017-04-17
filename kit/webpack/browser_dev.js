@@ -6,9 +6,11 @@
 // ----------------------
 // IMPORTS
 
+// NPM
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
+// Local
 import PATHS from '../../config/paths';
 
 // ----------------------
@@ -55,14 +57,18 @@ export default new WebpackConfig().extend({
   // Dev server configuration
   devServer: {
 
-    // bind our dev server to `localhost`
+    // bind our dev server to the correct host and port
     host: HOST,
-    // on port: 3000
     port: PORT,
 
     // link HTTP -> app/public, so static assets are being pulled from
-    // our source directory and not the not-yet-existent 'dist' folder
-    contentBase: PATHS.static,
+    // our source directory and not the `dist/public` we'd normally use in
+    // production.  Use `PATH.views` as a secondary source, for serving
+    // the /webpack.html fallback
+    contentBase: [
+      PATHS.static,
+      PATHS.views,
+    ],
 
     // Enables compression to better represent build sizes
     compress: true,

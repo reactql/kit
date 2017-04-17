@@ -1,3 +1,11 @@
+1.0.5 - 2017-04-17
+------------------------------------------------
+* Closes #1 - Adds `/favicon.ico` route handling-- if an icon is available, it'll be served. Otherwise, the server will return "204 No Content"
+* Adds sample ReactQL favicon at `static/favicon.ico`
+* Moved `static/webpack.html` default page for the Webpack Dev Server to `kit/views/webpack.html`, to emphasise that `static` is userland
+* Improves Webpack Dev Server config to check `static/*` first, and then `kit/views/*` when looking for static files (i.e. the `webpack.html` default view)
+* Adds `CopyWebpackPlugin` to production-- `static/*` will be copied to `dist/public/*` to make static files available to the production server
+
 1.0.4 - 2017-04-17
 ------------------------------------------------
 * Adds decorator syntax via [transform-decorators-legacy](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy)
