@@ -177,12 +177,18 @@ export default new WebpackConfig().extend({
 
     // Generate chunk manifest
     new ChunkManifestPlugin({
-      filename: 'chunk-manifest.json',
+      // Put this in `dist` rather than `dist/public`
+      filename: '../chunk-manifest.json',
       manifestVariable: 'webpackManifest',
     }),
 
     // Generate assets manifest
-    new ManifestPlugin(),
+    new ManifestPlugin({
+      // Put this in `dist` rather than `dist/public`
+      fileName: '../manifest.json',
+      // Prefix assets with '/' so that they can be referenced from any route
+      publicPath: '/',
+    }),
 
     // Output interactive bundle report
     new BundleAnalyzerPlugin({

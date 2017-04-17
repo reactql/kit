@@ -11,6 +11,11 @@
 // ----------------------
 // IMPORTS
 
+/* Node */
+import path from 'path';
+
+/* NPM */
+
 // Patch global.`fetch` so that Apollo calls to GraphQL work
 import 'isomorphic-fetch';
 
@@ -53,6 +58,8 @@ import { StaticRouter } from 'react-router';
 // title, meta info, etc along with the initial HTML
 import Helmet from 'react-helmet';
 
+/* Local */
+
 // Grab the shared Apollo Client
 import { serverClient } from 'kit/lib/apollo';
 
@@ -75,10 +82,15 @@ import PATHS from 'config/paths';
 
 // Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest'].map(
-  name => JSON.parse(readFileSync(`dist/public/${name}.json`, 'utf8')),
+  name => JSON.parse(
+    readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8'),
+  ),
 );
 
-const scripts = ['manifest.js', 'vendor.js', 'browser.js'].map(key => manifest[key]);
+const scripts = [
+  'manifest.js',
+  'vendor.js',
+  'browser.js'].map(key => manifest[key]);
 
 // Port to bind to.  Takes this from the `PORT` environment var, or assigns
 // to 4000 by default

@@ -1,3 +1,8 @@
+1.0.6 - 2017-04-17
+------------------------------------------------
+* Moves `manifest.json` and `chunk-manifest.json` to `dist` instead of `dist/public` (stops them being accessible publicly)
+* Fixes issue with manifest paths not working on non-root routes
+
 1.0.5 - 2017-04-17
 ------------------------------------------------
 * Closes #1 - Adds `/favicon.ico` route handling-- if an icon is available, it'll be served. Otherwise, the server will return "204 No Content"
