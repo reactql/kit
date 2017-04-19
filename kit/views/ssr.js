@@ -17,7 +17,8 @@ const Html = ({ head, html, state, scripts, chunkManifest, css }) => (
       <meta httpEquiv="Content-Language" content="en" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {head.meta.toComponent()}
-      <link rel="stylesheet" href={css} />
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/grommet/1.3.4/grommet.min.css" />
+      <link rel="stylesheet" type="text/css" href={css} />
       {head.title.toComponent()}
       <script
         dangerouslySetInnerHTML={{

@@ -59,6 +59,17 @@ const cssLoader = {
   },
 };
 
+// SASS/SCSS loader
+const sassLoader = {
+  loader: 'sass-loader',
+  options: {
+    outputStyle: 'compressed',
+    includePaths: [
+      './node_modules',
+    ],
+  },
+};
+
 // Extend the `browser.js` config
 export default new WebpackConfig().extend({
   '[root]/browser.js': config => {
@@ -108,7 +119,7 @@ export default new WebpackConfig().extend({
             cssLoader,
             'postcss-loader',
             'resolve-url-loader',
-            'sass-loader?sourceMap',
+            sassLoader,
           ],
           fallback: 'style-loader',
         }),

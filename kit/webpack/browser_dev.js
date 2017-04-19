@@ -31,6 +31,17 @@ const cssLoader = {
   },
 };
 
+const sassLoader = {
+  loader: 'sass-loader',
+  options: {
+    outputStyle: 'expanded',
+    includePaths: [
+      './node_modules',
+    ],
+    sourceMap: true,
+  },
+};
+
 export default new WebpackConfig().extend({
   '[root]/browser.js': conf => {
     // Add `webpack-dev-server` polyfills needed to communicate with the browser
@@ -125,7 +136,7 @@ export default new WebpackConfig().extend({
           'style-loader',
           cssLoader,
           'resolve-url-loader',
-          'sass-loader?sourceMap',
+          sassLoader,
         ],
       },
       // LESS processing.  Parsed through `less-loader` first
