@@ -17,7 +17,13 @@ import Helmet from 'react-helmet';
 // Helper to merge expected React PropTypes to Apollo-enabled component
 import { mergeData } from 'kit/lib/apollo';
 
+import App from 'grommet/components/App';
+import Header from 'grommet/components/Header';
+import Footer from 'grommet/components/Footer';
+import Title from 'grommet/components/Title';
+
 // Styles
+import 'grommet/scss/vanilla/index.scss';
 import css from './styles.css';
 import sass from './styles.scss';
 import less from './styles.less';
@@ -91,7 +97,7 @@ class GraphQLMessage extends React.PureComponent {
         }),
       ),
     }),
-  }
+  };
 
   render() {
     const { data } = this.props;
@@ -146,5 +152,26 @@ export default () => (
     <hr />
     <p>Stylesheet examples:</p>
     <Styles />
+    <hr />
+    <App centered={false}>
+      <Header
+        direction="row"
+        justify="between"
+        size="large"
+        pad={{ horizontal: 'medium' }}>
+        <Title>Grommet</Title>
+      </Header>
+      <Footer
+        primary
+        appCentered
+        direction="column"
+        align="center"
+        pad="small"
+        colorIndex="grey-1">
+        <p>
+          Build your ideas with <a href="http://grommet.io" rel="noopener noreferrer" target="_blank">Grommet</a>!
+        </p>
+      </Footer>
+    </App>
   </div>
 );
