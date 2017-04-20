@@ -1,3 +1,8 @@
+1.0.7 - 2017-04-17
+------------------------------------------------
+* Optimises `window.*` initial variables on SSR by removing whitespace
+* Allows passing a `window` prop to `<Html>` on SSR, instead of separate props for `webpackManifest` / `state`
+
 1.0.6 - 2017-04-17
 ------------------------------------------------
 * Moves `manifest.json` and `chunk-manifest.json` to `dist` instead of `dist/public` (stops them being accessible publicly)

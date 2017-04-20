@@ -146,9 +146,11 @@ const PORT = process.env.PORT || 4000;
         <Html
           html={html}
           head={Helmet.rewind()}
-          state={store.getState()}
+          window={{
+            webpackManifest: chunkManifest,
+            __STATE__: store.getState(),
+          }}
           scripts={scripts}
-          chunkManifest={chunkManifest}
           css={manifest['browser.css']} />,
       )}`;
     });
