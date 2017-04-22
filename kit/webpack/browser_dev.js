@@ -10,6 +10,9 @@
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
+// Common config
+import { css } from './common';
+
 // Local
 import PATHS from '../../config/paths';
 
@@ -19,17 +22,6 @@ import PATHS from '../../config/paths';
 const HOST = 'localhost';
 const PORT = 8080;
 const LOCAL = `http://${HOST}:${PORT}`;
-
-// CSS loader options.  We want local modules, for all imports to be
-// recognised, and source maps enabled
-const cssLoader = {
-  loader: 'css-loader',
-  query: {
-    modules: true,
-    importLoaders: 1,
-    sourceMap: true,
-  },
-};
 
 export default new WebpackConfig().extend({
   '[root]/browser.js': conf => {
@@ -106,37 +98,30 @@ export default new WebpackConfig().extend({
 
   module: {
     loaders: [
-      // .css processing.  In development, styles are bundled into the
-      // resulting Javascript, instead of winding up in a separate file.
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          {
-            loader: 'postcss-loader',
-          },
-        ],
-      },
-      // SASS processing.  Same as .css, but parsed through `node-sass` first
-      {
-        test: /\.s(a|c)ss$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          'resolve-url-loader',
-          'sass-loader?sourceMap',
-        ],
-      },
-      // LESS processing.  Parsed through `less-loader` first
-      {
-        test: /\.less$/,
-        loaders: [
-          'style-loader',
-          cssLoader,
-          'less-loader',
-        ],
-      },
+      // CSS loaders
+      ...(function* loadCss() {
+        for (const loader of css.loaders) {
+          // Iterate over CSS/SASS/LESS and yield local and global mod configs
+          for (const mod of css.getModuleRegExp(loader.ext)) {
+            yield {
+              test: new RegExp(mod[0]),
+              loader: [
+                'style-loader',
+                {
+                  loader: 'css-loader',
+                  query: Object.assign({
+                    importLoaders: 1,
+                    sourceMap: true,
+                    localIdentName: css.localIdentName,
+                  }, mod[1]),
+                },
+                'postcss-loader',
+                ...loader.use,
+              ],
+            };
+          }
+        }
+      }()),
     ],
   },
 

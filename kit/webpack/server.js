@@ -12,17 +12,12 @@ import WebpackConfig from 'webpack-config';
 // to those modules locally and they don't need to wind up in the bundle file
 import nodeModules from 'webpack-node-externals';
 
+// Common config
+import { css } from './common';
+
 import PATHS from '../../config/paths';
 
 // ----------------------
-
-// CSS loader
-const cssLoader = {
-  loader: 'css-loader/locals',
-  query: {
-    modules: true,
-  },
-};
 
 // Helper function to recursively filter through loaders, and apply the
 // supplied function
@@ -83,31 +78,28 @@ export default new WebpackConfig().extend({
 
   module: {
     loaders: [
-      // .css files should make the classnames available to our Node code,
-      // but shouldn't emit anything
-      {
-        test: /\.css$/,
-        loaders: [
-          cssLoader,
-          'postcss-loader',
-        ],
-      },
-      // Do the same with SASS files-- get the classnames, but don't emit
-      {
-        test: /\.s(c|a)ss$/,
-        loaders: [
-          cssLoader,
-          'sass-loader',
-        ],
-      },
-      // Do the same with LESS files-- same with SASS; classnames, but no emission
-      {
-        test: /\.less$/,
-        loaders: [
-          cssLoader,
-          'less-loader',
-        ],
-      },
+      // CSS loaders
+      ...(function* loadCss() {
+        for (const loader of css.loaders) {
+          // Iterate over CSS/SASS/LESS and yield local and global mod configs
+          for (const mod of css.getModuleRegExp(loader.ext)) {
+            yield {
+              test: new RegExp(mod[0]),
+              loader: [
+                {
+                  loader: 'css-loader/locals',
+                  query: Object.assign({
+                    importLoaders: 1,
+                    localIdentName: css.localIdentName,
+                  }, mod[1]),
+                },
+                'postcss-loader',
+                ...loader.use,
+              ],
+            };
+          }
+        }
+      }()),
       // .js(x) files can extend the `.babelrc` file at the root of the project
       // (which was used to spawn Webpack in the first place), because that's
       // exactly the same polyfill config we'll want to use for this bundle

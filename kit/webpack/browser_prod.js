@@ -35,6 +35,9 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 // Copy files from `PATH.static` to `PATHS.public`
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
+// Common config
+import { css } from './common';
+
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
 
@@ -43,21 +46,12 @@ import { BUNDLE_ANALYZER } from '../../config/project';
 
 // ----------------------
 
-// The final CSS file will wind up in `dist/assets/css/style.[contenthash].css`
+// The final CSS file will wind up in `dist/public/assets/css/style.[contenthash].css`
+
 const extractCSS = new ExtractTextPlugin({
   filename: 'assets/css/style.[contenthash].css',
   allChunks: true,
 });
-
-// CSS loader
-const cssLoader = {
-  loader: 'css-loader',
-  query: {
-    // Enable CSS modules spec.  This makes our styles :local by
-    // default, so they won't bleed out to the global scope
-    modules: true,
-  },
-};
 
 // Extend the `browser.js` config
 export default new WebpackConfig().extend({
@@ -80,54 +74,31 @@ export default new WebpackConfig().extend({
   },
   module: {
     loaders: [
-      // .css loading
-      {
-        test: /\.css$/,
-        loader: extractCSS.extract({
-          use: [
-            // CSS loader -- see above for options
-            cssLoader,
-            // Pass through postcss first, which will minify, optimise and
-            // parse through cssnext
-            {
-              loader: 'postcss-loader',
-            },
-          ],
-          // As a fallback, use the style loader
-          fallback: 'style-loader',
-        }),
-      },
-      // As a secondary option to postcss, we'll also allow SASS files that
-      // have a .sass/.scss extension.  They will get routed through postcss
-      // in just the same way, and @import should also work fine
-      {
-        test: /\.s(c|a)ss$/,
-        loader: extractCSS.extract({
-          use: [
-            // CSS loader -- see above for options
-            cssLoader,
-            'postcss-loader',
-            'resolve-url-loader',
-            'sass-loader?sourceMap',
-          ],
-          fallback: 'style-loader',
-        }),
-      },
-      // As a secondary option to postcss, we'll also allow LESS files that
-      // have a .less extension.  They will get routed through postcss
-      // in just the same way, and @import should also work fine
-      {
-        test: /\.less$/,
-        loader: extractCSS.extract({
-          use: [
-            // CSS loader -- see above for options
-            cssLoader,
-            'postcss-loader',
-            'less-loader',
-          ],
-          fallback: 'style-loader',
-        }),
-      },
+      // CSS loaders
+      ...(function* loadCss() {
+        for (const loader of css.loaders) {
+          // Iterate over CSS/SASS/LESS and yield local and global mod configs
+          for (const mod of css.getModuleRegExp(loader.ext)) {
+            yield {
+              test: new RegExp(mod[0]),
+              loader: extractCSS.extract({
+                use: [
+                  {
+                    loader: 'css-loader',
+                    query: Object.assign({
+                      importLoaders: 1,
+                      localIdentName: css.localIdentName,
+                    }, mod[1]),
+                  },
+                  'postcss-loader',
+                  ...loader.use,
+                ],
+                fallback: 'style-loader',
+              }),
+            };
+          }
+        }
+      }()),
     ],
   },
   // Minify, optimise

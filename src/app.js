@@ -18,6 +18,7 @@ import Helmet from 'react-helmet';
 import { mergeData } from 'kit/lib/apollo';
 
 // Styles
+import './styles.global.css';
 import css from './styles.css';
 import sass from './styles.scss';
 import less from './styles.less';

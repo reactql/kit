@@ -18,8 +18,9 @@ import WebpackConfig from 'webpack-config';
 // stylesheet syntax like it's available today.
 import cssnext from 'postcss-cssnext';
 
-// Allow @import statements in our CSS, and use webpack to resolve those paths
+// PostCSS filters
 import postcssPartialImport from 'postcss-partial-import';
+import postcssNested from 'postcss-nested';
 
 // Show a nice little progress bar
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
@@ -126,6 +127,7 @@ export default new WebpackConfig().merge({
                   PATHS.src,
                 ],
               }),
+              postcssNested(),
               // Use the default CSSNext settings
               cssnext(),
             ],

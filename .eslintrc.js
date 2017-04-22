@@ -32,7 +32,11 @@ module.exports = {
     'react/jsx-closing-bracket-location': [1, 'after-props'],
     'linebreak-style': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    'no-restricted-syntax': [2, ...restricted.filter(r => r !== 'ForOfStatement')],
+    'no-restricted-syntax': [2,
+      ...restricted.filter(
+        r => !['ForOfStatement'].includes(r.selector)
+      ),
+    ],
     'global-require': 0,
     'import/no-unresolved': [2, { commonjs: true }],
     'compat/compat': 2
