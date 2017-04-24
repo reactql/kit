@@ -109,10 +109,9 @@ export default new WebpackConfig().extend({
                 'style-loader',
                 {
                   loader: 'css-loader',
-                  query: Object.assign({
-                    importLoaders: 1,
+                  query: Object.assign({}, css.loaderDefaults, {
+                    // Use sourcemaps in development
                     sourceMap: true,
-                    localIdentName: css.localIdentName,
                   }, mod[1]),
                 },
                 'postcss-loader',

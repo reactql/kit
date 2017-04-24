@@ -88,10 +88,7 @@ export default new WebpackConfig().extend({
               loader: [
                 {
                   loader: 'css-loader/locals',
-                  query: Object.assign({
-                    importLoaders: 1,
-                    localIdentName: css.localIdentName,
-                  }, mod[1]),
+                  query: Object.assign({}, css.loaderDefaults, mod[1]),
                 },
                 'postcss-loader',
                 ...loader.use,

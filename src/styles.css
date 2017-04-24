@@ -8,14 +8,14 @@
 our React code, so that we could also use .hello in conjunction with another
 component without the two clashing */
 .hello {
-  & h1 {
+  h1 {
     margin: 0;
     /* Variables can be injected into our resulting CSS */
     color: var(--fg);
     font-size: 4rem;
   }
   /* We can nest other classnames, too, which are automatically hashed */
-  & .logo {
+  .logo {
     width: 250px;
   }
 }
@@ -23,13 +23,13 @@ component without the two clashing */
 /* We can define as many top-level classes as we like, and they will all
 be hashed in our HTML */
 .data {
-  & li {
+  li {
     margin-bottom: 0.5em;
     font-size: 1.4rem;
     &:last-child {
       margin-bottom: 0;
     }
-    & span {
+    span {
       font-style: italic;
       font-weight: bold;
     }
@@ -41,7 +41,7 @@ be hashed in our HTML */
   font-weight: bold;
   margin: 0;
   padding: 0;
-  & li {
+  li {
     list-style-type: none;
     padding: 10px;
   }
