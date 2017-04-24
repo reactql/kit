@@ -1,3 +1,13 @@
+1.1.1 - 2017-04-24
+------------------------------------------------
+* Adds CSSNano, for optimising resulting stylesheet code via PostCSS
+* Adds extensible `css-loader` defaults to `kit/webpack/common.js`
+* Fixes `src/styles.css` to use SASS-style nesting of elements
+* Bumps `yarn.lock`
+* Bumps NPM:
+ chunk-manifest-webpack-plugin  ^1.0.0  →  ^1.1.0
+ webpack-dev-server             ^2.4.3  →  ^2.4.4
+
 1.1.0 - 2017-04-22
 ------------------------------------------------
 * Adds '.global.(css|scss|sass|less)' loaders, making it trivial to separate 'localised' and global styles

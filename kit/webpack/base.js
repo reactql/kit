@@ -14,13 +14,15 @@ import webpack from 'webpack';
 // merged/extended from for further configs
 import WebpackConfig from 'webpack-config';
 
-// CSSNext is our postcss plugin of choice, that will allow us to use 'future'
+// PostCSS filters
+import postcssNested from 'postcss-nested';
+
+// CSSNext is our PostCSS plugin of choice, that will allow us to use 'future'
 // stylesheet syntax like it's available today.
 import cssnext from 'postcss-cssnext';
 
-// PostCSS filters
-import postcssPartialImport from 'postcss-partial-import';
-import postcssNested from 'postcss-nested';
+// CSSNano will optimise our stylesheet code
+import cssnano from 'cssnano';
 
 // Show a nice little progress bar
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
@@ -121,15 +123,12 @@ export default new WebpackConfig().merge({
         postcss() {
           return {
             plugins: [
-              // @import powers
-              postcssPartialImport({
-                dirs: [
-                  PATHS.src,
-                ],
-              }),
               postcssNested(),
-              // Use the default CSSNext settings
               cssnext(),
+              cssnano({
+                // Disable autoprefixer-- CSSNext already used it
+                autoprefixer: false,
+              }),
             ],
           };
         },
