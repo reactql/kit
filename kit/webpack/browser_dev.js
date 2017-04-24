@@ -78,6 +78,10 @@ export default new WebpackConfig().extend({
     // Disable build's information
     noInfo: false,
 
+    // Show a full-screen overlay in the browser when there is a
+    // compiler error
+    overlay: true,
+
     // We're using React Router for all routes, so redirect 404s
     // back to the webpack-dev-server bootstrap HTML
     historyApiFallback: {
