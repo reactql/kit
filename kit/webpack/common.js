@@ -14,7 +14,8 @@ export const css = {
         {
           loader: 'sass-loader',
             options: {
-                includePaths: ['node_modules'],
+              includePaths: ['node_modules'],
+              sourceMap: true,
             },
         },
       ],
