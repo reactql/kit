@@ -29,6 +29,10 @@ import logo from './reactql-logo.svg';
 
 // ----------------------
 
+// Grommet Components
+import Box from 'grommet/components/Box';
+import Heading from 'grommet/components/Heading';
+
 // We'll display this <Home> component when we're on the / route
 const Home = () => (
   <h1>You&apos;re on the home page - click another link above</h1>
@@ -92,7 +96,7 @@ class GraphQLMessage extends React.PureComponent {
         }),
       ),
     }),
-  }
+  };
 
   render() {
     const { data } = this.props;
@@ -113,6 +117,13 @@ const Styles = () => (
     <li className={css.example}>Styled by CSS</li>
     <li className={sass.example}>Styled by SASS</li>
     <li className={less.example}>Styled by LESS</li>
+    <Box colorIndex='ok'>
+      <li>
+        <Heading align='start' margin='none' strong='true' tag='h3'>
+          Styled by Grommet
+        </Heading>
+      </li>
+    </Box>
   </ul>
 );
 

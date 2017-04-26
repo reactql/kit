@@ -9,7 +9,15 @@ export const css = {
     },
     {
       ext: 's(c|a)ss',
-      use: ['resolve-url-loader', 'sass-loader?sourceMap'],
+      use: [
+        'resolve-url-loader',
+        {
+          loader: 'sass-loader',
+            options: {
+                includePaths: ['node_modules'],
+            },
+        },
+      ],
     },
     {
       ext: 'less',

@@ -14,6 +14,15 @@ import webpack from 'webpack';
 // merged/extended from for further configs
 import WebpackConfig from 'webpack-config';
 
+// CopyWebpackPlugin will be used to get our external .css
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
+// HtmlWebpackPlugin will generate our HTML
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+// HtmlWebpackIncludeAssetsPlugin will be used to prepend our external .css to our generated styles
+import HtmlWebpackIncludeAssetsPlugin from 'html-webpack-include-assets-plugin';
+
 // CSSNext is our postcss plugin of choice, that will allow us to use 'future'
 // stylesheet syntax like it's available today.
 import cssnext from 'postcss-cssnext';
@@ -58,6 +67,12 @@ export default new WebpackConfig().merge({
   // actually get that stuff working in *Javascript* -- woot!
   module: {
     loaders: [
+      // Html
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+
       // Fonts
       {
         test: /\.(woff|woff2|ttf|eot)$/i,
@@ -102,6 +117,19 @@ export default new WebpackConfig().merge({
     // Progress bar + options
     new ProgressBarPlugin({
       format: ` ${chalk.magenta.bold('ReactQL')} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
+    }),
+
+    new CopyWebpackPlugin([
+      { from: 'node_modules/grommet/grommet.min.css', to: 'public/assets/css/'},
+    ]),
+
+    new HtmlWebpackPlugin({
+      template: 'kit/views/webpack.html',
+    }),
+
+    new HtmlWebpackIncludeAssetsPlugin({
+      assets: ['public/assets/css/grommet.min.css'],
+      append: false,
     }),
 
     // Options that our module loaders will pull from
