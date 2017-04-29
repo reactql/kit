@@ -26,27 +26,18 @@ environment.setAll({
   root: () => PATHS.webpack,
 });
 
-// eslint-disable-next-line import/no-mutable-exports
-let toExport;
-
 // Spawning webpack will be done through an `npm run ...` command, so we'll
 // map those npm options here to know which webpack config file to use
-switch (process.env.npm_lifecycle_event) {
-  case 'start':
-    toExport = load('browser_dev');
-    break;
-  case 'build-run':
-  case 'build':
-    toExport = [load('browser_prod'), load('server')];
-    break;
-  case 'build-browser':
-    toExport = load('browser_prod');
-    break;
-  case 'build-server':
-    toExport = load('server');
-    break;
-  default:
-    throw new Error('Invoke through npm only');
+const toExport = [];
+
+for (const build of (process.env.WEBPACK_CONFIG || '').trim().split(',')) {
+  if (build) toExport.push(load(build));
+}
+
+if (!toExport.length) {
+  // eslint-disable-next-line no-console
+  console.error('Error: WEBPACK_CONFIG files not given');
+  process.exit();
 }
 
 export default toExport;

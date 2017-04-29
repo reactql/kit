@@ -6,14 +6,14 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --colors",
-    "build-browser": "webpack --colors",
-    "build-server": "webpack --colors",
-    "build-run": "webpack --colors && node dist/server",
+    "build": "cross-env WEBPACK_CONFIG=browser_prod,server webpack --colors",
+    "build-browser": "cross-env WEBPACK_CONFIG=browser_prod webpack --colors",
+    "build-server": "cross-env WEBPACK_CONFIG=server webpack --colors",
+    "build-run": "cross-env WEBPACK_CONFIG=browser_prod,server webpack --colors && node dist/server",
     "lint": "eslint .",
     "clean": "rimraf dist",
     "server": "node dist/server",
-    "start": "webpack-dev-server"
+    "start": "cross-env WEBPACK_CONFIG=browser_dev webpack-dev-server"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -32,6 +32,7 @@
     "chunk-manifest-webpack-plugin": "^1.1.0",
     "compression-webpack-plugin": "^0.4.0",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
     "cssnano": "^3.10.0",
     "eslint": "^3.19.0",
