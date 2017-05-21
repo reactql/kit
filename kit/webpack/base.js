@@ -30,6 +30,9 @@ import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 // Chalk lib, to add some multi-colour awesomeness to our progress messages
 import chalk from 'chalk';
 
+// plugin to lint your CSS/Sass code using stylelint
+import StyleLintPlugin from 'stylelint-webpack-plugin';
+
 // Our local path configuration, so webpack knows where everything is/goes.
 // Since we haven't yet established our module resolution paths, we have to
 // use the full relative path
@@ -104,6 +107,12 @@ export default new WebpackConfig().merge({
     // Progress bar + options
     new ProgressBarPlugin({
       format: ` ${chalk.magenta.bold('ReactQL')} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
+    }),
+
+    // Enable Style Linting for .scss
+    new StyleLintPlugin({
+      configFile: '.stylelintrc.js',
+      syntax: 'scss'
     }),
 
     // Options that our module loaders will pull from
