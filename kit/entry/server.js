@@ -92,6 +92,8 @@ const scripts = [
   'vendor.js',
   'browser.js'].map(key => manifest[key]);
 
+const HOST = process.env.HOST || 'localhost';
+
 // Port to bind to.  Takes this from the `PORT` environment var, or assigns
 // to 4000 by default
 const PORT = process.env.PORT || 4000;
@@ -202,5 +204,7 @@ const PORT = process.env.PORT || 4000;
     .use(router.allowedMethods())
 
     // Bind to the specified port
-    .listen(PORT);
+    .listen({ host: HOST, port: PORT }, () => {
+      console.log(`Running on http://${HOST}:${PORT}/`);
+    });
 }());

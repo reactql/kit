@@ -1,3 +1,31 @@
+1.2.0 - 2017-05-22
+------------------------------------------------
+* Adds `npm run build-browser-only` option, which creates `index.html` alongside regular JS and CSS browser bundling. Useful for static hosts or via a BYO web server.
+* Adds provisional `postcss.config.js`, for upcoming PostCSS v6.0 (note: not implemented yet; CSSNext currently awaiting https://github.com/MoOx/postcss-cssnext/issues/374)
+* Fixes PostCSS source maps in development
+* Adds `HOST` environment var for overriding `localhost` default
+* Adds `Running on http://localhost:4000/` default message when server starts (or whatever the correct `HOST` and `PORT` are)
+* Bumps NPM packages:
+  "cross-env": "^5.0.0",
+  "css-loader": "^0.28.1",
+  "eslint-config-airbnb": "^15.0.0",
+  "eslint-plugin-jsx-a11y": "^5.0.1",
+  "eslint-plugin-react": "^7.0.1",
+  "image-webpack-loader": "^3.3.1",
+  "node-noop": "^1.0.0",
+  "postcss-cssnext": "2.11.0",
+  "postcss-loader": "^2.0.5",
+  "postcss-nested": "^2.0.2",
+  "promise-monofill": "^1.0.1",
+  "sass-loader": "^6.0.5",
+  "style-loader": "^0.18.0",
+  "webpack": "^2.5.1",
+  "webpack-bundle-analyzer": "^2.8.1",
+  "webpack-dev-server": "^2.4.5",
+  "webpack-node-externals": "^1.6.0"
+* Bumps `yarn.lock`
+* Merges #25 - .editorconfig ESLint fix eol-last
+
 1.1.2 - 2017-04-29
 ------------------------------------------------
 * Closes #33 - Webpack config options are not specified by `WEBPACK_CONFIG` in `package.json`

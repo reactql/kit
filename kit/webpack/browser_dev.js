@@ -118,7 +118,12 @@ export default new WebpackConfig().extend({
                     sourceMap: true,
                   }, mod[1]),
                 },
-                'postcss-loader',
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                  },
+                },
                 ...loader.use,
               ],
             };
