@@ -11,16 +11,10 @@
 // ----------------------
 // IMPORTS
 
-/* Node */
-import path from 'path';
-
 /* NPM */
 
 // Patch global.`fetch` so that Apollo calls to GraphQL work
 import 'isomorphic-fetch';
-
-// Needed to read manifest files
-import { readFileSync } from 'fs';
 
 // React UI
 import React from 'react';
@@ -43,9 +37,6 @@ import koaHelmet from 'koa-helmet';
 
 // Koa Router, for handling URL requests
 import KoaRouter from 'koa-router';
-
-// Static file handler
-import koaStatic from 'koa-static';
 
 // High-precision timing, so we can debug response time to serve a request
 import ms from 'microseconds';
@@ -74,137 +65,100 @@ import Html from 'kit/views/ssr';
 // App entry point
 import App from 'src/app';
 
-// Import paths.  We'll use this to figure out where our public folder is
-// so we can serve static files
-import PATHS from 'config/paths';
-
 // ----------------------
 
-// Read in manifest files
-const [manifest, chunkManifest] = ['manifest', 'chunk-manifest'].map(
-  name => JSON.parse(
-    readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8'),
-  ),
-);
+// Function to create a React handler, per the environment's correct
+// manifest files
+export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
+  return async function reactHandler(ctx) {
+    const routeContext = {};
 
-const scripts = [
-  'manifest.js',
-  'vendor.js',
-  'browser.js'].map(key => manifest[key]);
+    // Create a new server Apollo client for this request
+    const client = serverClient();
 
-const HOST = process.env.HOST || 'localhost';
+    // Create a new Redux store for this request
+    const store = createNewStore(client);
 
-// Port to bind to.  Takes this from the `PORT` environment var, or assigns
-// to 4000 by default
-const PORT = process.env.PORT || 4000;
+    // Generate the HTML from our React tree.  We're wrapping the result
+    // in `react-router`'s <StaticRouter> which will pull out URL info and
+    // store it in our empty `route` object
+    const components = (
+      <StaticRouter location={ctx.request.url} context={routeContext}>
+        <ApolloProvider store={store} client={client}>
+          <App />
+        </ApolloProvider>
+      </StaticRouter>
+    );
+
+    // Wait for GraphQL data to be available in our initial render,
+    // before dumping HTML back to the client
+    await getDataFromTree(components);
+
+    // Full React HTML render
+    const html = ReactDOMServer.renderToString(components);
+
+    // TODO add redirect handling
+
+    // Render the view with our injected React data.  We'll pass in the
+    // Helmet component to generate the <head> tag, as well as our Redux
+    // store state so that the browser can continue from the server
+    ctx.body = `<!DOCTYPE html>\n${ReactDOMServer.renderToStaticMarkup(
+      <Html
+        html={html}
+        head={Helmet.rewind()}
+        window={{
+          webpackManifest: chunkManifest,
+          __STATE__: store.getState(),
+        }}
+        css={css}
+        scripts={scripts} />,
+    )}`;
+
+    return true;
+  };
+}
 
 // Run the server
-(async function server() {
-  // Set up routes
-  const router = (new KoaRouter())
-    // Set-up a general purpose /ping route to check the server is alive
-    .get('/ping', async ctx => {
-      ctx.body = 'pong';
-    })
+export default (async function server() {
+  return {
+    router: (new KoaRouter())
+      // Set-up a general purpose /ping route to check the server is alive
+      .get('/ping', async ctx => {
+        ctx.body = 'pong';
+      })
 
-    // Favicon.ico.  By default, we'll serve this as a 204 No Content.
-    // If /favicon.ico is available as a static file, it'll try that first
-    .get('/favicon.ico', async ctx => {
-      ctx.res.statusCode = 204;
-    })
+      // Favicon.ico.  By default, we'll serve this as a 204 No Content.
+      // If /favicon.ico is available as a static file, it'll try that first
+      .get('/favicon.ico', async ctx => {
+        ctx.res.statusCode = 204;
+      }),
+    app: new Koa()
 
-    // Everything else is React
-    .get('/*', async ctx => {
-      const route = {};
+      // Preliminary security for HTTP headers
+      .use(koaHelmet())
 
-      // Create a new server Apollo client for this request
-      const client = serverClient();
+      // Error wrapper.  If an error manages to slip through the middleware
+      // chain, it will be caught and logged back here
+      .use(async (ctx, next) => {
+        try {
+          await next();
+        } catch (e) {
+          // TODO we've used rudimentary console logging here.  In your own
+          // app, I'd recommend you implement third-party logging so you can
+          // capture errors properly
+          console.log('Error', e.message);
+          ctx.body = 'There was an error. Please try again later.';
+        }
+      })
 
-      // Create a new Redux store for this request
-      const store = createNewStore(client);
-
-      // Generate the HTML from our React tree.  We're wrapping the result
-      // in `react-router`'s <StaticRouter> which will pull out URL info and
-      // store it in our empty `route` object
-      const components = (
-        <StaticRouter location={ctx.request.url} context={route}>
-          <ApolloProvider store={store} client={client}>
-            <App />
-          </ApolloProvider>
-        </StaticRouter>
-      );
-
-      // Wait for GraphQL data to be available in our initial render,
-      // before dumping HTML back to the client
-      await getDataFromTree(components);
-
-      // Full React HTML render
-      const html = ReactDOMServer.renderToString(components);
-
-      // Render the view with our injected React data.  We'll pass in the
-      // Helmet component to generate the <head> tag, as well as our Redux
-      // store state so that the browser can continue from the server
-      ctx.body = `<!DOCTYPE html>\n${ReactDOMServer.renderToStaticMarkup(
-        <Html
-          html={html}
-          head={Helmet.rewind()}
-          window={{
-            webpackManifest: chunkManifest,
-            __STATE__: store.getState(),
-          }}
-          scripts={scripts}
-          css={manifest['browser.css']} />,
-      )}`;
-    });
-
-  // Start Koa
-  (new Koa())
-
-    // Preliminary security for HTTP headers
-    .use(koaHelmet())
-
-    // Error wrapper.  If an error manages to slip through the middleware
-    // chain, it will be caught and logged back here
-    .use(async (ctx, next) => {
-      try {
+      // It's useful to see how long a request takes to respond.  Add the
+      // timing to a HTTP Response header
+      .use(async (ctx, next) => {
+        const start = ms.now();
         await next();
-      } catch (e) {
-        // TODO we've used rudimentary console logging here.  In your own
-        // app, I'd recommend you implement third-party logging so you can
-        // capture errors properly
-        console.log('Error', e.message);
-        ctx.body = 'There was an error. Please try again later.';
-      }
-    })
-
-    // It's useful to see how long a request takes to respond.  Add the
-    // timing to a HTTP Response header
-    .use(async (ctx, next) => {
-      const start = ms.now();
-      await next();
-      const end = ms.parse(ms.since(start));
-      const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
-      ctx.set('Response-Time', `${total / 1e3}ms`);
-    })
-
-    // Serve static files from our dist/public directory, which is where
-    // the compiled JS, images, etc will wind up.  Note this is being checked
-    // FIRST before any routes -- static files always take priority
-    .use(koaStatic(PATHS.public, {
-      // All asset names contain the hashes of their contents so we can
-      // assume they are immutable for caching
-      maxage: 31536000000,
-      // Don't defer to middleware.  If we have a file, serve it immediately
-      defer: false,
-    }))
-
-    // If the requests makes it here, we'll assume they need to be handled
-    // by the router
-    .use(router.routes())
-    .use(router.allowedMethods())
-
-    // Bind to the specified port
-    .listen({ host: HOST, port: PORT }, () => {
-      console.log(`Running on http://${HOST}:${PORT}/`);
-    });
+        const end = ms.parse(ms.since(start));
+        const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
+        ctx.set('Response-Time', `${total / 1e3}ms`);
+      }),
+  };
 }());

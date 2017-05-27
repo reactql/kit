@@ -6,21 +6,25 @@
 // ----------------------
 // IMPORTS
 
-// NPM
+/* NPM */
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
-// Common config
-import { css } from './common';
+// Chalk terminal library
+import chalk from 'chalk';
 
-// Local
+/* Local */
+
+// Import console messages
+import { css, stats } from './common';
+import { logServerStarted } from '../lib/console';
 import PATHS from '../../config/paths';
 
 // ----------------------
 
 // Host and port settings to spawn the dev server on
-const HOST = 'localhost';
-const PORT = 8080;
+const HOST = process.env.BROWSER_DEV_HOST || 'localhost';
+const PORT = process.env.BROWSER_DEV_PORT || 8080;
 const LOCAL = `http://${HOST}:${PORT}`;
 
 export default new WebpackConfig().extend({
@@ -41,10 +45,13 @@ export default new WebpackConfig().extend({
 
     return conf;
   },
-}).merge({
-
-  // Add source maps
-  devtool: 'cheap-module-source-map',
+}, '[root]/dev.js').merge({
+  module: {
+    loaders: [
+      // CSS loaders
+      ...css.getDevLoaders(),
+    ],
+  },
 
   // Dev server configuration
   devServer: {
@@ -88,69 +95,34 @@ export default new WebpackConfig().extend({
       index: '/webpack.html',
     },
 
-    // Displays neater and more compact statistics
-    stats: {
-      chunks: false,
-      colors: true,
-      errors: true,
-      hash: true,
-      performance: true,
-      version: true,
-      warnings: true,
-    },
-  },
-
-  module: {
-    loaders: [
-      // CSS loaders
-      ...(function* loadCss() {
-        for (const loader of css.loaders) {
-          // Iterate over CSS/SASS/LESS and yield local and global mod configs
-          for (const mod of css.getModuleRegExp(loader.ext)) {
-            yield {
-              test: new RegExp(mod[0]),
-              loader: [
-                'style-loader',
-                {
-                  loader: 'css-loader',
-                  query: Object.assign({}, css.loaderDefaults, {
-                    // Use sourcemaps in development
-                    sourceMap: true,
-                  }, mod[1]),
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap: true,
-                  },
-                },
-                ...loader.use,
-              ],
-            };
-          }
-        }
-      }()),
-    ],
+    // Format output stats
+    stats,
   },
 
   // Extra output options, specific to the dev server -- source maps and
   // our public path
   output: {
-    sourceMapFilename: '[file].map',
     publicPath: `${LOCAL}/`,
   },
 
   plugins: [
+    // Log to console when `webpack-dev-server` has finished
+    {
+      apply(compiler) {
+        compiler.plugin('done', () => {
+          logServerStarted({
+            type: 'hot-reloading browser',
+            host: HOST,
+            port: PORT,
+            chalk: chalk.bgMagenta.white,
+          });
+        });
+      },
+    },
+
     new webpack.NamedModulesPlugin(),
 
     // Activate the hot-reloader, so changes can be pushed to the browser
     new webpack.HotModuleReplacementPlugin(),
-
-    // Set NODE_ENV to 'development', in case we need verbose debug logs
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
   ],
 });

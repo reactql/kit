@@ -36,6 +36,9 @@ module.exports = {
   // Dist path; where bundled assets will wind up
   dist: path.join(root, 'dist'),
 
+  // Dist path for development; where dev assets will wind up
+  distDev: path.resolve(root, 'dist', 'dev'),
+
   // Public.  This is where our web server will start looking to serve
   // static files from
   public: path.join(root, 'dist', 'public'),

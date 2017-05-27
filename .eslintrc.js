@@ -1,4 +1,3 @@
-require('babel-register');
 const path = require('path');
 const baseRules = require('eslint-config-airbnb-base/rules/style');
 const [_, ...restricted] = baseRules.rules['no-restricted-syntax'];
@@ -43,11 +42,13 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      webpack: {
-        config: path.join(PATHS.webpack, 'eslint.js'),
+      node: {
+        paths: [
+          PATHS.root,
+          'node_modules',
+        ],
       },
-      polyfills: ['fetch'],
-    }
+    },
   },
   globals: {
     SERVER: false,

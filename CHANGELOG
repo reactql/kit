@@ -1,3 +1,62 @@
+1.3.0 - 2017-05-27
+------------------------------------------------
+## Linting
+* Fixes #24 - ESLint works with latest Atom ESLinter, bypasses the need for Webpack and `babel-register`, and speeds up linting.
+* Removes `kit/webpack/eslint.js` - which is now moot
+
+## Server
+* Closes #4 - Introduces server development bundling.  Now running `npm start` bundles _both_ a hot-reloading browser bundle, and a spawns server-side rendering that reloads upon code changes.
+* Adds `distDev` route to paths, for server development bundled assets
+* Adds `kit/webpack/server_dev.js` Webpack config for building and launching a development server
+* Adds separate `kit/webpack/server_prod.js` Webpack config for building production server bundle
+* Refactors `kit/entry/server.js` for working in both dev/production
+* Adds console messages to show server start-up info, including network IP and ports
+* Fixes `__dirname` in the built server bundle, so that `dist/server.js` can be run from anywhere (mentioned in / fixes https://github.com/reactql/cli/issues/36)
+
+## Helpers
+* Adds `kit/lib/console.js` and `logServerStarted()` function, for dumping neat console messages to the screen when starting servers
+* Adds `kit/lib/routing.js`, with `<Status>` (internal), `<NotFound>` and `<Redirect>` components for handling status codes, 404s and redirects, universally.
+
+## Webpack / bundling
+* Adds ability to use multiple webpack-configs in a given config file, by exporting as an array
+* Tidies up `kit/webpack/base` with common stats; fixes path typo
+* Adds `kit/webpack/dev.js`, which is extended by server_dev and browser_dev and adds the correct env vars and source-maps.
+* Closes #22 - Adds static bundling.  Now you can run `npm run build-static` to create a production browser bundle along with an `index.html` file, for uploading to a static web host
+* Adds `npm run build-static-run`, for static bundling and running the static site locally on port 5000
+* Adds `npm run static`, for running an already built static bundle
+* Refactors `kit/webpack/browser_prod.js` to add console messages; fixes minor chunk hash typo
+* Adds `css.getDevLoaders()` and `css.getExtractCSSLoaders()` helper functions to `kit/webpack/common.js`, for CSS configs that work across multiple configs
+* Adds `stats` to `kit/webpack/common.js`, for a common output format that shows built assets, errors and warnings, with minimal clutter
+
+## NPM
+* Adds packages:
+"concurrently": "^3.4.0"
+"serve": "^5.1.5"
+"boxen": "^1.1.0",
+"chalk": "^1.1.3",
+"ip": "^1.1.5"
+* Removes redundant packages:
+  "babel-register": "^6.24.1"
+  "node-noop": "^1.0.0"
+  "promise-monofill": "^1.0.1"
+* Re-orders packages so that they correctly appear within `devDependencies` or `dependencies`
+* Refactors `npm run...` commands as follows:
+  "browser": Runs hot-reloaded Webpack dev server for the browser on port 8080
+  "build": Builds production bundles for server and browser
+  "build-run": Builds production bundles, and runs a live web server
+  "build-static": Builds a production browser bundle and `index.html`, for hosting statically
+  "build-static-run": Builds static bundle, and runs it locally on port 5000
+  "clean": Removes `dist` folder and contents
+  "lint": Runs ESLint on project source code
+  "server": Runs a previously build production web server
+  "server-dev": Runs a development web server on port 8081 (restarts automatically on code changes)
+  "start": Starts both a development web server and a hot-reloadable browser Webpack dev server (ports 8081/8080 respectively)
+  "static": Starts a static web server on port 5000 for a previously built static bundle
+  "test": Currently does nothing. TBD.
+
+## App
+* Adds 404 route handling (currently a blank response - but 404 codes can be implemented at the server level to be handled by middleware, or respond appropriately; redirects TBD.)
+
 1.2.0 - 2017-05-22
 ------------------------------------------------
 * Adds `npm run build-browser-only` option, which creates `index.html` alongside regular JS and CSS browser bundling. Useful for static hosts or via a BYO web server.

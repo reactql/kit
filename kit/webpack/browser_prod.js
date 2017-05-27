@@ -7,7 +7,11 @@
 // ----------------------
 // IMPORTS
 
+/* Node */
+
 import { join } from 'path';
+
+/* NPM */
 
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
@@ -35,8 +39,13 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 // Copy files from `PATH.static` to `PATHS.public`
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
+// Chalk library for adding color to console messages
+import chalk from 'chalk';
+
+/* Local */
+
 // Common config
-import { css } from './common';
+import { css, webpackProgress } from './common';
 
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
@@ -68,44 +77,26 @@ export default new WebpackConfig().extend({
   },
 }).merge({
   output: {
-    // Filenames will be <name>.<chunkhas>.js in production on the browser
+    // Filenames will be <name>.<chunkhash>.js in production on the browser
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
   },
   module: {
     loaders: [
       // CSS loaders
-      ...(function* loadCss() {
-        for (const loader of css.loaders) {
-          // Iterate over CSS/SASS/LESS and yield local and global mod configs
-          for (const mod of css.getModuleRegExp(loader.ext)) {
-            yield {
-              test: new RegExp(mod[0]),
-              loader: extractCSS.extract({
-                use: [
-                  {
-                    loader: 'css-loader',
-                    query: Object.assign({}, css.loaderDefaults, mod[1]),
-                  },
-                  'postcss-loader',
-                  ...loader.use,
-                ],
-                fallback: 'style-loader',
-              }),
-            };
-          }
-        }
-      }()),
+      ...css.getExtractCSSLoaders(extractCSS),
     ],
   },
   // Minify, optimise
   plugins: [
+    webpackProgress(
+      `${chalk.magenta.bold('ReactQL browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
+    ),
 
     // Set NODE_ENV to 'production', so that React will minify our bundle
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+      DEBUG: false,
     }),
 
     // Check for errors, and refuse to emit anything with issues

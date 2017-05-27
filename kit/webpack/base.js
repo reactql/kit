@@ -7,6 +7,8 @@
 // ----------------------
 // IMPORTS
 
+/* NPM */
+
 // Webpack 2 is our bundler of choice.
 import webpack from 'webpack';
 
@@ -24,11 +26,10 @@ import cssnext from 'postcss-cssnext';
 // CSSNano will optimise our stylesheet code
 import cssnano from 'cssnano';
 
-// Show a nice little progress bar
-import ProgressBarPlugin from 'progress-bar-webpack-plugin';
+/* Local */
 
-// Chalk lib, to add some multi-colour awesomeness to our progress messages
-import chalk from 'chalk';
+// Common config
+import { stats } from './common';
 
 // Our local path configuration, so webpack knows where everything is/goes.
 // Since we haven't yet established our module resolution paths, we have to
@@ -39,6 +40,9 @@ import PATHS from '../../config/paths';
 
 // Export a new 'base' config, which we can extend/merge from
 export default new WebpackConfig().merge({
+
+  // Format the output stats to avoid too much noise
+  stats,
 
   // Javascript file extensions that webpack will resolve
   resolve: {
@@ -90,7 +94,7 @@ export default new WebpackConfig().merge({
   // to be the root public path for dev-server.
   output: {
 
-    // Our compiled bundles/static files will wind up in `dist`
+    // Our compiled bundles/static files will wind up in `dist/public`
     path: PATHS.public,
 
     // Deem the `dist` folder to be the root of our web server
@@ -101,11 +105,6 @@ export default new WebpackConfig().merge({
   },
 
   plugins: [
-    // Progress bar + options
-    new ProgressBarPlugin({
-      format: ` ${chalk.magenta.bold('ReactQL')} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
-    }),
-
     // Options that our module loaders will pull from
     new webpack.LoaderOptionsPlugin({
 

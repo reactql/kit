@@ -9,13 +9,20 @@ import PropTypes from 'prop-types';
 import { gql, graphql } from 'react-apollo';
 
 // Routing
-import { Link, Route } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
 // <Helmet> component for setting the page title
 import Helmet from 'react-helmet';
 
 // Helper to merge expected React PropTypes to Apollo-enabled component
 import { mergeData } from 'kit/lib/apollo';
+
+// NotFound 404 handler for unknown routes
+import { NotFound } from 'kit/lib/routing';
 
 // Styles
 import './styles.global.css';
@@ -55,7 +62,6 @@ Page.propTypes = {
 const Stats = () => {
   const info = [
     ['Environment', process.env.NODE_ENV],
-    ['Running', SERVER ? 'On the server' : 'In the browser'],
   ];
 
   return (
@@ -139,8 +145,11 @@ export default () => (
       <li><Link to="/page/contact">Contact</Link></li>
     </ul>
     <hr />
-    <Route exact path="/" component={Home} />
-    <Route path="/page/:name" component={Page} />
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/page/:name" component={Page} />
+      <Route component={NotFound} />
+    </Switch>
     <hr />
     <p>Runtime info:</p>
     <Stats />
