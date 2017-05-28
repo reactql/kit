@@ -65,8 +65,8 @@ export default [
 
     // Output to the `dist` folder
     output: {
-      path: PATHS.distDev,
-      filename: '../server_dev.js',
+      path: PATHS.dist,
+      filename: 'server_dev.js',
     },
 
     plugins: [

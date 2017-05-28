@@ -21,16 +21,6 @@ import PATHS from '../../config/paths';
 
 // ----------------------
 
-// Helper function to recursively filter through loaders, and apply the
-// supplied function
-function recursiveLoader(root = {}, func) {
-  if (root.loaders) {
-    root.loaders.forEach(l => recursiveLoader(l, func));
-  }
-  if (root.loader) return func(root);
-  return false;
-}
-
 export default new WebpackConfig().extend({
   '[root]/server.js': conf => {
     // Optimise images
@@ -42,17 +32,6 @@ export default new WebpackConfig().extend({
         // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
         options: {},
       });
-
-    // Prevent file emission, since the browser bundle will already have done it
-    conf.module.loaders.forEach(loader => {
-      recursiveLoader(loader, l => {
-        if (l.loader === 'file-loader') {
-          // eslint-disable-next-line
-          l.query.emitFile = false;
-        }
-      });
-    });
-
     return conf;
   },
 }).merge({

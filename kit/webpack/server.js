@@ -17,7 +17,30 @@ import { css } from './common';
 
 // ----------------------
 
-export default new WebpackConfig().extend('[root]/base.js').merge({
+// Helper function to recursively filter through loaders, and apply the
+// supplied function
+function recursiveLoader(root = {}, func) {
+  if (root.loaders) {
+    root.loaders.forEach(l => recursiveLoader(l, func));
+  }
+  if (root.loader) return func(root);
+  return false;
+}
+
+export default new WebpackConfig().extend({
+  '[root]/base.js': conf => {
+    // Prevent file emission, since the browser bundle will already have done it
+    conf.module.loaders.forEach(loader => {
+      recursiveLoader(loader, l => {
+        if (l.loader === 'file-loader') {
+          // eslint-disable-next-line
+          l.query.emitFile = false;
+        }
+      });
+    });
+    return conf;
+  },
+}).merge({
 
   // Set the target to Node.js, since we'll be running the bundle on the server
   target: 'node',
