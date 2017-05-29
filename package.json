@@ -7,6 +7,7 @@
   "scripts": {
     "browser": "cross-env WEBPACK_CONFIG=browser_dev webpack-dev-server",
     "build": "cross-env WEBPACK_CONFIG=browser_prod,server_prod webpack --colors",
+    "build-browser": "cross-env WEBPACK_CONFIG=browser_prod webpack --colors",
     "build-run": "cross-env WEBPACK_CONFIG=browser_prod,server_prod webpack --colors && npm run server",
     "build-static": "cross-env WEBPACK_CONFIG=static webpack --colors",
     "build-static-run": "npm run build-static && npm run static",

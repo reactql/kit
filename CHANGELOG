@@ -1,3 +1,8 @@
+1.3.2 - 2017-05-29
+------------------------------------------------
+* Replaces `gzip` with `zopfli` compression on Webpack build assets (up to 5% better compression)
+* Adds `npm run build-browser` script, for generating just a production browser bundle
+
 1.3.1 - 2017-05-28
 ------------------------------------------------
 * Fixes #30 - code splitting now works on both the dev and production web server

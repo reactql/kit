@@ -127,6 +127,8 @@ export default new WebpackConfig().extend({
     // Compress assets into .gz files, so that our Koa static handler can
     // serve those instead of the full-sized version
     new CompressionPlugin({
+      // Use Zopfli compression
+      algorithm: 'zopfli',
       // Overwrite the default 80% compression-- anything is better than
       // nothing
       minRatio: 0.99,
