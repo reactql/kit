@@ -1,3 +1,33 @@
+1.4.0 - 2017-05-30
+------------------------------------------------
+## General
+* Fixes edge case where `<script defer>` tags in `kit/views/ssr.js` could cause manifest/vendor/browser files to load in the wrong order
+* Adds Brotli compression - builds `.br` versions of static assets in production
+* Adds `staticMiddleware()` to `kit/entry/server.js` for serving static file assets
+* Replaces `koa-static` middleware with a direct call to parent `koa-send`
+* Bumps to PostCSS v6 by removing inline Webpack config
+
+## NPM
+* Removes packages:
+"koa-static": "^3.0.0"
+
+* Adds packages:
+"brotli-webpack-plugin": "^0.3.0"
+"koa-send": "^4.1.0"
+
+* Bumps packages:
+"babel-preset-env": "^1.5.1"
+"css-loader": "^0.28.4"
+"eslint-plugin-compat": "^1.0.3"
+"eslint-plugin-import": "^2.3.0"
+"eslint-plugin-jsx-a11y": "^5.0.3"
+"node-sass": "^4.5.3"
+"style-loader": "^0.18.1"
+"webpack": "^2.6.1"
+"webpack-bundle-analyzer": "^2.8.2"
+"koa-router": "^7.2.0"
+"react-helmet": "^5.1.3"
+
 1.3.2 - 2017-05-29
 ------------------------------------------------
 * Replaces `gzip` with `zopfli` compression on Webpack build assets (up to 5% better compression)

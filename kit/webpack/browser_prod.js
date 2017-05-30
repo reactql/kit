@@ -24,6 +24,9 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // Compression plugin for generating `.gz` static files
 import CompressionPlugin from 'compression-webpack-plugin';
 
+// Generate .br files, using the Brotli compression algorithm
+import BrotliPlugin from 'brotli-webpack-plugin';
+
 // Chunk Manifest plugin for generating a chunk asset manifest
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
 
@@ -129,6 +132,14 @@ export default new WebpackConfig().extend({
     new CompressionPlugin({
       // Use Zopfli compression
       algorithm: 'zopfli',
+      // Overwrite the default 80% compression-- anything is better than
+      // nothing
+      minRatio: 0.99,
+    }),
+
+    // Also generate .br files, with Brotli compression-- often significantly
+    // smaller than the gzip equivalent, but not yet universally supported
+    new BrotliPlugin({
       // Overwrite the default 80% compression-- anything is better than
       // nothing
       minRatio: 0.99,

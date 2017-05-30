@@ -1,13 +1,5 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
-/*
-
-//
-// NOTE: This file is for the upcoming config of PostCSS v6.0
-// This is not currently used; ignore for now.
-
-*/
-
 // PostCSS filters
 const postcssNested = require('postcss-nested');
 

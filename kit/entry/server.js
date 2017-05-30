@@ -32,6 +32,9 @@ import Koa from 'koa';
 // to await data being ready before rendering back HTML to the client
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 
+// Static file handler
+import koaSend from 'koa-send';
+
 // HTTP header hardening
 import koaHelmet from 'koa-helmet';
 
@@ -65,7 +68,32 @@ import Html from 'kit/views/ssr';
 // App entry point
 import App from 'src/app';
 
+// Import paths.  We'll use this to figure out where our public folder is
+// so we can serve static files
+import PATHS from 'config/paths';
+
 // ----------------------
+
+// Static file middleware
+export function staticMiddleware() {
+  return async function staticMiddlewareHandler(ctx, next) {
+    try {
+      if (ctx.path !== '/') {
+        return await koaSend(
+          ctx,
+          ctx.path,
+          process.env.NODE_ENV === 'production' ? {
+            root: PATHS.public,
+            immutable: true,
+          } : {
+            root: PATHS.distDev,
+          },
+        );
+      }
+    } catch (e) { /* Errors will fall through */ }
+    return next();
+  };
+}
 
 // Function to create a React handler, per the environment's correct
 // manifest files

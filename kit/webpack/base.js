@@ -16,16 +16,6 @@ import webpack from 'webpack';
 // merged/extended from for further configs
 import WebpackConfig from 'webpack-config';
 
-// PostCSS filters
-import postcssNested from 'postcss-nested';
-
-// CSSNext is our PostCSS plugin of choice, that will allow us to use 'future'
-// stylesheet syntax like it's available today.
-import cssnext from 'postcss-cssnext';
-
-// CSSNano will optimise our stylesheet code
-import cssnano from 'cssnano';
-
 /* Local */
 
 // Common config
@@ -117,20 +107,6 @@ export default new WebpackConfig().merge({
 
         // The 'context' that our loaders will use as the root folder
         context: PATHS.src,
-
-        // PostCSS -- @import, cssnext
-        postcss() {
-          return {
-            plugins: [
-              postcssNested(),
-              cssnext(),
-              cssnano({
-                // Disable autoprefixer-- CSSNext already used it
-                autoprefixer: false,
-              }),
-            ],
-          };
-        },
 
         // image-webpack-loader image crunching options
         imageWebpackLoader: {

@@ -7,9 +7,6 @@
 
 /* NPM */
 
-// Static file handler
-import koaStatic from 'koa-static';
-
 // Chalk terminal library
 import chalk from 'chalk';
 
@@ -18,12 +15,8 @@ import chalk from 'chalk';
 // Import console messages
 import { logServerStarted } from 'kit/lib/console';
 
-// Import paths.  We'll use this to figure out where our public folder is
-// so we can serve static files
-import PATHS from 'config/paths';
-
 // Extend the server base
-import server, { createReactHandler } from './server';
+import server, { createReactHandler, staticMiddleware } from './server';
 
 // ----------------------
 
@@ -44,7 +37,7 @@ server.then(({ router, app }) => {
 
   // Connect the development routes to the server
   app
-    .use(koaStatic(PATHS.distDev))
+    .use(staticMiddleware())
     .use(router.routes())
     .use(router.allowedMethods());
 
