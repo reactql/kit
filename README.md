@@ -14,7 +14,7 @@ React+GraphQL front-end starter kit. Universal: Browser + SSR.
 - [Webpack 2](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/)
 - [PostCSS v6](http://postcss.org/) with [next-gen CSS](http://cssnext.io/) and inline [@imports](https://github.com/postcss/postcss-import)
 - [SASS](http://sass-lang.com) and [LESS](http://lesscss.org/) support (also parsed through PostCSS)
-- Full route-aware server-side rendering (SSR) of initial HTML
+- Full route-aware [server-side rendering (SSR)](https://reactql.org/docs/ssr) of initial HTML
 - Universal building - both browser + Node.js web server
 - Dev + [React-compatible hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates
 - Built-in [Koa 2](http://koajs.com/) web server, with async/await routing
