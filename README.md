@@ -18,8 +18,9 @@ React+GraphQL front-end starter kit. Universal: Browser + SSR.
 - Universal building - both browser + Node.js web server
 - Dev + [React-compatible hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates
 - Built-in [Koa 2](http://koajs.com/) web server, with async/await routing
-- Development web server that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
-- Production bundling, for generating optimised server and client code
+- [Development web server](https://reactql.org/docs/setup#development) that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
+- [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
+- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc 
 - HTTP header hardening with [Helmet for Koa](https://github.com/venables/koa-helmet)
 - Declarative/dynamic `<head>` section, using [react-helmet](https://github.com/nfl/react-helmet)
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files
