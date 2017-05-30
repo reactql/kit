@@ -1,3 +1,14 @@
+1.4.1 - 2017-05-30
+------------------------------------------------
+
+## Server
+* Adds 301/302 redirect handling (issues `Location:` header to new URL)
+* Adds 404 Not Found handling; by default, just sets a 404 status code
+
+## App
+* Adds sample `<Redirect>` handler, from /old/path to /new/path
+* Adds fall-through 404 handler, when no routes are matched
+
 1.4.0 - 2017-05-30
 ------------------------------------------------
 ## General

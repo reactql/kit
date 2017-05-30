@@ -125,7 +125,25 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
     // Full React HTML render
     const html = ReactDOMServer.renderToString(components);
 
-    // TODO add redirect handling
+    // Handle redirects
+    if ([301, 302].includes(routeContext.status)) {
+      // 301 = permanent redirect, 302 = temporary
+      ctx.status = routeContext.status;
+
+      // Issue the new `Location:` header
+      ctx.redirect(routeContext.url);
+
+      // Return early -- no need to set a response body
+      return;
+    }
+
+    // Handle 404 Not Found
+    if (routeContext.status === 404) {
+      // By default, just set the status code to 404.  You can add your
+      // own custom logic here, if you want to redirect to a permanent
+      // 404 route or set a different response on `ctx.body`
+      ctx.status = routeContext.status;
+    }
 
     // Render the view with our injected React data.  We'll pass in the
     // Helmet component to generate the <head> tag, as well as our Redux
@@ -141,8 +159,6 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
         css={css}
         scripts={scripts} />,
     )}`;
-
-    return true;
   };
 }
 
