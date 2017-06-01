@@ -26,18 +26,56 @@ function getStub() {
   return `${isServer ? 'SERVER' : 'BROWSER'}_${isProduction ? 'PROD' : 'DEV'}`;
 }
 
+// Get browser stub
+function getBrowserStub() {
+  return `BROWSER_${isProduction ? 'PROD' : 'DEV'}`;
+}
+
+// Get server stub
+function getServerStub() {
+  return `SERVER_${isProduction ? 'PROD' : 'DEV'}`;
+}
+
 // Get the hostname for the server, based on the current environment
 export function getHost() {
   return process.env[`${getStub()}_HOST`] || defaultHost;
 }
 
-// Get the port for the server, based on the current environment
+// Get the server host -- based on the current environment
+export function getServerHost() {
+  return process.env[`${getServerStub()}_HOST`] || defaultHost;
+}
+
+// Get the browser host -- based on the current environment
+export function getBrowserHost() {
+  return process.env[`${getBrowserStub()}_HOST`] || defaultHost;
+}
+
+// Get the port, based on the current environment
 export function getPort() {
   const port = process.env[`${getStub()}_PORT`];
   if (port) return port;
 
   // No clue from the environment -- work it out ourselves
   return defaultPorts[process.env.NODE_ENV][isServer ? 'server' : 'browser'];
+}
+
+// Get the browser port, based on the current environment
+export function getBrowserPort() {
+  const port = process.env[`${getBrowserStub()}_PORT`];
+  if (port) return port;
+
+  // No clue from the environment -- work it out ourselves
+  return defaultPorts[process.env.NODE_ENV].browser;
+}
+
+// Get the server port, based on the current environment
+export function getServerPort() {
+  const port = process.env[`${getServerStub()}_PORT`];
+  if (port) return port;
+
+  // No clue from the environment -- work it out ourselves
+  return defaultPorts[process.env.NODE_ENV].server;
 }
 
 // Get the protocol://host:port of where the current server would bind

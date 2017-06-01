@@ -1,3 +1,9 @@
+1.5.1 - 2017-06-01
+------------------------------------------------
+
+## Environment
+* Adds more complete `kit/lib/env.js`, with functions for getting browser/server-specific host/ports
+
 1.5.0 - 2017-06-01
 ------------------------------------------------
 
