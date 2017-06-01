@@ -12,6 +12,9 @@ import chalk from 'chalk';
 
 /* Local */
 
+// Local environment
+import { getHost, getPort } from 'kit/lib/env';
+
 // Import console messages
 import { logServerStarted } from 'kit/lib/console';
 
@@ -21,8 +24,8 @@ import server, { createReactHandler, staticMiddleware } from './server';
 // ----------------------
 
 // Host and port -- from the environment
-const HOST = process.env.SERVER_DEV_HOST || 'localhost';
-const PORT = process.env.SERVER_DEV_PORT || 8081;
+const HOST = getHost();
+const PORT = getPort();
 
 // Get manifest values
 const css = '/assets/css/style.css';

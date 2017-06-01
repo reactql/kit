@@ -15,17 +15,23 @@ import chalk from 'chalk';
 
 /* Local */
 
+
 // Import console messages
 import { css, stats } from './common';
 import { logServerStarted } from '../lib/console';
+
+// Local environment
+import { getHost, getPort, getURL } from '../lib/env';
+
+// Locla paths
 import PATHS from '../../config/paths';
 
 // ----------------------
 
 // Host and port settings to spawn the dev server on
-const HOST = process.env.BROWSER_DEV_HOST || 'localhost';
-const PORT = process.env.BROWSER_DEV_PORT || 8080;
-const LOCAL = `http://${HOST}:${PORT}`;
+const HOST = getHost();
+const PORT = getPort();
+const LOCAL = getURL();
 
 export default new WebpackConfig().extend({
   '[root]/browser.js': conf => {

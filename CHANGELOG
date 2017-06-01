@@ -1,3 +1,19 @@
+1.5.0 - 2017-06-01
+------------------------------------------------
+
+## Environment
+* Adds `kit/lib/env.js`, for determining local environment settings
+* Adds `getHost()`, `getPort()` and `getURL()` to `kit/lib/env.js` to detect where the local server is/will be spawned on
+* Updates Webpack and `kit/entry/server_*.js` configs to use dynamic environment host/port/URL
+* Adds development/production env vars to webpack builds, to provide context to Webpack
+
+## NPM
+* Replaces `concurrently` with `npm-run-all`, to avoid errors in NPM v5.0.0 when terminating with Ctrl/Cmd + C
+* Removes packages:
+"concurrently": "^3.4.0"
+* Adds packages:
+"npm-run-all": "^4.0.2"
+
 1.4.1 - 2017-05-30
 ------------------------------------------------
 
