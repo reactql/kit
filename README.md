@@ -1,8 +1,12 @@
 <img src="https://reactql.org/docs/images/reactql-logo.svg" alt="ReactQL" width="278" height="77" />
 
-# Starter kit code (full version)
+# Starter kit code (Javascript version)
 
 React+GraphQL front-end starter kit. Universal: Browser + SSR.
+
+[Typescript version](https://github.com/reactql/kit.ts) also available.
+
+Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does the heavy lifting for you.
 
 ## Features
 
