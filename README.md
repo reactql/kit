@@ -30,8 +30,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 - Dev + [React-compatible hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates
 - [Development web server](https://reactql.org/docs/setup#development) that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
-- [ESLint](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
-- Tons of commentary/documentation to fill you in on what's happening under the hood
+
 
 ### Code optimisation
 
@@ -50,6 +49,13 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 - [PostCSS v6](http://postcss.org/) with [next-gen CSS](http://cssnext.io/) and inline [@imports](https://github.com/postcss/postcss-import)
 - [SASS](http://sass-lang.com) and [LESS](http://lesscss.org/) support (also parsed through PostCSS)
+
+### Developer support
+
+- [ESLint](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
+- Tons of code commentary to fill you in on what's happening under the hood
+- Extensive, up-to-date [online documentation](https://reactql.org/docs/)
+- [Examples repository](https://github.com/reactql/examples), showing you how to add a GraphQL server, run without GraphQL, take advantage of Redux, etc.
 
 ## Usage
 
