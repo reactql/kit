@@ -1,3 +1,14 @@
+1.5.2 - 2017-06-05
+------------------------------------------------
+
+## ESLint
+* Adds React ignore for the following props:
+- `dispatch`, for less Redux boilerplate
+- `data`, injected by Apollo
+
+## Apollo
+* Removes redundant `kit/lib/apollo.js -> mergeData()` function
+
 1.5.1 - 2017-06-01
 ------------------------------------------------
 

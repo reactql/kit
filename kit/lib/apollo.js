@@ -1,9 +1,6 @@
 // ----------------------
 // IMPORTS
 
-// React propTypes
-import PropTypes from 'prop-types';
-
 // Apollo client library
 import { createNetworkInterface, ApolloClient } from 'react-apollo';
 
@@ -26,14 +23,6 @@ function createClient(opt = {}) {
     reduxRootSelector: state => state.apollo,
     networkInterface,
   }, opt));
-}
-
-// Helper function that will merge a passed object with the expected
-// React propTypes 'shape', for use with the `react-apollo` `graphql` HOC
-export function mergeData(toMerge) {
-  return PropTypes.shape(Object.assign({
-    loading: PropTypes.bool.isRequired,
-  }, toMerge));
 }
 
 // Creates a new browser client

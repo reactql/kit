@@ -29,6 +29,14 @@ module.exports = {
     'react/prefer-stateless-function': [2, { ignorePureComponents: true }],
     'react/no-multi-comp': 0,
     'react/jsx-closing-bracket-location': [1, 'after-props'],
+    'react/prop-types': [1, {
+      ignore: [
+        // `dispatch` is typically used by Redux `@connect`
+        'dispatch',
+        // `data` is injected by Apollo
+        'data',
+      ],
+    }],
     'linebreak-style': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'no-restricted-syntax': [2,

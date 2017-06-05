@@ -18,9 +18,6 @@ import {
 // <Helmet> component for setting the page title
 import Helmet from 'react-helmet';
 
-// Helper to merge expected React PropTypes to Apollo-enabled component
-import { mergeData } from 'kit/lib/apollo';
-
 // NotFound 404 handler for unknown routes
 import { NotFound, Redirect } from 'kit/lib/routing';
 
@@ -98,7 +95,7 @@ const query = gql`
 @graphql(query)
 class GraphQLMessage extends React.PureComponent {
   static propTypes = {
-    data: mergeData({
+    data: PropTypes.shape({
       allMessages: PropTypes.arrayOf(
         PropTypes.shape({
           text: PropTypes.string.isRequired,
