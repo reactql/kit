@@ -13,7 +13,7 @@ import WebpackConfig from 'webpack-config';
 
 export default new WebpackConfig().merge({
   // Add source maps
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
 
   plugins: [
     // Set NODE_ENV to 'development', in case we need verbose debug logs

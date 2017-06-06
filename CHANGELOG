@@ -1,3 +1,10 @@
+1.5.3 - 2017-06-06
+------------------------------------------------
+
+## Webpack
+* Replaces `cheap-module-source-map` with `source-map` in development, for compatibility with CSS
+* Adds `sourceMap` option to `common.css.getExtractCSSLoaders()`
+
 1.5.2 - 2017-06-05
 ------------------------------------------------
 

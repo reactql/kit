@@ -88,7 +88,7 @@ export default [
     module: {
       loaders: [
         // CSS loaders
-        ...css.getExtractCSSLoaders(extractCSS),
+        ...css.getExtractCSSLoaders(extractCSS, true /* sourceMaps = true */),
       ],
     },
     plugins: [

@@ -81,7 +81,7 @@ export const css = {
     }());
   },
 
-  getExtractCSSLoaders(extractCSS) {
+  getExtractCSSLoaders(extractCSS, sourceMap = false) {
     return (function* loadCss() {
       for (const loader of css.loaders) {
         // Iterate over CSS/SASS/LESS and yield local and global mod configs
@@ -92,9 +92,17 @@ export const css = {
               use: [
                 {
                   loader: 'css-loader',
-                  query: Object.assign({}, css.loaderDefaults, mod[1]),
+                  query: Object.assign({}, css.loaderDefaults, {
+                    sourceMap,
+                  }, mod[1]),
                 },
-                'postcss-loader',
+                // Temp fix for `postcss-loader` bug https://github.com/postcss/postcss-loader/issues/250
+                sourceMap ? {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                  },
+                } : 'postcss-loader',
                 ...loader.use,
               ],
               fallback: 'style-loader',
