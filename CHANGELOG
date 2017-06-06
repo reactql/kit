@@ -1,3 +1,19 @@
+1.6.0 - 2017-06-06
+------------------------------------------------
+
+## GraphQL
+* Adds `graphql-tag` loader, for storing queries in `.gql|graphql` files (closes #32)
+* Refactors `src/app.js` to use file queries
+* Adds `src/queries/all_messages.gql`, for retrieving GraphCool endpoint messages
+* Adds `src/queries/message.gql`, imported by `all_messages.gql` as a query fragment
+
+## Webpack
+* Adds `graphql-tag` loader config to `kit/webpack/base.js`
+
+## NPM
+* Adds packages:
+"graphql-tag": "^2.2.1"
+
 1.5.3 - 2017-06-06
 ------------------------------------------------
 

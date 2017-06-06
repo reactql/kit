@@ -63,6 +63,13 @@ export default new WebpackConfig().merge({
         },
       },
 
+      // GraphQL queries
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      },
+
       // Images.  By default, we'll just use the file loader.  In production,
       // we'll also crunch the images first -- so let's set up `loaders` to
       // be an array to make extending this easier

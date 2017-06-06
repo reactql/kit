@@ -1,12 +1,14 @@
 // ----------------------
 // IMPORTS
 
+/* NPM */
+
 // React
 import React from 'react';
 import PropTypes from 'prop-types';
 
 // GraphQL
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 // Routing
 import {
@@ -18,8 +20,13 @@ import {
 // <Helmet> component for setting the page title
 import Helmet from 'react-helmet';
 
+/* Local */
+
 // NotFound 404 handler for unknown routes
 import { NotFound, Redirect } from 'kit/lib/routing';
+
+// GraphQL queries
+import allMessages from 'src/queries/all_messages.gql';
 
 // Styles
 import './styles.global.css';
@@ -79,20 +86,10 @@ const Stats = () => {
 
 // Now, let's create a GraphQL-enabled component...
 
-// First, create the GraphQL query that we'll use to request data from our
-// sample endpoint
-const query = gql`
-  query {
-    allMessages(first:1) {
-      text
-    }
-  }
-`;
-
 // ... then, let's create the component and decorate it with the `graphql`
 // HOC that will automatically populate `this.props` with the query data
 // once the GraphQL API request has been completed
-@graphql(query)
+@graphql(allMessages)
 class GraphQLMessage extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({

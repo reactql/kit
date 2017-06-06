@@ -3315,6 +3315,10 @@ graphql-tag@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.2.0.tgz#9ea24f35a19aab1be1e55675928344d84d852905"
 
+graphql-tag@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.2.1.tgz#1da61feb6c6fc119ee8c579c4de424d389bee0c2"
+
 graphql@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.10.1.tgz#75c93c2ce73aeb5bae2eefb555a8e9e39c36027d"
