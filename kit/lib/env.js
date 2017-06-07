@@ -17,7 +17,7 @@ const defaultPorts = {
 };
 
 // Determines whether we're currently running in production
-const isProduction = !!process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 const isServer = typeof SERVER !== 'undefined' && SERVER;
 
 // Returns the prefix of the variable on `process.env` that determines
