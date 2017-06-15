@@ -1,3 +1,25 @@
+1.8.0 - 2017-06-08
+------------------------------------------------
+
+## State management (Redux)
+* Refactors `kit/lib/redux.js` to provide a pattern for adding custom reducers outside of Apollo
+* Adds `reducers/counter.js` sample reducer, for incrementing a counter
+* Adds `<ReduxCounter>` example to `src/app.js` for triggering an increment action and listening for store changes
+* Adds `react-redux`, for passing Redux store state to React via props
+* Adds `redux-thunk`, for allowing custom actions that return functions, giving them access to `dispatch` related actions
+* Adds `seamless-immutable`, for enforcing immutability in custom Redux state
+
+## ESLint
+* Bumps to ESLint v4 (from v3.19)
+
+## NPM
+* Adds packages
+"react-redux": "^5.0.5"
+"redux-thunk": "^2.2.0",
+"seamless-immutable": "^7.1.2"
+* Bumps packages:
+"eslint": "^4.0.0"
+
 1.7.0 - 2017-06-08
 ------------------------------------------------
 

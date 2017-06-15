@@ -10,6 +10,9 @@ import PropTypes from 'prop-types';
 // GraphQL
 import { graphql } from 'react-apollo';
 
+// Listen to Redux store state
+import { connect } from 'react-redux';
+
 // Routing
 import {
   Link,
@@ -123,6 +126,35 @@ const Styles = () => (
   </ul>
 );
 
+// Sample component that demonstrates using a part of the Redux store
+// outside of Apollo.  We can import own custom reducers in `kit/lib/redux`
+// and 'listen' to them here
+@connect(state => ({ counter: state.counter }))
+class ReduxCounter extends React.PureComponent {
+  static propTypes = {
+    counter: PropTypes.shape({
+      count: PropTypes.number.isRequired,
+    }),
+  };
+
+  // Trigger the `INCREMENT_COUNTER` action in Redux, to add 1 to the total
+  triggerIncrement = () => {
+    this.props.dispatch({
+      type: 'INCREMENT_COUNTER',
+    });
+  }
+
+  render() {
+    const { count } = this.props.counter;
+    return (
+      <div>
+        <h2>Listening to Redux counter: {count}</h2>
+        <button onClick={this.triggerIncrement}>Increment</button>
+      </div>
+    );
+  }
+}
+
 // Export a simple component that allows clicking on list items to change
 // the route, along with a <Route> 'listener' that will conditionally display
 // the <Page> component based on the route name
@@ -153,6 +185,8 @@ export default () => (
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
+    <hr />
+    <ReduxCounter />
     <hr />
     <p>Runtime info:</p>
     <Stats />
