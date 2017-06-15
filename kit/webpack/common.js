@@ -96,13 +96,12 @@ export const css = {
                     sourceMap,
                   }, mod[1]),
                 },
-                // Temp fix for `postcss-loader` bug https://github.com/postcss/postcss-loader/issues/250
-                sourceMap ? {
+                {
                   loader: 'postcss-loader',
                   options: {
-                    sourceMap: true,
+                    sourceMap,
                   },
-                } : 'postcss-loader',
+                },
                 ...loader.use,
               ],
               fallback: 'style-loader',

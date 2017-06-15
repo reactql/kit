@@ -1,3 +1,13 @@
+1.8.1 - 2017-06-15
+------------------------------------------------
+
+## Webpack
+* Improves sourceMap handling in `postcss-loader` per the fix at https://github.com/postcss/postcss-loader/issues/250
+
+## NPM:
+* Bumps packages:
+"postcss-loader": "^2.0.6"
+
 1.8.0 - 2017-06-15
 ------------------------------------------------
 
