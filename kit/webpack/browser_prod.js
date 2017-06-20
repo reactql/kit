@@ -69,8 +69,8 @@ const extractCSS = new ExtractTextPlugin({
 export default new WebpackConfig().extend({
   '[root]/browser.js': config => {
     // Optimise images
-    config.module.loaders.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
-      .loaders.push({
+    config.module.rules.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
+      .use.push({
         loader: 'image-webpack-loader',
         // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
         options: {},
@@ -85,7 +85,7 @@ export default new WebpackConfig().extend({
     chunkFilename: '[name].[chunkhash].js',
   },
   module: {
-    loaders: [
+    rules: [
       // CSS loaders
       ...css.getExtractCSSLoaders(extractCSS),
     ],
@@ -120,9 +120,6 @@ export default new WebpackConfig().extend({
       },
       exclude: [/\.min\.js$/gi], // skip pre-minified libs
     }),
-
-    // Optimise chunk IDs
-    new webpack.optimize.OccurrenceOrderPlugin(),
 
     // A plugin for a more aggressive chunk merging strategy
     new webpack.optimize.AggressiveMergingPlugin(),

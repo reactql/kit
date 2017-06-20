@@ -15,7 +15,7 @@ import chalk from 'chalk';
 
 export const css = {
   // CSS loader configuration -- plain CSS, SASS and LESS
-  loaders: [
+  rules: [
     {
       ext: 'css',
       use: [],
@@ -53,12 +53,12 @@ export const css = {
 
   getDevLoaders() {
     return (function* loadCss() {
-      for (const loader of css.loaders) {
+      for (const loader of css.rules) {
         // Iterate over CSS/SASS/LESS and yield local and global mod configs
         for (const mod of css.getModuleRegExp(loader.ext)) {
           yield {
             test: new RegExp(mod[0]),
-            loader: [
+            use: [
               'style-loader',
               {
                 loader: 'css-loader',
@@ -83,7 +83,7 @@ export const css = {
 
   getExtractCSSLoaders(extractCSS, sourceMap = false) {
     return (function* loadCss() {
-      for (const loader of css.loaders) {
+      for (const loader of css.rules) {
         // Iterate over CSS/SASS/LESS and yield local and global mod configs
         for (const mod of css.getModuleRegExp(loader.ext)) {
           yield {

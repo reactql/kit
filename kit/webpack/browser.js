@@ -43,12 +43,12 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
 
   // Modules specific to our browser bundle
   module: {
-    loaders: [
+    rules: [
       // .js(x) loading
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
+        use: [
           {
             loader: 'babel-loader',
             query: {

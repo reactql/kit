@@ -1,3 +1,34 @@
+1.9.0 - 2017-06-20
+------------------------------------------------
+
+## Webpack
+* Removes redundant `OccurrenceOrderPlugin` (on in default in Weback v2)
+* Updates `module.loaders` -> `module.rules`, and `loaders.loaders` -> `rules.use`
+
+## NPM
+* Bumps packages:
+"babel-core": "^6.25.0"
+"babel-loader": "^7.1.0"
+"babel-preset-env": "^1.5.2"
+"cross-env": "^5.0.1"
+"eslint-plugin-compat": "^1.0.4"
+"eslint-plugin-react": "^7.1.0",
+"extract-text-webpack-plugin": "^2.1.2",
+"file-loader": "^0.11.2",
+"graphql-tag": "^2.4.0"
+"less-loader": "^4.0.4"
+"resolve-url-loader": "^2.0.3"
+"sass-loader": "^6.0.6",
+"serve": "^5.2.2",
+"style-loader": "^0.18.2"
+"webpack-dev-server": "^2.5.0"
+"koa-helmet": "^3.2.0",
+"koa-router": "^7.2.1"
+"react": "^15.6.1",
+"react-apollo": "^1.4.2",
+"react-dom": "^15.6.1"
+"redux": "^3.7.0"
+
 1.8.1 - 2017-06-15
 ------------------------------------------------
 

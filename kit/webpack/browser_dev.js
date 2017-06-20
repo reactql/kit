@@ -44,8 +44,8 @@ export default new WebpackConfig().extend({
     );
 
     // Add React-specific hot loading
-    conf.module.loaders.find(l => l.test.toString() === /\.jsx?$/.toString())
-      .loaders.unshift({
+    conf.module.rules.find(l => l.test.toString() === /\.jsx?$/.toString())
+      .use.unshift({
         loader: 'react-hot-loader/webpack',
       });
 
@@ -53,7 +53,7 @@ export default new WebpackConfig().extend({
   },
 }, '[root]/dev.js').merge({
   module: {
-    loaders: [
+    rules: [
       // CSS loaders
       ...css.getDevLoaders(),
     ],

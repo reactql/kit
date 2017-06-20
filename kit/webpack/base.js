@@ -53,7 +53,7 @@ export default new WebpackConfig().merge({
   // possible to do crazy things like `import css from './style.css'` and
   // actually get that stuff working in *Javascript* -- woot!
   module: {
-    loaders: [
+    rules: [
       // Fonts
       {
         test: /\.(woff|woff2|ttf|eot)$/i,
@@ -75,7 +75,7 @@ export default new WebpackConfig().merge({
       // be an array to make extending this easier
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
+        use: [
           {
             loader: 'file-loader',
             query: {
