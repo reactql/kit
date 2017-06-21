@@ -1,6 +1,7 @@
 FROM debian:jessie-slim
 
-ENV EPHIMERAL_PACKAGES "build-essential autotools-dev curl xz-utils python"
+ENV EPHIMERAL_PACKAGES "build-essential dh-autoreconf curl xz-utils python"
+ENV PACKAGES "libpng-dev"
 
 # Add `package.json` to build Debian compatible NPM packages
 WORKDIR /src
@@ -9,7 +10,7 @@ ADD package.json .
 # install everything (and clean up afterwards)
 RUN apt-get update \
   && apt-get install -y apt-utils \
-  && apt-get install -y ${EPHIMERAL_PACKAGES} \
+  && apt-get install -y ${EPHIMERAL_PACKAGES} ${PACKAGES} \
   && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
   && apt-get install -y nodejs \
   && cd /src \
