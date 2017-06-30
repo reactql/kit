@@ -1,3 +1,26 @@
+1.11.0 - 2017-06-30
+------------------------------------------------
+
+## Webpack
+* Removes Uglify2 compression options, to avoid edge cases in NPM packages
+* Bump to Webpack v3 and latest versions (shaves 12.2% off the default vendor build sizes)
+
+## NPM
+* Bumps versions:
+chalk                    ^1.1.3  →  ^2.0.1
+eslint                  ^3.19.0  →  ^4.1.1
+eslint-plugin-jsx-a11y   ^5.0.3  →  ^6.0.2
+serve                    ^5.2.2  →  ^6.0.0
+webpack                  ^2.6.1  →  ^3.0.0
+koa                              ^2.2.0  →   ^2.3.0
+redux                            ^3.7.0  →   ^3.7.1
+babel-loader                     ^7.1.0  →   ^7.1.1
+eslint-import-resolver-webpack   ^0.8.1  →   ^0.8.3
+eslint-plugin-import             ^2.3.0  →   ^2.6.1
+graphql-tag                      ^2.4.0  →   ^2.4.2
+html-webpack-plugin             ^2.28.0  →  ^2.29.0
+resolve-url-loader               ^2.0.3  →   ^2.1.0
+
 1.10.1 - 2017-06-21
 ------------------------------------------------
 
