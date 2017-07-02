@@ -1,6 +1,6 @@
 <img src="https://reactql.org/reactql/logo.svg" alt="ReactQL" width="278" height="77" />
 
-![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square) ![Libraries.io for GitHub](https://img.shields.io/librariesio/github/reactql/kit.svg?style=flat-square)
+![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square)
 
 # Starter kit code (Javascript version)
 
