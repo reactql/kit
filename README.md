@@ -1,5 +1,7 @@
 <img src="https://reactql.org/reactql/logo.svg" alt="ReactQL" width="278" height="77" />
 
+![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square) ![Libraries.io for GitHub](https://img.shields.io/librariesio/github/reactql/kit.svg?style=flat-square)
+
 # Starter kit code (Javascript version)
 
 React+GraphQL front-end starter kit. Universal: Browser + SSR.
@@ -38,7 +40,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Universal building - both browser + Node.js web server
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files
 - [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
-- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc 
+- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - Separate local + vendor bundles, for better browser caching/faster builds
 - Dynamic polyfills, courtesy of [babel-preset-env](https://github.com/babel/babel-preset-env)
 - Aggressive code minification with [Uglify](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
