@@ -1,3 +1,15 @@
+1.12.0 - 2017-07-02
+------------------------------------------------
+
+## ESLint
+* Reverts back to ESLint v3, to avoid Airbnb syntax issues (fixes #44)
+* Reverts to `eslint-plugin-jsx-a11y` ^5.1.0, fixing ESLint v3 issues
+
+## Testing
+* Adds `jest` test runner (currently no tests)
+* Adds `npm test` option to `package.json`
+* Adds `.travis.yml` for building and testing lint status via Travis-CI
+
 1.11.0 - 2017-06-30
 ------------------------------------------------
 
