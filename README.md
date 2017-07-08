@@ -6,8 +6,6 @@
 
 React+GraphQL front-end starter kit. Universal: Browser + SSR.
 
-[Typescript version](https://github.com/reactql/kit.ts) also available.
-
 Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does the heavy lifting for you.
 
 ## Features
