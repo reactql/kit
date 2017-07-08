@@ -1,3 +1,22 @@
+1.13.0 - 2017-07-08
+------------------------------------------------
+
+## Webpack
+* Enables scope hoisting `webpack.optimize.ModuleConcatenationPlugin`-- shaves a few KB of the vendor bundle size
+
+## NPM
+* Bumps packages:
+postcss-cssnext          2.11.0  →   3.0.0
+react-apollo              ^1.4.2  →   ^1.4.3
+babel-preset-env          ^1.5.2  →   ^1.6.0
+eslint-config-airbnb     ^15.0.1  →  ^15.0.2
+eslint-plugin-import      ^2.6.1  →   ^2.7.0
+iltorb                    ^1.3.2  →   ^1.3.3
+serve                     ^6.0.0  →   ^6.0.2
+webpack                   ^3.0.0  →   ^3.1.0
+webpack-dev-server        ^2.5.0  →   ^2.5.1
+webpack-manifest-plugin   ^1.1.0  →   ^1.1.2
+
 1.12.0 - 2017-07-02
 ------------------------------------------------
 

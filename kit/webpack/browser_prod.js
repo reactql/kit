@@ -171,6 +171,7 @@ export default new WebpackConfig().extend({
       openAnalyzer: BUNDLE_ANALYZER.openAnalyzer,
     }),
 
+    // Enable scope hoisting to speed up JS loading
     new webpack.optimize.ModuleConcatenationPlugin(),
 
     // Copy files from `PATHS.static` to `dist/public`.  No transformations
