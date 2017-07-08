@@ -171,6 +171,8 @@ export default new WebpackConfig().extend({
       openAnalyzer: BUNDLE_ANALYZER.openAnalyzer,
     }),
 
+    new webpack.optimize.ModuleConcatenationPlugin(),
+
     // Copy files from `PATHS.static` to `dist/public`.  No transformations
     // will be performed on the files-- they'll be copied as-is
     new CopyWebpackPlugin([
