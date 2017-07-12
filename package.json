@@ -5,10 +5,10 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "browser": "cross-env NODE_ENV=development WEBPACK_CONFIG=browser_dev webpack-dev-server",
+    "browser": "cross-env NODE_ENV=development WEBPACK_CONFIG=browser_dev webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production WEBPACK_CONFIG=browser_prod,server_prod webpack --colors",
     "build-browser": "cross-env NODE_ENV=production WEBPACK_CONFIG=browser_prod webpack --colors",
-    "build-run": "cross-env NODE_ENV=production WEBPACK_CONFIG=browser_prod,server_prod webpack --colors && npm run server",
+    "build-run": "npm run build && npm run server",
     "build-static": "cross-env NODE_ENV=production WEBPACK_CONFIG=static webpack --colors",
     "build-static-run": "npm run build-static && npm run static",
     "clean": "rimraf dist",
@@ -98,5 +98,9 @@
     "redux-thunk": "^2.2.0",
     "regenerator-runtime": "^0.10.5",
     "seamless-immutable": "^7.1.2"
+  },
+  "engines": {
+    "node": ">=7",
+    "npm": ">=4"
   }
 }
