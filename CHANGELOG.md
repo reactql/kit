@@ -1,3 +1,23 @@
+1.14.0 - 2017-07-17
+-----------------------------------------------
+
+## General
+* Merges #49 - browser window now automatically opens on `npm start`
+
+## NPM
+* Removes `compression-webpack-plugin` in favour of `zopfli-webpack-plugin`
+* Bumps packages
+extract-text-webpack-plugin   ^2.1.2  →  ^3.0.0
+postcss-cssnext                3.0.0  →   3.0.2
+
+boxen                    ^1.1.0  →  ^1.2.0
+react-router             ^4.1.1  →  ^4.1.2
+react-router-dom         ^4.1.1  →  ^4.1.2
+redux                    ^3.7.1  →  ^3.7.2
+postcss-nested           ^2.0.2  →  ^2.0.4
+webpack                  ^3.1.0  →  ^3.3.0
+webpack-bundle-analyzer  ^2.8.2  →  ^2.8.3
+
 1.13.0 - 2017-07-08
 ------------------------------------------------
 

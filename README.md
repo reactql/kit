@@ -13,7 +13,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 ### Stack
 
 - [ReactQL CLI](https://github.com/reactql/cli) for quickly starting a new project
-- [React](https://facebook.github.io/react/) for UI
+- [React v15](https://facebook.github.io/react/) for UI
 - [Apollo Client (React)](http://dev.apollodata.com/react/) for GraphQL
 - [React Router 4](https://github.com/ReactTraining/react-router/tree/v4) for declarative browser + server routes
 - [Redux](http://redux.js.org/) for flux/store state management
@@ -34,7 +34,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Code optimisation
 
-- [Webpack 2](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/)
+- [Webpack v3](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/)
 - Universal building - both browser + Node.js web server
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files
 - [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
@@ -52,7 +52,8 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Developer support
 
-- [ESLint](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
+- [ESLint v3](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
+- [Jest](https://facebook.github.io/jest/) test runner
 - Tons of code commentary to fill you in on what's happening under the hood
 - Extensive, up-to-date [online documentation](https://reactql.org/docs/)
 - [Examples repository](https://github.com/reactql/examples), showing you how to add a GraphQL server, run without GraphQL, take advantage of Redux, etc.
