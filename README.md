@@ -37,18 +37,22 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - [Webpack v3](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/)
 - Universal building - both browser + Node.js web server
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files
-- [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
-- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - Separate local + vendor bundles, for better browser caching/faster builds
 - Dynamic polyfills, courtesy of [babel-preset-env](https://github.com/babel/babel-preset-env)
 - Aggressive code minification with [Uglify](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
 - [GIF/JPEG/PNG/SVG crunching](https://github.com/tcoopman/image-webpack-loader) for images
-- [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files
 
 ### Styles
 
 - [PostCSS v6](http://postcss.org/) with [next-gen CSS](http://cssnext.io/) and inline [@imports](https://github.com/postcss/postcss-import)
 - [SASS](http://sass-lang.com) and [LESS](http://lesscss.org/) support (also parsed through PostCSS)
+
+### Production-ready
+
+- [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
+- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
+- [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files
+- [Docker](https://www.docker.com/) support. Just `docker build .` in the project root.
 
 ### Developer support
 
