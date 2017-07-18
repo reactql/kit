@@ -70,7 +70,7 @@ Then run `npm start` in the project root, and away you go!
 
 ## Docker
 
-A [Dockerfile](https://github.com/reactql/kit/blob/master/Dockerfile) is included out-the-box. Building the image will generate optimised assets and a web server that runs in production mode, ready to deploy.
+A [Dockerfile](https://github.com/reactql/kit/blob/master/Dockerfile) is included, that will build, optimise and bundle a production-mode ReactQL web server, your static assets and client-side code -- making it trivial to deploy to production.
 
 Build as normal with:
 
