@@ -49,9 +49,9 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Production-ready
 
-- [Production bundling](https://reactql.org/docs/setup#production), for generating optimised server and client code
-- [Static bundling mode](https://reactql.org/docs/setup#browser) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
-- [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files
+- [Production bundling](https://reactql.org/docs/bundling/production), that generates optimised server and client code
+- [Static bundling mode](https://reactql.org/docs/bundling/static) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
+- [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files (default `vendor.js.bz` goes from 380kb -> 89kb!)
 - [Docker](https://www.docker.com/) support. Just `docker build .` in the project root.
 
 ### Developer support
@@ -65,6 +65,22 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 ## Usage
 
 See the **[CLI tool](https://github.com/reactql/cli)** for easily deploying this starter kit on Mac, Windows or Linux.
+
+Then run `npm start` in the project root, and away you go!
+
+## Docker
+
+A [Dockerfile](https://github.com/reactql/kit/blob/master/Dockerfile) is included out-the-box. Building the image will generate optimised assets and a web server that runs in production mode, ready to deploy.
+
+Build as normal with:
+
+`docker build . -t <project>`
+
+Then run with:
+
+`docker run -p 4000:4000 <project>`
+
+Navigating to http://<docker_host>:4000 will yield the ReactQL project code.
 
 ### Complete documentation @ **https://reactql.org**
 
