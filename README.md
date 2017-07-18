@@ -52,7 +52,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - [Production bundling](https://reactql.org/docs/bundling/production), that generates optimised server and client code
 - [Static bundling mode](https://reactql.org/docs/bundling/static) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files (default `vendor.js.bz` goes from 380kb -> 89kb!)
-- [Docker](https://www.docker.com/) support. Just `docker build .` in the project root.
+- [Docker](https://www.docker.com/) support, out-the-box.
 
 ### Developer support
 
