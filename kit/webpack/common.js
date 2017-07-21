@@ -46,7 +46,7 @@ export const css = {
   // based on the original file extension
   getModuleRegExp(ext) {
     return [
-      [`[^\\.global]\\.${ext}$`, { modules: true }],
+      [`^(?!.*\\.global\\.${ext}$).*\\.${ext}$`, { modules: true }],
       [`\\.global\\.${ext}$`, { modules: false }],
     ];
   },
