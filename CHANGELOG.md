@@ -1,3 +1,24 @@
+1.16.0 - 2017-07-26
+-----------------------------------------------
+
+## Webpack
+* Moves sass `sourceMap` option to newer `options` object
+
+## NPM
+* Bumps packages:
+brotli-webpack-plugin    ^0.3.0  →  ^0.4.0
+boxen                           ^1.1.0  →   ^1.2.1
+react-apollo                    ^1.4.3  →   ^1.4.8
+chunk-manifest-webpack-plugin   ^1.1.0  →   ^1.1.2
+eslint-config-airbnb           ^15.0.2  →  ^15.1.0
+eslint-plugin-babel             ^4.1.1  →   ^4.1.2
+iltorb                          ^1.3.3  →   ^1.3.5
+postcss-nested                  ^2.0.2  →   ^2.1.0
+serve                           ^6.0.2  →   ^6.0.3
+webpack                         ^3.1.0  →   ^3.4.1
+webpack-dev-server              ^2.5.1  →   ^2.6.1
+webpack-manifest-plugin         ^1.1.2  →   ^1.2.1
+
 1.15.1 - 2017-07-22
 -----------------------------------------------
 
