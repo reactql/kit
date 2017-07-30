@@ -40,6 +40,8 @@ class ServerDevPlugin {
       if (this.server) this.server.kill();
       this.server = childProcess.fork(path.resolve(PATHS.dist, 'server_dev.js'), {
         cwd: PATHS.dist,
+        silent: false,
+        execArgv: ['--inspect'],
       });
     });
   }

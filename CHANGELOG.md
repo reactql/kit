@@ -1,3 +1,9 @@
+1.17.0 - 2017-07-30
+-----------------------------------------------
+
+## Server (development)
+* Adds `--inspect` to server fork in development, to enable debugging
+
 1.16.0 - 2017-07-26
 -----------------------------------------------
 
