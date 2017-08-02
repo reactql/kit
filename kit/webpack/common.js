@@ -13,6 +13,12 @@ import chalk from 'chalk';
 
 // ----------------------
 
+// RegExp for file types
+export const regex = {
+  fonts: /\.(woff|woff2|ttf|eot)$/i,
+  images: /\.(jpe?g|png|gif|svg)$/i,
+};
+
 export const css = {
   // CSS loader configuration -- plain CSS, SASS and LESS
   rules: [

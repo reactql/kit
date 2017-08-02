@@ -48,7 +48,7 @@ import chalk from 'chalk';
 /* Local */
 
 // Common config
-import { css, webpackProgress } from './common';
+import { regex, css, webpackProgress } from './common';
 
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
@@ -69,7 +69,7 @@ const extractCSS = new ExtractTextPlugin({
 export default new WebpackConfig().extend({
   '[root]/browser.js': config => {
     // Optimise images
-    config.module.rules.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
+    config.module.rules.find(l => l.test.toString() === regex.images.toString())
       .use.push({
         loader: 'image-webpack-loader',
         // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88

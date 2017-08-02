@@ -1,3 +1,10 @@
+1.17.1 - 2017-08-02
+-----------------------------------------------
+
+## Webpack
+* Refactors inline image and font file regex to `kit/webpack/common.js`
+* Fixes image/font file loading, when importing from an NPM package
+
 1.17.0 - 2017-07-30
 -----------------------------------------------
 
