@@ -2,7 +2,7 @@
 
 ![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square)
 
-# Starter kit code (Javascript version)
+# Isomorphic starter kit code (written in ES6)
 
 React+GraphQL front-end starter kit. Universal: Browser + SSR.
 
