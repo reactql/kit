@@ -34,25 +34,29 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Code optimisation
 
-- [Webpack v3](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/)
-- Universal building - both browser + Node.js web server
-- Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files
+- [Webpack v3](https://webpack.js.org/), with [tree shaking](https://webpack.js.org/guides/tree-shaking/) -- dead code paths are automatically eliminated
 - Separate local + vendor bundles, for better browser caching/faster builds
 - Dynamic polyfills, courtesy of [babel-preset-env](https://github.com/babel/babel-preset-env)
 - Aggressive code minification with [Uglify](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
-- [GIF/JPEG/PNG/SVG crunching](https://github.com/tcoopman/image-webpack-loader) for images
+- [GIF/JPEG/PNG/SVG crunching](https://github.com/tcoopman/image-webpack-loader) for images in production
+- CSS code is combined, minified and optimised automatically - even if you use SASS, LESS and CSS together!
 
 ### Styles
 
 - [PostCSS v6](http://postcss.org/) with [next-gen CSS](http://cssnext.io/) and inline [@imports](https://github.com/postcss/postcss-import)
 - [SASS](http://sass-lang.com) and [LESS](http://lesscss.org/) support (also parsed through PostCSS)
+- Automatic vendor prefixing - write modern CSS, and let the compiler take care of browser compatibility
+- Mix and match SASS, LESS and regular CSS - without conflicts!
+- CSS modules - your classes are hashed automatically, to avoid namespace conflicts
+- Compatible with Foundation, Bootstrap, Material and more. Simply configure via a `.global.*` import to preserve class names
 
 ### Production-ready
 
 - [Production bundling](https://reactql.org/docs/bundling/production), that generates optimised server and client code
 - [Static bundling mode](https://reactql.org/docs/bundling/static) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files (default `vendor.js.bz` goes from 380kb -> 89kb!)
-- [Docker](https://www.docker.com/) support, out-the-box
+- Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files, for modular Webpack tweaks
+- [Docker](https://www.docker.com/) support, with an optimised `Dockerfile` out-the-box
 
 ### Developer support
 
