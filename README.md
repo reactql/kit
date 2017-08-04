@@ -28,7 +28,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Real-time
 
-- Dev + [React-compatible hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates
+- [Hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates in development (that preserves React + Redux state)
 - [Development web server](https://reactql.org/docs/setup#development) that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
 
 
