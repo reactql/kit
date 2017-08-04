@@ -22,7 +22,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 - Built-in [Koa 2](http://koajs.com/) web server, with async/await routing
 - Full route-aware [server-side rendering (SSR)](https://reactql.org/docs/ssr) of initial HTML
-- Universal building - both browser + Node.js web server
+- Universal building - both browser + Node.js web server compile down to static, runnable files
 - HTTP header hardening with [Helmet for Koa](https://github.com/venables/koa-helmet)
 - Declarative/dynamic `<head>` section, using [react-helmet](https://github.com/nfl/react-helmet)
 
