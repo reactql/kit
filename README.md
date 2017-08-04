@@ -52,15 +52,16 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - [Production bundling](https://reactql.org/docs/bundling/production), that generates optimised server and client code
 - [Static bundling mode](https://reactql.org/docs/bundling/static) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files (default `vendor.js.bz` goes from 380kb -> 89kb!)
-- [Docker](https://www.docker.com/) support, out-the-box.
+- [Docker](https://www.docker.com/) support, out-the-box
 
 ### Developer support
 
 - [ESLint v3](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
 - [Jest](https://facebook.github.io/jest/) test runner
+- [Node Inspector](https://nodejs.org/en/docs/inspector/) support for SSR in dev mode - remotely debug the server, set breakpoints, inspect the stack from within Chrome
 - Tons of code commentary to fill you in on what's happening under the hood
 - Extensive, up-to-date [online documentation](https://reactql.org/docs/)
-- [Examples repository](https://github.com/reactql/examples), showing you how to add a GraphQL server, run without GraphQL, take advantage of Redux, etc.
+- [Examples repository](https://github.com/reactql/examples), with real-world use cases
 
 ## Usage
 
