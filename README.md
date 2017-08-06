@@ -2,9 +2,9 @@
 
 ![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square)
 
-# Isomorphic starter kit code (written in ES6)
+# New in 2.0.0: Full-stack GraphQL + React v16 streaming API
 
-React+GraphQL front-end starter kit. Universal: Browser + SSR.
+Full-stack React + GraphQL, done properly.
 
 Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does the heavy lifting for you.
 
@@ -13,24 +13,36 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 ### Stack
 
 - [ReactQL CLI](https://github.com/reactql/cli) for quickly starting a new project
-- [React v15](https://facebook.github.io/react/) for UI
-- [Apollo Client (React)](http://dev.apollodata.com/react/) for GraphQL
+- New in 2.x: [React v16](https://facebook.github.io/react/) for UI
+- New in 2.x: [Apollo Server](http://dev.apollodata.com/tools/) for enabling the built-in GraphQL server
+- [Apollo Client (React)](http://dev.apollodata.com/react/) for connecting to GraphQL
 - [React Router 4](https://github.com/ReactTraining/react-router/tree/v4) for declarative browser + server routes
 - [Redux](http://redux.js.org/) for flux/store state management
+
+### GraphQL
+
+- New in 2.x: Built-in GraphQL server via - just pass in your schema, and enable `/graphql` with a single line of code
+- [GraphiQL](https://github.com/graphql/graphiql) query browser enabled by default
+- Isomorphic GraphQL client - await data via SSR before rendering HTML; query asynchronously in the browser
+- Avoid network overhead with local GraphQL querying via [apollo-local-query](https://github.com/af/apollo-local-query)
+- Write `.gql` GraphQL query files, use fragments, or type queries inline.
 
 ### Server-side rendering
 
 - Built-in [Koa 2](http://koajs.com/) web server, with async/await routing
+- React v16 with streaming API - time-to-first-byte as low as 4-5ms!
 - Full route-aware [server-side rendering (SSR)](https://reactql.org/docs/ssr) of initial HTML
-- Universal building - both browser + Node.js web server compile down to static, runnable files
+- Universal building - both browser + Node.js web server compile down to static files
+- Per-request Redux stores. Store state is dehydrated via SSR, and rehydrated automatically on the client
 - HTTP header hardening with [Helmet for Koa](https://github.com/venables/koa-helmet)
 - Declarative/dynamic `<head>` section, using [react-helmet](https://github.com/nfl/react-helmet)
+- Full page React via built-in `<Html>` component - every byte of your HTML is React!
 
 ### Real-time
 
-- [Hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates in development (that preserves React + Redux state)
+- [Hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates in development
+- React + Redux state preservation on hot reloading, to avoid interrupting your dev flow
 - [Development web server](https://reactql.org/docs/setup#development) that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
-
 
 ### Code optimisation
 
@@ -49,6 +61,14 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Mix and match SASS, LESS and regular CSS - without conflicts!
 - CSS modules - your classes are hashed automatically, to avoid namespace conflicts
 - Compatible with Foundation, Bootstrap, Material and more. Simply configure via a `.global.*` import to preserve class names
+
+### Highly configurable
+
+- New in 2.x: Userland configuration.  No need to edit kit code; simply use the built-in `Config` singleton
+- Add a GraphQL server with one line of code
+- Add GET|POST|PUT|PATCH|DELETE routes - auto-injected with Koa context and the per-request Redux store
+- Add a custom 404 handler
+- Enable/disable POST body parsing, along with custom options
 
 ### Production-ready
 
