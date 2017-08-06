@@ -53,9 +53,6 @@ import { regex, css, webpackProgress } from './common';
 // Our local path configuration, so webpack knows where everything is/goes
 import PATHS from '../../config/paths';
 
-// Project configuration to control build settings
-import { BUNDLE_ANALYZER } from '../../config/project';
-
 // ----------------------
 
 // The final CSS file will wind up in `dist/public/assets/css/style.[contenthash].css`
@@ -154,21 +151,23 @@ export default new WebpackConfig().extend({
       // Put this in `dist` rather than `dist/public`
       filename: '../chunk-manifest.json',
       manifestVariable: 'webpackManifest',
+      inlineManifest: true,
     }),
 
     // Generate assets manifest
     new ManifestPlugin({
       // Put this in `dist` rather than `dist/public`
-      fileName: '../manifest.json',
+      // fileName: '../manifest.json',
       // Prefix assets with '/' so that they can be referenced from any route
       publicPath: '/',
+      inlineManifest: true,
     }),
 
     // Output interactive bundle report
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: join(PATHS.dist, 'report.html'),
-      openAnalyzer: BUNDLE_ANALYZER.openAnalyzer,
+      openAnalyzer: !!process.env.BUNDLE_ANALYZER,
     }),
 
     // Enable scope hoisting to speed up JS loading

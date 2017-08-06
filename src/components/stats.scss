@@ -1,0 +1,15 @@
+/* We can define as many top-level classes as we like, and they will all
+be hashed in our HTML */
+.data {
+  li {
+    margin-bottom: 0.5em;
+    font-size: 1.4rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    span {
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
+}

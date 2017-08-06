@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 // ----------------------
 
-const Html = ({ head, html, scripts, window, css }) => (
+const Html = ({ head, scripts, window, css, children }) => (
   <html lang="en" prefix="og: http://ogp.me/ns#">
     <head>
       <meta charSet="utf-8" />
@@ -21,14 +21,12 @@ const Html = ({ head, html, scripts, window, css }) => (
       {head.title.toComponent()}
     </head>
     <body>
-      <div
-        id="main"
-        dangerouslySetInnerHTML={{ __html: html }} />
+      <div id="main">{children}</div>
       <script
         dangerouslySetInnerHTML={{
           __html: Object.keys(window).reduce(
             (out, key) => out += `window.${key}=${JSON.stringify(window[key])};`,
-          ''),
+            ''),
         }} />
       {scripts.map(src => <script key={src} src={src} />)}
     </body>
@@ -37,10 +35,10 @@ const Html = ({ head, html, scripts, window, css }) => (
 
 Html.propTypes = {
   head: PropTypes.object.isRequired,
-  html: PropTypes.string.isRequired,
   window: PropTypes.object.isRequired,
   scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
   css: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Html;

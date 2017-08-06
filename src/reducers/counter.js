@@ -22,18 +22,15 @@ const initialState = Immutable({
 export default {
 
   // The shape that our Redux handler in `kit/lib/redux` expects is
-  // { stateKey: { state, reducer() } } -- the `stateKey` is where in the `state`
-  // object starts looking, `state` is the initial state, and `reducer()` is the
+  // { state, reducer() } } -- `state` is the initial state, and `reducer()` is the
   // function that handles the 'listening' to Redux to know how to manipulate state
-  counter: {
-    state: initialState,
-    reducer(state = initialState, action) {
-      if (action.type === 'INCREMENT_COUNTER') {
-        return state.merge({
-          count: state.count + 1,
-        });
-      }
-      return state;
-    },
+  state: initialState,
+  reducer(state = initialState, action) {
+    if (action.type === 'INCREMENT_COUNTER') {
+      return state.merge({
+        count: state.count + 1,
+      });
+    }
+    return state;
   },
 };

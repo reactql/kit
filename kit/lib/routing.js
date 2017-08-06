@@ -62,7 +62,6 @@ export class NotFound extends React.PureComponent {
 // <Redirect> component. Mirrors React Router's component by the same name,
 // except it sets a 301/302 status code for setting server-side HTTP headers.
 export class Redirect extends React.PureComponent {
-
   static propTypes = {
     to: PropTypes.oneOfType([
       PropTypes.string,

@@ -4,6 +4,8 @@
 // ----------------------
 // IMPORTS
 
+/* NPM */
+
 // Enable async/await and generators, cross-browser
 import 'regenerator-runtime/runtime';
 
@@ -21,6 +23,14 @@ import { BrowserRouter } from 'react-router-dom';
 // and handle injecting data down to any listening component
 import { ApolloProvider } from 'react-apollo';
 
+/* ReactQL */
+
+// Root component.  This is our 'entrypoint' into the app.  If you're using
+// the ReactQL starter kit for the first time, `src/app.js` is where
+// you can start editing to add your own code.  Note:  This first is imported
+// first, since it sets up our app's settings
+import App from 'src/app';
+
 // Grab the shared Apollo Client
 import { browserClient } from 'kit/lib/apollo';
 
@@ -28,11 +38,6 @@ import { browserClient } from 'kit/lib/apollo';
 // of Apollo, so we can apply our own reducers and make use of the Redux dev
 // tools in the browser
 import createNewStore from 'kit/lib/redux';
-
-// Root component.  This is our 'entrypoint' into the app.  If you're using
-// the ReactQL starter kit for the first time, `src/app.js` is where
-// you can start editing to add your own code
-import App from 'src/app';
 
 // ----------------------
 
@@ -46,7 +51,7 @@ const store = createNewStore(client);
 // (i.e. if we're in development), then we'll wrap the whole thing in an
 // <AppContainer>.  Otherwise, we'll jump straight to the browser router
 function doRender() {
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <Root />,
     document.getElementById('main'),
   );

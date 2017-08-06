@@ -79,6 +79,11 @@ export function getServerPort() {
 }
 
 // Get the protocol://host:port of where the current server would bind
-export function getURL() {
-  return `http://${getHost()}:${getPort()}`;
+export function getURL(ssl = false) {
+  return `http${ssl ? 's' : ''}://${getHost()}:${getPort()}`;
+}
+
+// Get the protocol://host:port of where the current server would bind
+export function getServerURL(ssl = false) {
+  return `http${ssl ? 's' : ''}://${getServerHost()}:${getServerPort()}`;
 }

@@ -15,17 +15,12 @@ import thunkMiddleware from 'redux-thunk';
 import Immutable from 'seamless-immutable';
 
 /* Local */
-
-// Reducers -- CHANGE THIS TO REFLECT YOUR OWN REDUCERS!
-import counterReducer from 'reducers/counter';
+import config from 'kit/config';
 
 // ----------------------
 
 // Detect if we're both in the browser, AND we have dehydrated state
 const hasState = !!(!SERVER && window.__STATE__);
-
-// All reducers, in one array -- CHANGE THIS TO REFLECT YOUR OWN REDUCERS!
-const reducers = [counterReducer];
 
 // Helper function that 'unwinds' the { reducerKey {state, reducer} } format
 // from each imported reducer, and either returns the `reducer` function (if
@@ -33,11 +28,9 @@ const reducers = [counterReducer];
 function unwind(reducer = true) {
   // Get the combined reducers `reducer` or `state` object
   const r = Object.assign({},
-    ...[].concat(...reducers.map(arr => Object.keys(arr).map(
-      key => ({
-        [key]: arr[key][reducer ? 'reducer' : 'state'],
-      }),
-    ))),
+    ...[].concat([...config.reducers].map(arr => ({
+      [arr[0]]: arr[1][reducer ? 'reducer' : 'state'],
+    }))),
   );
 
   // If this is a reducer, return at this point
@@ -63,13 +56,13 @@ export default function createNewStore(apolloClient) {
       ...unwind(false),
     },
     compose(
-        applyMiddleware(
-          apolloClient.middleware(),
-          thunkMiddleware,
-        ),
-        // Enable Redux Devtools on the browser, for easy state debugging
-        // eslint-disable-next-line no-underscore-dangle
-        (!SERVER && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+      applyMiddleware(
+        apolloClient.middleware(),
+        thunkMiddleware,
+      ),
+      // Enable Redux Devtools on the browser, for easy state debugging
+      // eslint-disable-next-line no-underscore-dangle
+      (!SERVER && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
     ),
   );
 

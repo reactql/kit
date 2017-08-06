@@ -1,3 +1,241 @@
+2.0.0 - 2017-08-06
+-----------------------------------------------
+
+# New features in 2.0.0
+
+Kit v2 introduces a few significant improvements that make it easier to upgrade between kits, and power-up your ReactQL experience:
+
+## React v16 + new streaming SSR
+
+React has been bumped to the new v16, and `renderToString` has been replaced with `renderToStream` -- for turbo-powered first page rendering of React to HTML.
+
+Early tests have shown a promising reduction from 12ms+ for React-only rendering (no GraphQL) to 4-5ms on my local Macbook Pro, using out-the-box defaults.
+
+What's more, on Node 8+, the asynchronous `createReactHandler` that sets up the Redux store, runs Helmet, initialises the component tree and starts the stream, has been benchmarked as low as 0.48ms on my same machine!
+
+Your ReactQL project will be faster than ever.
+
+## Kit API - a cleaner separation between 'kit' and 'app' code
+
+In kit v1.x, the lines between ReactQL and your client code were a little blurry.  Editing the Apollo endpoint meant modifying `config/project.js`, which was a file that Webpack also used to assess whether to show the bundle optimiser post-build.
+
+If you wanted to add anything more to the server or browser, you'd typically need to delve into `kit/*` files and make changes.
+
+Now, the separation between two is clearer than ever. ReactQL v2.x introduces a new `Config` singleton instance that provides 'hooks' into adding functionality to the standard config, without mashing together custom code.
+
+ReactQL is and always has been a 'starter kit', and will continue to be so. But now the framework-esque separation of client and kit code paves the way to clean abstractions, and easier upgrading.
+
+In a future ReactQL CLI version, it's possible that you'll be able to upgrade an active project to the latest kit with a single command, instead of the current process of creating a new project, copying over `src` and manually/surgically editing kit files.
+
+## Built-in GraphQL server.
+
+ReactQL was originally focused on being a front-end starter kit.  But the effort put into creating a fast and capable SSR stack means you now also have an ideal home to run a monolithic GraphQL server, too.
+
+Starting with 2.0, you're now able to add a GraphQL server easily, by add a few lines of code to `src/app.js`:
+
+**src/app.js**
+```js
+// Import the new `Config` singleton instance
+import config from `kit/config`;
+
+// Enable GraphQL on the server -- this code will be eliminated from the browser bundle
+if (SERVER) {
+  config.enableGraphQLServer(require('src/path/to/schema').default);
+}
+```
+
+That's it!
+
+The above mounts a GraphQL server inside Koa at `/graphql`, gives you a visual UI to query data via GraphiQL, and sets up Apollo to point to the server URI automatically. It takes care of your server-side CORS config, and adds POST body processing for incoming GraphQL queries.
+
+It also adds [apollo-local-query](https://github.com/af/apollo-local-query) to Apollo client initialisation on the server, so instead of routing requests over the network, GraphQL queries are made against the schema already loaded in memory -- eliminating TCP/IP overhead.
+
+Of course, if you want to connect to a third-party endpoint, you can still do that easily:
+
+```js
+config.setApolloURI('http://example.com/graphql');
+```
+
+(Special thanks to graph.cool for allowing us to use their service in the starter kit in 1.x. Hopefully the move above will also take some load off your server :smile:)
+
+## Add Redux reducers more easily
+
+With the new `Config` API, you no longer need to edit `kit/lib/redux.js` to add custom reducers.
+
+Instead, you can add them to `src/app.js` and keep reducers in userland:
+
+```js
+import config from `kit/config`;
+
+// Create a reducer somewhere, shaped as { state, reducer() } -- this will
+// probably be imported from a separate file
+const someReducer = {
+  // This is the reducer's initial state
+  state: {
+    someSetting: true,
+  },
+  reducer(state, action) {
+    // ... reducer code to do something with `state`
+  }
+}
+
+// Add the reducer, and specify the reducer key
+settings.addReducer('someKey', someReducer);
+```
+
+## Custom routes
+
+You can now add custom GET|POST|PUT|PATCH routes to the server, like so:
+
+```js
+// We can add custom routes to the web server easily, by using
+// `config.add<Get|Post|Put|Patch>Route()`.  Note:  These are server routes only.
+config.addGetRoute('/test', async ctx => {
+  ctx.body = 'Hello from your ReactQL route.';
+});
+```
+
+Routes will be added in insertion order, to obey your precedence rules.
+
+## POST body parsing
+
+`koa-bodyparser` is enabled by default, to process POST requests for a built-in GraphQL server or custom POST routes.
+
+By default, it'll process JSON and form requests automatically.
+
+You can disable with:
+
+```js
+config.disableBodyParser();
+```
+
+Or pass in your own custom options to `koa-bodyparser` with:
+
+```js
+config.setBodyParserOptions({
+  // Example of a config option -- see https://github.com/koajs/bodyparser
+  jsonLimit: '8mb',
+})
+```
+
+## Custom 404 handler
+
+The custom 404 handler added in 2.0 is one of several planned API 'hooks' that allow you to attach custom functionality to common server and browser entry points, without editing kit code.
+
+This example ships in the starter kit:
+
+```js
+config.set404Handler((ctx, store) => {
+  // For demo purposes, let's get a JSON dump of the current Redux state
+  // to see that we can expect its contents
+  const stateDump = JSON.stringify(store.getState());
+
+  // Explicitly set the return status to 404.  This is done for us by
+  // default if we don't have a custom 404 handler, but left to the function
+  // otherwise (since we might not always want to return a 404)
+  ctx.status = 404;
+
+  // Set the body
+  ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
+});
+```
+
+You get access to the Koa `ctx` request context object as well as the Redux `store`, giving you the flexibility to handle responses in whichever way makes the most sense for your application.
+
+In future kits, expect hooks to crop up in places like redirect and error handling.
+
+## Neater `src` layout; more commentary
+
+The out-the-box sample app that comes with a new ReactQL project is now better organised. Instead of a single `src/app.js` file, components have been given their own files/folders, and tons of extra commentary has been added to give you a better idea of what's happening under the hood.
+
+Whilst `src/app.js` is still required in every project (that's where ReactQL will look for your app code), now the file should serve two simple purposes:
+
+1. Configuring the app, per the new features above.
+2. Exporting the root React component, to mount automatically inside `<Html> -> <div id="main"/>`
+
+This best practice will make it easier to organise your code, and know what goes where.
+
+Several components also demonstrate the pattern of asset co-location; images and SASS code is often in the same directory as the calling `.js` file, to make it clear which assets belong to which React components.
+
+---
+
+v2.0 documentation will land on https://reactql.org/docs soon.
+
+All changes:
+
+## Code layout
+* Removes moot `config/project.js`
+
+## Configuration
+* Adds new `Config` class to `kit/config.js`, initialised as a singleton to use globally in `src/app.js`
+* Adds the following new methods:
+- `addReducer(key, reducer)` -- adds a new Redux reducer in the shape of `{state, reducer()}`
+- `disableBodyParser()` -- disables `koa-bodyparser` in the server config
+- `setBodyParserOptions(opt)` -- pass custom `koa-bodyparser` options to override defaults
+- `addRoute(method, route, handler)` -- add new Koa route
+- `addGetRoute(route, handler)` -- add new GET route
+- `addPostRoute(route, handler)` -- add new POST route
+- `addPutRoute(route, handler)` -- add new PUT route
+- `addPatchRoute(route, handler)` -- add new PATCH route
+- `addDeleteRoute(route, handler)` -- add new DELETE route
+- `set404Handler(func)` -- sets a custom 404 handler, which is given `(state, store)` inside `createReactHandler()`
+- `enableGraphQLServer(schema, endpoint = '/graphql', graphiql = true)` -- enables built-in GraphQL web server at `/graphql`, (optionally) enables up GraphiQL
+- `setGraphQLEndpoint(uri)` -- sets the GraphQL server URI for Apollo. For use with external GraphQL servers.
+
+## Browser
+* Replaces ReactDOM's deprecated `render` with the new `hydrate` method, for rehydrating server HTML.
+
+## Server
+* Bumps to React v16's streaming API.
+* React's `data-reactid` tags no longer appear in resulting HTML, saving bandwidth
+* Adds GraphQL server configuration
+* Adds GraphiQL UI option when using a local GraphQL server
+* Adds `apollo-local-query`, for bypassing the network when using a local GraphQL server
+* Adds `createNeworkInterface()`, for memoizing network interface creation on the server
+* Refactors React to use `renderToStream` instead of `renderToStaticMarkup`
+* Refactors `<Html>` component to take component tree as a child prop, and not as a rendered string
+* Adds custom route configuration
+* Adds `kcors` to allow cross-origin requests by default (for REST/GraphQL)
+
+## Libs
+* Removes `serverClient()` method in `kit/lib/apollo.js`, to avoid unnecessary `apollo-local-query` bundling on the browser
+* Improves `getURL()` in `kit/lib/env.js`, to allow a boolean flag to enable HTTPS
+* Adds `getServerURL()` to `kit/lib/env.js`, to explicitly get the web server host and port (typically for GraphQL)
+* Refactors `kib/lib/redux.js` to derive config from the `config.reducers` Map
+
+## Webpack
+* Adds new `npm run build-analyze` option, to open a browser window showing the bundle analysis report after building
+* Removes explicit `BUNDLE_ANALYZER` config option -- now uses the above command
+
+## App
+* Refactors app code to tidy up the `src` folder
+* Gives each component its own file/folder layout, with images/CSS co-located
+* Adds tons of extra commentary to make it clearer how each component works
+* Moves `<root>/reducers` to `src/reducers`, to reflect best practices
+* Refactors counter reducer to use the new `{state, reducer()}` reducer shape (now exported bare; no longer attached to a reducer key)
+* Refactors SASS/CSS to use separate files to be imported by components, instead of together in one file
+
+## General
+* Fixes spacing issues being reported in ESLInt 4.0
+* Shaves 9kb off `vendor.<hash>.js` bundle (383kb -> 374kb... 107kb gzipped... 90.9kb Brotli!)
+
+## NPM
+* Adds packages:
+- "apollo-local-query": "^0.3.0",
+- "apollo-server-koa": "^1.0.5",
+- "graphql": "^0.10.5"
+- "kcors": "^2.2.1"
+- "koa-bodyparser": "^4.2.0"
+
+* Bumps packages:
+- "eslint": "^4.3.0"
+- "serve": "^6.0.6"
+- "react": "^16.0.0-beta.3"
+- "react-dom": "^16.0.0-beta.3"
+
+## Known issues
+* Static bundling via `npm run build-static` builds an an invalid `<script>` include for the Webpack manifest, pending https://github.com/reactql/kit/issues/55
+
 1.17.1 - 2017-08-02
 -----------------------------------------------
 
