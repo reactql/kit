@@ -1,3 +1,16 @@
+2.1.0 - 2017-08-07
+-----------------------------------------------
+
+## Production
+* Fixes production server run error introduced by when diagnosing #55
+* Fixes docker image building
+
+## NPM
+* Bumps packages:
+- "cross-env": "^5.0.4"
+- "eslint": "^4.4.1"
+- "chalk": "^2.1.0"
+
 2.0.0 - 2017-08-06
 -----------------------------------------------
 

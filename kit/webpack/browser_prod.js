@@ -151,13 +151,12 @@ export default new WebpackConfig().extend({
       // Put this in `dist` rather than `dist/public`
       filename: '../chunk-manifest.json',
       manifestVariable: 'webpackManifest',
-      inlineManifest: true,
     }),
 
     // Generate assets manifest
     new ManifestPlugin({
       // Put this in `dist` rather than `dist/public`
-      // fileName: '../manifest.json',
+      fileName: '../manifest.json',
       // Prefix assets with '/' so that they can be referenced from any route
       publicPath: '/',
       inlineManifest: true,
