@@ -107,7 +107,7 @@ const createNeworkInterface = (() => {
 
   function externalInterface() {
     return createNetworkInterface({
-      uri: config.apolloURI,
+      uri: config.graphQLEndpoint,
     });
   }
 
