@@ -295,7 +295,7 @@ if (config.graphQLServer) {
     router.get(
       config.graphQLServer.endpoint,
       apolloGraphQLServer.graphiqlKoa({
-        endpointURL: config.graphQLEndpoint
+        endpointURL: config.graphQLEndpoint,
       }),
     );
   }
