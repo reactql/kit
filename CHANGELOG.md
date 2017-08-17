@@ -1,3 +1,33 @@
+2.2.0 - 2017-08-17
+-----------------------------------------------
+
+## NPM
+* Bumps packages:
+regenerator-runtime     ^0.10.5  →  ^0.11.0
+eslint-plugin-jsx-a11y   ^5.1.1  →   ^6.0.2
+apollo-server-koa                           ^1.0.5  →   ^1.1.0
+react-apollo                                ^1.4.8  →  ^1.4.14
+react-redux                                 ^5.0.5  →   ^5.0.6
+react-router                                ^4.1.1  →   ^4.1.2
+react-router-dom                            ^4.1.1  →   ^4.1.2
+redux                                       ^3.7.1  →   ^3.7.2
+babel-core                                 ^6.25.0  →  ^6.26.0
+babel-plugin-transform-object-rest-spread  ^6.23.0  →  ^6.26.0
+babel-plugin-transform-regenerator         ^6.24.1  →  ^6.26.0
+babel-polyfill                             ^6.23.0  →  ^6.26.0
+cross-env                                   ^5.0.4  →   ^5.0.5
+css-loader                                 ^0.28.4  →  ^0.28.5
+eslint-plugin-react                         ^7.1.0  →   ^7.2.1
+html-webpack-plugin                        ^2.29.0  →  ^2.30.1
+less-loader                                 ^4.0.4  →   ^4.0.5
+postcss-nested                              ^2.1.0  →   ^2.1.2
+progress-bar-webpack-plugin                 ^1.9.3  →  ^1.10.0
+webpack                                     ^3.4.1  →   ^3.5.5
+webpack-bundle-analyzer                     ^2.8.2  →   ^2.9.0
+webpack-config                              ^7.0.0  →   ^7.2.1
+webpack-dev-server                          ^2.6.1  →   ^2.7.1
+webpack-manifest-plugin                     ^1.2.1  →   ^1.3.1
+
 2.1.0 - 2017-08-07
 -----------------------------------------------
 
