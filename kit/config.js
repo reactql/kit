@@ -1,15 +1,5 @@
 // Simple class to act as a singleton for app-wide configuration.
 
-// ----------------------
-// IMPORTS
-
-/* ReactQL */
-
-// Get environment, to figure out where we're running the GraphQL server
-import { getServerURL } from 'kit/lib/env';
-
-// ----------------------
-
 class Config {
   constructor() {
     // Store reducers in a `Map`, for easy key retrieval
@@ -18,9 +8,20 @@ class Config {
     // Create a set for routes -- to retrieve based on insertion order
     this.routes = new Set();
 
-    // By default, point the GraphQL URI to the server variant of the local
-    // ReactQL project
-    this.graphQLEndpoint = `${getServerURL()}/graphql`;
+    // GraphQL endpoint.  This needs setting via either `config.enableGraphQLServer()`
+    // or `config.setGraphQLEndpoint()`
+    this.graphQLEndpoint = null;
+
+    // Set to true if we're using an internal GraphQL server
+    this.graphQLServer = false;
+
+    // GraphQL schema (if we're using an internal server)
+    this.graphQLSchema = null;
+
+    // Attach a GraphiQL IDE endpoint to our server?  By default - no.  If
+    // this === true, this will default to `/graphql`.  If it's a string, it'll
+    // default to the string value
+    this.graphiQL = false;
 
     // Enable body parsing by default.  Leave `koa-bodyparser` opts as default
     this.enableBodyParser = true;
@@ -96,19 +97,24 @@ class Config {
 
   /* GRAPHQL */
 
-  // Add GraphQL server.  The only required parameter is `schema`, which is
-  // a valid GraphQLSchema instance
-  enableGraphQLServer(schema, endpoint = '/graphql', graphiql = true) {
-    this.graphQLServer = {
-      schema,
-      endpoint,
-      graphiql,
-    };
+  // Enables internal GraphQL server.  Default GraphQL and GraphiQL endpoints
+  // can be overridden
+  enableGraphQLServer(endpoint = '/graphql', graphiQL = true) {
+    this.graphQLServer = true;
+    this.graphQLEndpoint = endpoint;
+    this.graphiQL = graphiQL;
+  }
+
+  // Set the GraphQL schema. This should only be called on the server, otherwise
+  // the bundle size passed by the `schema` object will be unnecessarily inflated
+  setGraphQLSchema(schema) {
+    this.graphQLSchema = schema;
   }
 
   // Set an external GraphQL URI for use with Apollo
-  setGraphQLEndpoint(uri) {
+  setGraphQLEndpoint(uri, graphiQL = true) {
     this.graphQLEndpoint = uri;
+    this.graphiQL = graphiQL;
   }
 }
 

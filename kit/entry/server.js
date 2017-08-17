@@ -61,6 +61,9 @@ import { StaticRouter } from 'react-router';
 // title, meta info, etc along with the initial HTML
 import Helmet from 'react-helmet';
 
+// Import the Apollo GraphQL server, for Koa
+import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
+
 // Allow local GraphQL schema querying when using a built-in GraphQL server
 import apolloLocalQuery from 'apollo-local-query';
 
@@ -101,7 +104,7 @@ const createNeworkInterface = (() => {
   function localInterface() {
     return apolloLocalQuery.createLocalInterface(
       graphql,
-      config.graphQLServer.schema,
+      config.graphQLSchema,
     );
   }
 
@@ -273,32 +276,49 @@ const app = new Koa()
     ctx.set('Response-Time', `${total / 1e3}ms`);
   });
 
-// Attach a GraphQL server, if we need one
+// Attach an internal GraphQL server, if we need one
 if (config.graphQLServer) {
-  // Import the Apollo GraphQL server, for Koa
-  const apolloGraphQLServer = require('apollo-server-koa');
-
   // Attach the GraphQL schema to the server, and hook it up to the endpoint
   // to listen to POST requests
   router.post(
-    config.graphQLServer.endpoint,
-    apolloGraphQLServer.graphqlKoa(context => ({
+    config.graphQLEndpoint,
+    graphqlKoa(context => ({
       // Bind the current request context, so it's accessible within GraphQL
       context,
       // Attach the GraphQL schema
-      schema: config.graphQLServer.schema,
+      schema: config.graphQLSchema,
     })),
   );
+}
 
-  // Do we need the GraphiQL query interface?
-  if (config.graphQLServer.graphiql) {
-    router.get(
-      config.graphQLServer.endpoint,
-      apolloGraphQLServer.graphiqlKoa({
-        endpointURL: config.graphQLServer.endpoint,
-      }),
-    );
+// Do we need the GraphiQL query interface?  This can be used if we have an
+// internal GraphQL server, or if we're pointing to an external server.  First,
+// we check if `config.graphiql` === `true` to see if we need one...
+
+if (config.graphiQL) {
+  // The GraphiQL endpoint default depends on this order of precedence:
+  // explicit -> internal GraphQL server endpoint -> /graphql
+  let graphiQLEndpoint;
+
+  if (typeof config.graphiQL === 'string') {
+    // Since we've explicitly passed a string, we'll use that as the endpoint
+    graphiQLEndpoint = config.graphiQL;
+  } else if (config.graphQLServer) {
+    // If we have an internal GraphQL server, AND we haven't set a string,
+    // the default GraphiQL path should be the same as the server endpoint
+    graphiQLEndpoint = config.graphQLEndpoint;
+  } else {
+    // Since we haven't set anything, AND we don't have an internal server,
+    // by default we'll use `/graphql` which will work for an external server
+    graphiQLEndpoint = '/graphql';
   }
+
+  router.get(
+    graphiQLEndpoint,
+    graphiqlKoa({
+      endpointURL: config.graphQLEndpoint,
+    }),
+  );
 }
 
 // Attach any custom routes we may have set in userland

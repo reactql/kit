@@ -1,3 +1,15 @@
+2.3.0 - 2017-08-17
+-----------------------------------------------
+
+## GraphQL
+* Adds GraphiQL IDE by default to `/graphql` when using external GraphQL endpoint
+* Allows explicit GraphiQL IDE endpoint to be set on `config.enableGraphQLServer|setGraphQLEndpoint()`
+* Updates GraphiQL endpoint to match internal GraphQL POST endpoint URL by default (falls back to `/graphql`)
+
+## Config
+* **Breaking change** -- now `config.enableGraphQLServer()` should be called isomorphically!
+* Adds explicit `config.setGraphQLSchema()` for passing the schema to the GraphQL server (use inside a `SERVER` block only!)
+
 2.2.0 - 2017-08-17
 -----------------------------------------------
 

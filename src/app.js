@@ -38,20 +38,26 @@ import './styles.global.css';
 // {state, reducer()}, otherwise it will throw an error
 config.addReducer('counter', counterReducer);
 
+/* GRAPHQL */
+
+// Enable the internal GraphQL server.  This will do two things:
+//
+// 1.  On the server, it will set-up the necessary route handlers to 'listen'
+// to incoming GraphQL requests on `/graphql`, as well as (by default) set-up
+// the GraphiQL IDE
+//
+// 2.  On the client, it will append the correct server URL so that we can
+// call the ReactQL host properly, and let the server handle our requests
+config.enableGraphQLServer();
+
 // Set our server config, by checking `SERVER` -- this code path will be
 // eliminated by Webpack in the browser, so we can safely add this.
 
 if (SERVER) {
-  /* GRAPHQL */
-
-  // If we're running on the server, create a built-in GraphQL server using
-  // custom schema.  By default, this will bind to /graphql -- POST will
-  // handle GraphQL requests; GET will display the GraphiQL query interface
-  //
-  // Apollo will attempt to connect to /graphql automatically.  We'll run
-  // this only on the server, to avoid the bloat of loading unnecessary GraphQL
-  // schema and types on the client
-  config.enableGraphQLServer(require('src/graphql/schema').default);
+  // Pass in the schema to use for our internal GraphQL server.  Note we're
+  // doing this inside a `SERVER` block to avoid importing a potentially large
+  // file, which would then inflate our client bundle unnecessarily
+  config.setGraphQLSchema(require('src/graphql/schema').default);
 
   /* CUSTOM ROUTES */
 
