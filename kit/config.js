@@ -8,6 +8,9 @@ class Config {
     // Create a set for routes -- to retrieve based on insertion order
     this.routes = new Set();
 
+    // Custom middleware -- again, based on insertion order
+    this.middleware = new Set();
+
     // GraphQL endpoint.  This needs setting via either `config.enableGraphQLServer()`
     // or `config.setGraphQLEndpoint()`
     this.graphQLEndpoint = null;
@@ -49,6 +52,11 @@ class Config {
 
   setBodyParserOptions(opt = {}) {
     this.bodyParserOptions = opt;
+  }
+
+  // Add custom middleware.  This should be an async func, for use with Koa
+  addMiddleware(middlewareFunc) {
+    this.middleware.add(middlewareFunc);
   }
 
   // Adds a custom server route to attach to our Koa router

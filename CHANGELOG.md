@@ -1,3 +1,14 @@
+2.4.0 - 2017-08-17
+-----------------------------------------------
+
+## Server
+* Moves Apollo client and Redux store to Koa `ctx` middleware, so it's available to all routes
+* Adds `config.addMiddleware()`, to add custom middleware to the Koa server
+
+## App
+* Adds sample `Powered-By` header, to showcase custom middleware
+* Adds `ctx.store.getStore()` dump to sample `/test` and 404 routes, to show the difference in Apollo response
+
 2.3.0 - 2017-08-17
 -----------------------------------------------
 

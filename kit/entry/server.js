@@ -144,21 +144,12 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
   return async function reactHandler(ctx) {
     const routeContext = {};
 
-    // Create a new server Apollo client for this request
-    const client = createClient({
-      ssrMode: true,
-      networkInterface: createNeworkInterface(),
-    });
-
-    // Create a new Redux store for this request
-    const store = createNewStore(client);
-
     // Generate the HTML from our React tree.  We're wrapping the result
     // in `react-router`'s <StaticRouter> which will pull out URL info and
     // store it in our empty `route` object
     const components = (
       <StaticRouter location={ctx.request.url} context={routeContext}>
-        <ApolloProvider store={store} client={client}>
+        <ApolloProvider store={ctx.store} client={ctx.apollo}>
           <App />
         </ApolloProvider>
       </StaticRouter>
@@ -187,7 +178,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
       // the `ctx` and store
 
       if (config.handler404) {
-        config.handler404(ctx, store);
+        config.handler404(ctx);
 
         // Return early -- no need to set a response body, because that should
         // be taken care of by the custom 404 handler
@@ -211,7 +202,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
         head={Helmet.rewind()}
         window={{
           webpackManifest: chunkManifest,
-          __STATE__: store.getState(),
+          __STATE__: ctx.store.getState(),
         }}
         css={css}
         scripts={scripts}>
@@ -274,7 +265,27 @@ const app = new Koa()
     const end = ms.parse(ms.since(start));
     const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
     ctx.set('Response-Time', `${total / 1e3}ms`);
+  })
+
+  // Create a new Apollo client and Redux store per request.  This will be
+  // stored on the `ctx` object, making it available for the React handler or
+  // any subsequent route/middleware
+  .use(async (ctx, next) => {
+    // Create a new server Apollo client for this request
+    ctx.apollo = createClient({
+      ssrMode: true,
+      networkInterface: createNeworkInterface(),
+    });
+
+    // Create a new Redux store for this request
+    ctx.store = createNewStore(ctx.apollo);
+
+    // Pass to the next middleware in the chain: React, custom middlware, etc
+    return next();
   });
+
+// Attach custom middleware
+config.middleware.forEach(middlewareFunc => app.use(middlewareFunc));
 
 // Attach an internal GraphQL server, if we need one
 if (config.graphQLServer) {

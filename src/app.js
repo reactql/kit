@@ -64,7 +64,15 @@ if (SERVER) {
   // We can add custom routes to the web server easily, by using
   // `config.add<Get|Post|Put|Patch>Route()`.  Note:  These are server routes only.
   config.addGetRoute('/test', async ctx => {
-    ctx.body = 'Hello from your ReactQL route.';
+    // For demo purposes, let's get a JSON dump of the current Redux state
+    // to see that we can expect its contents
+    const stateDump = JSON.stringify(ctx.store.getState());
+
+    // Display a simple message, along with the Redux dump.  Note that this
+    // won't contain a full `apollo` response, because it hasn't passed through
+    // the React handler -- but it *does* mean we can still manipulate the state
+    // from within our root, or fire action handlers!
+    ctx.body = `Hello from your ReactQL route. Redux dump: ${stateDump}`;
   });
 
   /* CUSTOM 404 HANDLER */
@@ -77,10 +85,12 @@ if (SERVER) {
   // Note:  This only applies to SERVER routes.  On the client, the
   // <NotFound> block will *always* run.
 
-  config.set404Handler((ctx, store) => {
-    // For demo purposes, let's get a JSON dump of the current Redux state
-    // to see that we can expect its contents
-    const stateDump = JSON.stringify(store.getState());
+  config.set404Handler(ctx => {
+    // Like above, we'll grab a dump of the store state again -- this time,
+    // it *will* contain a full `apollo` dump because in order to figure out that
+    // a route has hit a 404, it will already have rendered the React chain
+    // and retrieved any relevant GraphQL
+    const stateDump = JSON.stringify(ctx.store.getState());
 
     // Explicitly set the return status to 404.  This is done for us by
     // default if we don't have a custom 404 handler, but left to the function
@@ -89,6 +99,20 @@ if (SERVER) {
 
     // Set the body
     ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
+  });
+
+  /* CUSTOM MIDDLEWARE */
+
+  // We can set custom middleware to be processed on the server.  This gives us
+  // fine-grain control over headers, requests, responses etc, and even decide
+  // if we want to avoid the React handler until certain conditions
+  config.addMiddleware(async (ctx, next) => {
+    // Let's add a custom header so we can see middleware in action
+    ctx.set('Powered-By', 'ReactQL');
+
+    // Always return `next()`, otherwise the request won't 'pass' to the next
+    // middleware in the stack (likely, the React handler)
+    return next();
   });
 }
 
