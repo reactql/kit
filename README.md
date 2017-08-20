@@ -12,7 +12,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 
 ### Stack
 
-- [ReactQL CLI](https://github.com/reactql/cli) for quickly starting a new project
+- [ReactQL CLI](https://github.com/reactql/cli) for quickly starting a new project (or upgrading an existing one)
 - New in 2.x: [React v16](https://facebook.github.io/react/) for UI
 - New in 2.x: [Apollo Server](http://dev.apollodata.com/tools/) for enabling the built-in GraphQL server
 - [Apollo Client (React)](http://dev.apollodata.com/react/) for connecting to GraphQL
@@ -86,6 +86,14 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Tons of code commentary to fill you in on what's happening under the hood
 - Extensive, up-to-date [online documentation](https://reactql.org/docs/)
 - [Examples repository](https://github.com/reactql/examples), with real-world use cases
+
+### CLI tool
+
+- Get the [ReactQL CLI](https://github.com/reactql/cli) tool with `npm i -g reactql`
+- Mac, Windows and Linux compatible
+- One command to start a new project: `reactql new`
+- One command to upgrade an existing one: `reactql upgrade`
+- Takes care of the stuff you shouldn't have to: `reactql new` downloads the kit, unzips the files, removes artefacts, builds your `package.json`, installs required NPM packages, and dumps the start-up commands in your terminal, so you can start coding right away
 
 ## Usage
 
