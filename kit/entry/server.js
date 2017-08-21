@@ -36,7 +36,7 @@ import Koa from 'koa';
 // `ApolloProvider` HOC component, which will inject any 'listening' React
 // components with GraphQL data props.  We'll also use `getDataFromTree`
 // to await data being ready before rendering back HTML to the client
-import { createNetworkInterface, ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
 
 // Enable cross-origin requests
 import koaCors from 'kcors';
@@ -84,8 +84,8 @@ import createNewStore from 'kit/lib/redux';
 // Initial view to send back HTML render
 import Html from 'kit/views/ssr';
 
-// Grab the shared Apollo Client
-import { createClient } from 'kit/lib/apollo';
+// Grab the shared Apollo Client / network interface instantiation
+import { getNetworkInterface, createClient } from 'kit/lib/apollo';
 
 // App settings, which we'll use to customise the server -- must be loaded
 // *after* app.js has been called, so the correct settings have been set
@@ -109,9 +109,7 @@ const createNeworkInterface = (() => {
   }
 
   function externalInterface() {
-    return createNetworkInterface({
-      uri: config.graphQLEndpoint,
-    });
+    return getNetworkInterface(config.graphQLEndpoint);
   }
 
   return config.graphQLServer ? localInterface : externalInterface;

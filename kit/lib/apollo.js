@@ -24,6 +24,19 @@ export function createClient(opt = {}) {
   }, opt));
 }
 
+// Wrap `createNetworkInterface` to attach middleware
+export function getNetworkInterface(uri) {
+  const networkInterface = createNetworkInterface({
+    uri,
+  });
+
+  // Attach middleware
+  networkInterface.use(config.apolloMiddleware.map(f => ({ applyMiddleware: f })));
+  networkInterface.useAfter(config.apolloAfterware.map(f => ({ applyAfterware: f })));
+
+  return networkInterface;
+}
+
 // Creates a new browser client
 export function browserClient() {
   // If we have an internal GraphQL server, we need to append it with a
@@ -32,10 +45,6 @@ export function browserClient() {
     ? `${getServerURL()}${config.graphQLEndpoint}` : config.graphQLEndpoint;
 
   return createClient({
-    networkInterface: createNetworkInterface({
-      // If we have an internal GraphQL server, then we should append the
-      // URL with `getServerURL()` to get the correct hostname
-      uri,
-    }),
+    networkInterface: getNetworkInterface(uri),
   });
 }

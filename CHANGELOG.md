@@ -1,3 +1,27 @@
+2.5.0 - 2017-08-21
+-----------------------------------------------
+
+## Redux
+* **Breaking change** - reducers should no longer be registered as `{ state, reducer}`. Instead, the format is:
+
+```js
+// root key name, reducer function, and initial state (as a plain object)
+config.addReducer('keyName', reducerFunction, { count: 0 });
+```
+
+* Initial state should now be a plain object; it will be wrapped in a call to `seamless-immutable` automatically, providing immutability by default
+
+* Refactors `kit/lib/redux.js -> unwind()` to wrap custom reducers in a `defaultReducer` function, that detects a Redux undefined sentinel `state` and returns a plain object -- otherwise, calls the 'real'  reducer. (The side-effect to this is that reducer no longer need to handle undefined values!)
+
+## GraphQL
+* Adds optional middleware / afterware to Apollo client instantiation via:
+- `config.addApolloMiddleware()`
+- `config.addApolloAfterware()`
+Both functions can be called isomorphically; the middleware will be attached only to the environment in which it's called, so wrap in an `if (SERVER)...` block if you need to isolate this behaviour. Note: If you're using a built-in GraphQL server, ReactQL will use  [apollo-local-query](https://github.com/af/apollo-local-query) instead of regular HTTP requests so middleware won't be executed -- be aware of this if you're doing HTTP header authentication!
+
+## Config
+* Refactors the `Config` class to progressively add server-side config functions by moving the class into sub-classes for the browser/server
+
 2.4.0 - 2017-08-18
 -----------------------------------------------
 

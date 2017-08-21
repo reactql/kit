@@ -34,9 +34,11 @@ import './styles.global.css';
 
 /* REDUCERS */
 
-// Add our custom `counter` reducer.  This must follow the shape
-// {state, reducer()}, otherwise it will throw an error
-config.addReducer('counter', counterReducer);
+// Add our custom `counter` reducer, with the initial state as a zero count.
+// Note:  The initial state (3rd param) will automatically be wrapped in
+// `seamless-immutable` by the kit's Redux init code, so plain objects are
+// automatically immutable by default
+config.addReducer('counter', counterReducer, { count: 0 });
 
 /* GRAPHQL */
 
