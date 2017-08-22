@@ -1,3 +1,20 @@
+2.5.1 - 2017-08-22
+-----------------------------------------------
+
+## Config
+* Adds `setErrorHandler()` function, to enable custom error logging/middleware
+
+## App
+* Adds example that uses a custom error handler
+* Fires sample `INCREMENT_COUNTER` action in server middleware, to demonstrate sending `count: 1` down the wire via SSR
+
+## NPM
+* Bumps packages:
+babel-loader         ^7.1.1  →  ^7.1.2
+eslint               ^4.4.1  →  ^4.5.0
+eslint-plugin-react  ^7.2.1  →  ^7.3.0
+webpack-config       ^7.2.1  →  ^7.4.0
+
 2.5.0 - 2017-08-21
 -----------------------------------------------
 

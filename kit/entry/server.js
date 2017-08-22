@@ -247,11 +247,14 @@ const app = new Koa()
     try {
       await next();
     } catch (e) {
-      // TODO we've used rudimentary console logging here.  In your own
-      // app, I'd recommend you implement third-party logging so you can
-      // capture errors properly
-      console.log('Error', e.message);
-      ctx.body = 'There was an error. Please try again later.';
+      // If we have a custom error handler, use that - else simply log a
+      // message and return one to the user
+      if (typeof config.errorHandler === 'function') {
+        config.errorHandler(e, ctx, next);
+      } else {
+        console.log('Error:', e.message);
+        ctx.body = 'There was an error. Please try again later.';
+      }
     }
   })
 
@@ -278,7 +281,7 @@ const app = new Koa()
     // Create a new Redux store for this request
     ctx.store = createNewStore(ctx.apollo);
 
-    // Pass to the next middleware in the chain: React, custom middlware, etc
+    // Pass to the next middleware in the chain: React, custom middleware, etc
     return next();
   });
 

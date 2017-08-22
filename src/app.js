@@ -103,6 +103,24 @@ if (SERVER) {
     ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
   });
 
+  /* CUSTOM ERROR HANDLER */
+
+  // By default, any exceptions thrown anywhere in the middleware chain
+  // (including inside the `createReactHandler` func) will propogate up the
+  // call stack to a default error handler that simply logs the message and
+  // informs the user that there's an error.  We can override that default
+  // behaviour with a func with a (e, ctx, next) -> {} signature, where `e` is
+  // the error thrown, `ctx` is the Koa context object, and `next()` should
+  // be called if you want to recover from the error and continue processing
+  // subsequent middleware.  Great for logging to third-party tools, tc.
+  config.setErrorHandler((e, ctx /* `next` is unused in this example */) => {
+    // Mimic the default behaviour with an overriden message, so we know it's
+    // working
+    // eslint-disable-next-line no-console
+    console.log('Error: ', e.message);
+    ctx.body = 'Some kind of error. Check your source code.';
+  });
+
   /* CUSTOM MIDDLEWARE */
 
   // We can set custom middleware to be processed on the server.  This gives us
@@ -111,6 +129,11 @@ if (SERVER) {
   config.addMiddleware(async (ctx, next) => {
     // Let's add a custom header so we can see middleware in action
     ctx.set('Powered-By', 'ReactQL');
+
+    // For the fun of it, let's demonstrate that we can fire Redux actions
+    // and it'll manipulate the state on the server side!  View the SSR version
+    // to see that the counter is now 1 and has been passed down the wire
+    ctx.store.dispatch({ type: 'INCREMENT_COUNTER' });
 
     // Always return `next()`, otherwise the request won't 'pass' to the next
     // middleware in the stack (likely, the React handler)

@@ -64,7 +64,7 @@ class Common {
 let Config;
 
 // Server Config extensions.  This is wrapped in a `SERVER` block to avoid
-// adding unnecessary functionality to the server bundle.  Every byte counts!
+// adding unnecessary functionality to the client bundle.  Every byte counts!
 if (SERVER) {
   Config = class ServerConfig extends Common {
     constructor() {
@@ -108,6 +108,16 @@ if (SERVER) {
         throw new Error('404 handler must be a function');
       }
       this.handler404 = func;
+    }
+
+    // Error handler.  If this isn't defined, the server will simply return a
+    // 'There was an error. Please try again later.' message, and log the output
+    // to the console.  Override that behaviour by passing a (e, ctx, next) -> {} func
+    setErrorHandler(func) {
+      if (typeof func !== 'function') {
+        throw new Error('Error handler must be a function');
+      }
+      this.errorHandler = func;
     }
 
     // Add custom middleware.  This should be an async func, for use with Koa
