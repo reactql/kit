@@ -25,7 +25,6 @@ import 'isomorphic-fetch';
 import React from 'react';
 
 // React utility to transform JSX to HTML (to send back to the client)
-// import ReactDOMServer from 'react-dom/server';
 import ReactDOMServer from 'react-dom/server';
 
 // Koa 2 web server.  Handles incoming HTTP requests, and will serve back
