@@ -1,6 +1,6 @@
 <img src="https://reactql.org/reactql/logo.svg" alt="ReactQL" width="278" height="77" />
 
-![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square)
+![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square) [![Twitter Follow](https://img.shields.io/twitter/follow/reactql.svg?style=social&label=Follow)](https://twitter.com/reactql)
 
 # New in 2.0.0: Full-stack GraphQL + React v16 streaming API
 
@@ -114,6 +114,13 @@ Then run with:
 `docker run -p 4000:4000 <project>`
 
 Navigating to http://<docker_host>:4000 will yield the ReactQL project code.
+
+
+# Follow @reactql for updates
+
+Get the latest updates by following us on Twitter: https://twitter.com/reactql
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/reactql.svg?style=social&label=Follow)](https://twitter.com/reactql)
 
 ### Complete documentation @ **https://reactql.org**
 
