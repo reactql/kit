@@ -1,3 +1,12 @@
+2.5.2 - 2017-08-26
+-----------------------------------------------
+
+## Config
+* Adds `config.setApolloOptions()`, for passing in an object of Apollo Client instantiation options
+
+## Server
+* Refactors `createLocalInterface` to accept Koa's context object when using local GraphQL schema via `apollo-local-query`
+
 2.5.1 - 2017-08-22
 -----------------------------------------------
 

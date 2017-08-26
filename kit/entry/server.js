@@ -100,10 +100,18 @@ import PATHS from 'config/paths';
 // that binds either the `localInterface` function (if there's a built-in
 // GraphQL) or `externalInterface` (if we're pointing outside of ReactQL)
 const createNeworkInterface = (() => {
-  function localInterface() {
+  // For a local interface, we want to allow passing in the request's
+  // context object, which can then feed through to our GraphQL queries to
+  // extract pertinent information and manipulate the response
+  function localInterface(context) {
     return apolloLocalQuery.createLocalInterface(
       graphql,
       config.graphQLSchema,
+      {
+        // Attach the request's context, which certain GraphQL queries might
+        // need for accessing cookies, auth headers, etc.
+        context,
+      },
     );
   }
 
@@ -274,7 +282,10 @@ const app = new Koa()
     // Create a new server Apollo client for this request
     ctx.apollo = createClient({
       ssrMode: true,
-      networkInterface: createNeworkInterface(),
+      // Create a network request.  If we're running an internal server, this
+      // will be a function that accepts the request's context, to feed through
+      // to the GraphQL schema
+      networkInterface: createNeworkInterface(ctx),
     });
 
     // Create a new Redux store for this request

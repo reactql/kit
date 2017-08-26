@@ -10,6 +10,7 @@ class Common {
     // Apollo (middle|after)ware
     this.apolloMiddleware = [];
     this.apolloAfterware = [];
+    this.apolloOptions = {};
 
     // GraphQL endpoint.  This needs setting via either `config.enableGraphQLServer()`
     // or `config.setGraphQLEndpoint()`
@@ -57,6 +58,12 @@ class Common {
   // Register Apollo afterware function
   addApolloAfterware(afterwareFunc) {
     this.apolloAfterware.push(afterwareFunc);
+  }
+
+  // Set Apollo options.  These will be merged in with the `createClient`
+  // default options defined in `kit/lib/apollo.js`
+  setApolloOptions(opt = {}) {
+    this.apolloOptions = opt;
   }
 }
 
