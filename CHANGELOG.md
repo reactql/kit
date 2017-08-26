@@ -1,3 +1,11 @@
+2.5.3 - 2017-08-26
+-----------------------------------------------
+
+## Config
+* Adds `config.setApolloNetworkOptions()`, for passing `opts` to Apollo's `createNetworkInterface`
+* Renames `config.setApolloOptions()` -> `config.setApolloClientOptions()`, to differentiate with `config.setApolloNetworkOptions()`
+* Adds server-side `config.setCORSOptions()`, for setting CORS config options for `koa-cors`
+
 2.5.2 - 2017-08-26
 -----------------------------------------------
 

@@ -243,7 +243,7 @@ const router = (new KoaRouter())
 // as a precursor to handling routes
 const app = new Koa()
   // Adds CORS config
-  .use(koaCors())
+  .use(koaCors(config.corsOptions))
 
   // Preliminary security for HTTP headers
   .use(koaHelmet())

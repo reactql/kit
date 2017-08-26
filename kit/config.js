@@ -10,7 +10,8 @@ class Common {
     // Apollo (middle|after)ware
     this.apolloMiddleware = [];
     this.apolloAfterware = [];
-    this.apolloOptions = {};
+    this.apolloNetworkOptions = {};
+    this.apolloClientOptions = {};
 
     // GraphQL endpoint.  This needs setting via either `config.enableGraphQLServer()`
     // or `config.setGraphQLEndpoint()`
@@ -60,10 +61,16 @@ class Common {
     this.apolloAfterware.push(afterwareFunc);
   }
 
-  // Set Apollo options.  These will be merged in with the `createClient`
+  // Apollo Client options.  These will be merged in with the `createClient`
   // default options defined in `kit/lib/apollo.js`
-  setApolloOptions(opt = {}) {
-    this.apolloOptions = opt;
+  setApolloClientOptions(opt = {}) {
+    this.apolloClientOptions = opt;
+  }
+
+  // Apollo Network options.  These will be merged in with the `createNetworkInterface`
+  // default options defined in `kit/lib/apollo.js`
+  setApolloNetworkOptions(opt = {}) {
+    this.apolloNetworkOptions = opt;
   }
 }
 
@@ -93,6 +100,9 @@ if (SERVER) {
       // Enable body parsing by default.  Leave `koa-bodyparser` opts as default
       this.enableBodyParser = true;
       this.bodyParserOptions = {};
+
+      // CORS options for `koa-cors`
+      this.corsOptions = {};
     }
 
     /* WEB SERVER / SSR */
@@ -170,6 +180,11 @@ if (SERVER) {
     // the bundle size passed by the `schema` object will be unnecessarily inflated
     setGraphQLSchema(schema) {
       this.graphQLSchema = schema;
+    }
+
+    // CORS options, for `koa-cors` instantiation
+    setCORSOptions(opt = {}) {
+      this.corsOptions = opt;
     }
   };
 } else {

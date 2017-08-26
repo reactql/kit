@@ -21,13 +21,14 @@ import { getServerURL } from 'kit/lib/env';
 export function createClient(opt = {}) {
   return new ApolloClient(Object.assign({
     reduxRootSelector: state => state.apollo,
-  }, config.apolloOptions, opt));
+  }, config.apolloClientOptions, opt));
 }
 
 // Wrap `createNetworkInterface` to attach middleware
 export function getNetworkInterface(uri) {
   const networkInterface = createNetworkInterface({
     uri,
+    opts: config.apolloNetworkOptions,
   });
 
   // Attach middleware
