@@ -16,6 +16,14 @@
 // For pre-pending a `<!DOCTYPE html>` stream to the server response
 import { PassThrough } from 'stream';
 
+// HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
+// HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
+// for building both server types. We'll let our TCP handler (defined later)
+// figure out the request type and pipe to the relevant host
+import net from 'net';
+import http from 'http';
+import https from 'https';
+
 /* NPM */
 
 // Patch global.`fetch` so that Apollo calls to GraphQL work
@@ -31,11 +39,18 @@ import ReactDOMServer from 'react-dom/server';
 // the React render, or any of the static assets being compiled
 import Koa from 'koa';
 
+// Get available ports, for creating a separate HTTP + SSL server that
+// can listen for traffic from our common `kit/lib/env.getPort()` call
+import getAvailablePort from 'get-port';
+
 // Apollo tools to connect to a GraphQL server.  We'll grab the
 // `ApolloProvider` HOC component, which will inject any 'listening' React
 // components with GraphQL data props.  We'll also use `getDataFromTree`
 // to await data being ready before rendering back HTML to the client
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
+
+// Enforce SSL, if required
+import koaSSL from 'koa-sslify';
 
 // Enable cross-origin requests
 import koaCors from 'kcors';
@@ -295,6 +310,13 @@ const app = new Koa()
     return next();
   });
 
+/* FORCE SSL */
+
+// Middleware to re-write HTTP requests to SSL, if required.
+if (config.enableForceSSL) {
+  app.use(koaSSL(config.enableForceSSL));
+}
+
 // Attach custom middleware
 config.middleware.forEach(middlewareFunc => app.use(middlewareFunc));
 
@@ -359,10 +381,90 @@ if (config.enableBodyParser) {
   ));
 }
 
-// Run the server
-export default (async function server() {
-  return {
-    router,
-    app,
+/* CUSTOM APP INSTANTIATION */
+
+// Pass the `app` to do anything we need with it in userland. Useful for
+// custom instantiation that doesn't fit into the middleware/route functions
+if (typeof config.koaAppFunc === 'function') {
+  config.koaAppFunc(app);
+}
+
+// Listener function that will start http(s) server(s) based on userland
+// config and available ports, and create a public-facing proxy that will
+// pipe traffic to the correct http/ssl port -- to enable single port HTTP + SSL
+const listen = async port => {
+  // Create the ports
+  const ports = {};
+
+  // Userland config can disable plain HTTP, so check we need it
+  if (config.enableHTTP) {
+    ports.http = await getAvailablePort();
+  }
+
+  // Do we have an SSL server?
+  if (config.sslOptions) {
+    ports.ssl = await getAvailablePort();
+  }
+
+  // If we have NEITHER, then throw an error!
+  if (!ports.http && !ports.ssl) {
+    throw new Error('You have disabled plain HTTP and not enabled SSL!');
+  }
+
+  // TCP handler.  This will allow us to spawn a Koa server on a common port
+  // and proxy through to HTTP(S) as necessary.
+  const tcpHandler = conn => {
+    conn.once('data', buf => {
+      let address;
+
+      if (!ports.http) {
+        // If HTTP is disabled, *always* use SSL
+        address = ports.ssl;
+      } else if (!ports.ssl) {
+        // If SSL is disabled, *always* use HTTP
+        address = ports.http;
+      } else {
+        // The first byte of a TLS handshake is always byte 22.  If we have
+        // something different, use plain HTTP
+        address = buf[0] === 22 ? ports.ssl : ports.http;
+      }
+
+      // Create a proxy to the underlying port, so we can simply pipe all
+      // data to the right listener
+      const proxy = net.createConnection(address, () => {
+        proxy.write(buf);
+        conn.pipe(proxy).pipe(conn);
+      });
+    });
   };
-}());
+
+  // Spawn the listeners. We'll store them on an array and return them as
+  // the resolved Promise value, in case we need to mess with them somehow
+  // in the calling function
+  const servers = [
+    net.createServer(tcpHandler).listen(port),
+  ];
+
+  // Plain HTTP
+  if (ports.http) {
+    servers.push(
+      http.createServer(app.callback()).listen(ports.http),
+    );
+  }
+
+  // SSL
+  if (ports.ssl) {
+    servers.push(
+      https.createServer(config.sslOptions, app.callback()).listen(ports.ssl),
+    );
+  }
+
+  return servers;
+};
+
+// Export everything we need to run the server (in dev or prod)
+export default {
+  router,
+  app,
+  listen,
+};

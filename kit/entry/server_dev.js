@@ -33,8 +33,11 @@ const scripts = [
   'vendor.js',
   'browser.js'].map(key => `/${key}`);
 
-// Spawn the server
-server.then(({ router, app }) => {
+// Spawn the development server.
+// Runs inside an immediate `async` block, to await listening on ports
+(async () => {
+  const { app, router, listen } = server;
+
   // Create proxy to tunnel requests to the browser `webpack-dev-server`
   router.get('/*', createReactHandler(css, scripts));
 
@@ -44,12 +47,14 @@ server.then(({ router, app }) => {
     .use(router.routes())
     .use(router.allowedMethods());
 
-  app.listen({ host: HOST, port: PORT }, () => {
-    logServerStarted({
-      type: 'server-side rendering',
-      host: HOST,
-      port: PORT,
-      chalk: chalk.bgYellow.black,
-    });
+  // Spawn the server
+  await listen(getPort());
+
+  // Log to the terminal that we're ready for action
+  logServerStarted({
+    type: 'server-side rendering',
+    host: HOST,
+    port: PORT,
+    chalk: chalk.bgYellow.black,
   });
-});
+})();

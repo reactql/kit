@@ -47,8 +47,11 @@ const scripts = [
   'vendor.js',
   'browser.js'].map(key => manifest[key]);
 
-// Spawn the server
-server.then(({ router, app }) => {
+// Spawn the development server.
+// Runs inside an immediate `async` block, to await listening on ports
+(async () => {
+  const { app, router, listen } = server;
+
   // Connect the production routes to the server
   router.get('/*', createReactHandler(css, scripts, chunkManifest));
   app
@@ -56,11 +59,13 @@ server.then(({ router, app }) => {
     .use(router.routes())
     .use(router.allowedMethods());
 
-  app.listen({ host: HOST, port: PORT }, () => {
-    logServerStarted({
-      type: 'server',
-      host: HOST,
-      port: PORT,
-    });
+  // Spawn the server
+  await listen(getPort());
+
+  // Log to the terminal that we're ready for action
+  logServerStarted({
+    type: 'server',
+    host: HOST,
+    port: PORT,
   });
-});
+})();

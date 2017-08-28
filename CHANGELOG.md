@@ -1,3 +1,44 @@
+2.6.0 - 2017-08-28
+-----------------------------------------------
+
+This release enables SSL with one line -- `config.enableSSL(options)`!
+
+Now SSL and plain HTTP can live side-by-side, on the same port, thanks to a new `tcpHandler()` function that proxies data to the correct listening port, avoiding the need to expose more than one port publicly.
+
+All changes:
+
+## Config
+* Adds `config.getKoaApp()`, for passing a function that access Koa's `app` instance, allowing you to do something with `app` that's not covered by other functions (closes https://github.com/reactql/kit/issues/65)
+* Adds `config.enableSSL(opt)`, for running Koa via a HTTPS/SSL server
+* Adds `config.disableHTTP()`, for disabling a plain HTTP server listener (used in conjunction with `config.enableSSL()`, when you want SSL-only)
+* Adds `config.forceSSL(opts)`, for re-writing plain `http://` -> `https://` using [koa-sslify](https://github.com/turboMaCk/koa-sslify)
+
+## Server
+* Adds `http` and `https` configurations, for enabling SSL
+* Adds `get-port`, for assigning http(s) listeners to random ports
+* Adds `listen()` function, for proxying traffic to http(s) depending on the request received (if the first byte == 22 ? SSL : HTTP)
+* Refactors `kit/entry/server.js` to no longer export an immediate `async` function (no longer returns a Promise)
+* Refactors `kit/entry/server_*` to use the new `server.js` default export
+
+## App
+* Adds example use of `config.getKoaApp()`, that extends the `app.context` prototype with an `engine = 'ReactQL'` key, which we later use in middleware to add a 'Powered-By' response header. Also adds a general error catching function, for server-level errors.
+* Adds `src/cert/self_signed.js`, to export a sample self-signed SSL certificate to enable SSL in userland
+* Adds `config.enableSSL()` example, for running HTTPS side-by-side with the regular HTTP port
+* Adds commentary for new `config.disableHTTP()` and `config.forceSSL()` functions
+
+## NPM
+* Adds packages:
+"get-port": "^3.2.0"
+"koa-sslify": "^2.1.2"
+
+* Bumps packages:
+graphql                 ^0.10.5  →  ^0.11.1
+apollo-server-koa   ^1.1.0  →   ^1.1.2
+react-apollo       ^1.4.14  →  ^1.4.15
+react-router        ^4.1.2  →   ^4.2.0
+react-router-dom    ^4.1.2  →   ^4.2.2
+npm-run-all         ^4.0.2  →   ^4.1.0
+
 2.5.3 - 2017-08-26
 -----------------------------------------------
 

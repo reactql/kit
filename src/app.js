@@ -52,10 +52,38 @@ config.addReducer('counter', counterReducer, { count: 0 });
 // call the ReactQL host properly, and let the server handle our requests
 config.enableGraphQLServer();
 
+/* SERVER */
+
 // Set our server config, by checking `SERVER` -- this code path will be
 // eliminated by Webpack in the browser, so we can safely add this.
 
 if (SERVER) {
+  /* SSL */
+
+  // By default, the Koa web server runs on a plain HTTP server. However,
+  // you can easily enable HTTPS.  In the following commands, I grab a sample
+  // self-signed key/cert combo and call `config.enableSSL()` with the options
+  // I want to pass to the `https.createServer()` that happens under the hood.
+  //
+  // Note: Running https:// in your browser using this self-signed cert will
+  // undoubtably raise a security error. But at least we can see it's working.
+  //
+  // Production note: I generally recommend using a dedicated upstream proxy
+  // such as Nginx to handle HTTPS traffic, since the TLS handshake will likely
+  // be faster, and you can add HTTP/2 and have much finer-grain control over
+  // HTTP. But, if you need a fast SSL service, ReactQL has you covered!
+  const cert = require('src/cert/self_signed');
+  config.enableSSL({ key: cert.key, cert: cert.cert });
+
+  // If wanted, you could also run an *SSL-only* server by uncommenting:
+  // config.disableHTTP();
+
+  // Or, you could automatically redirect non-HTTP traffic to SSL by
+  // uncommenting the following: (Note: pass { port: 8081 }) for development
+  // or { port: 4000 } for the default production port
+  // config.forceSSL({ port: 8081 });
+
+  /* GRAPHQL SCHEMA */
   // Pass in the schema to use for our internal GraphQL server.  Note we're
   // doing this inside a `SERVER` block to avoid importing a potentially large
   // file, which would then inflate our client bundle unnecessarily
@@ -121,6 +149,29 @@ if (SERVER) {
     ctx.body = 'Some kind of error. Check your source code.';
   });
 
+  /* CUSTOM KOA APP INSTANTIATION */
+
+  // If you need to do something with `app` outside of middleware/routing,
+  // you can pass a func to `config.getKoaApp()` that will be fed the `app`
+  // instance directly.
+  config.getKoaApp(app => {
+    // First, we'll add a new `engine` key to the app.context`
+    // prototype (that per-request `ctx` extends) that can be
+    // used in the middleware below, to set a `Powered-By` header.
+    // eslint-disable-next-line no-param-reassign
+    app.context.engine = 'ReactQL';
+
+    // We'll also add a generic error handler, that prints out to the console.
+    // Note: This is a 'lower-level' than `config.setErrorHandler()` because
+    // it's not middleware -- it's for errors that happen at the server level
+    app.on('error', e => {
+      // This function should never show up, because `config.setErrorHandler()`
+      // is already catching errors -- but just an FYI for what you might do.
+      // eslint-disable-next-line no-console
+      console.error('Server error:', e);
+    });
+  });
+
   /* CUSTOM MIDDLEWARE */
 
   // We can set custom middleware to be processed on the server.  This gives us
@@ -128,7 +179,7 @@ if (SERVER) {
   // if we want to avoid the React handler until certain conditions
   config.addMiddleware(async (ctx, next) => {
     // Let's add a custom header so we can see middleware in action
-    ctx.set('Powered-By', 'ReactQL');
+    ctx.set('Powered-By', ctx.engine); // <-- `ctx.engine` srt above!
 
     // For the fun of it, let's demonstrate that we can fire Redux actions
     // and it'll manipulate the state on the server side!  View the SSR version
