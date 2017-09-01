@@ -1,3 +1,19 @@
+2.7.0 - 2017-09-01
+-----------------------------------------------
+
+## Config
+* Now `config.addRoute()` (and derivatives) accept multiple route handlers
+
+## NPM
+* Bumps packages:
+graphql                ^0.11.1  →  ^0.11.2
+react-helmet            ^5.1.3  →   ^5.2.0
+brotli-webpack-plugin   ^0.4.0  →   ^0.4.1
+css-loader             ^0.28.5  →  ^0.28.7
+iltorb                  ^1.3.5  →   ^1.3.6
+image-webpack-loader    ^3.3.1  →   ^3.4.0
+npm-run-all             ^4.1.0  →   ^4.1.1
+
 2.6.0 - 2017-08-28
 -----------------------------------------------
 

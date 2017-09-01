@@ -185,37 +185,37 @@ if (SERVER) {
     }
 
     // Adds a custom server route to attach to our Koa router
-    addRoute(method, route, handler) {
+    addRoute(method, route, ...handlers) {
       this.routes.add({
         method,
         route,
-        handler,
+        handlers,
       });
     }
 
     // Adds custom GET route
-    addGetRoute(route, handler) {
-      this.addRoute('get', route, handler);
+    addGetRoute(route, ...handlers) {
+      this.addRoute('get', route, ...handlers);
     }
 
     // Adds custom POST route
-    addPostRoute(route, handler) {
-      this.addRoute('post', route, handler);
+    addPostRoute(route, ...handlers) {
+      this.addRoute('post', route, ...handlers);
     }
 
     // Adds custom PUT route
-    addPutRoute(route, handler) {
-      this.addRoute('put', route, handler);
+    addPutRoute(route, ...handlers) {
+      this.addRoute('put', route, ...handlers);
     }
 
     // Adds custom PATCH route
-    addPatchRoute(route, handler) {
-      this.addRoute('patch', route, handler);
+    addPatchRoute(route, ...handlers) {
+      this.addRoute('patch', route, ...handlers);
     }
 
     // Adds custom DELETE route
-    addDeleteRoute(route, handler) {
-      this.addRoute('delete', route, handler);
+    addDeleteRoute(route, ...handlers) {
+      this.addRoute('delete', route, ...handlers);
     }
 
     // Set the GraphQL schema. This should only be called on the server, otherwise

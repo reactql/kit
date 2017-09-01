@@ -2,7 +2,7 @@
 
 ![Travis](https://api.travis-ci.org/reactql/kit.svg?branch=master) ![npm](https://img.shields.io/npm/dt/reactql.svg?style=flat-square) ![license](https://img.shields.io/github/license/reactql/kit.svg?style=flat-square) [![Twitter Follow](https://img.shields.io/twitter/follow/reactql.svg?style=social&label=Follow)](https://twitter.com/reactql)
 
-# New in 2.0.0: Full-stack GraphQL + React v16 streaming API
+# New in 2.x: Full-stack GraphQL + React v16 streaming API + SSL
 
 Full-stack React + GraphQL, done properly.
 
@@ -37,6 +37,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - HTTP header hardening with [Helmet for Koa](https://github.com/venables/koa-helmet)
 - Declarative/dynamic `<head>` section, using [react-helmet](https://github.com/nfl/react-helmet)
 - Full page React via built-in `<Html>` component - every byte of your HTML is React!
+- Run plain HTTP and SSL from the same port - just `config.enableSSL(sslOptions)` in your app code
 
 ### Real-time
 

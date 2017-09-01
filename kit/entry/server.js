@@ -367,7 +367,7 @@ if (config.graphiQL) {
 
 // Attach any custom routes we may have set in userland
 config.routes.forEach(route => {
-  router[route.method](route.route, route.handler);
+  router[route.method](route.route, ...route.handlers);
 });
 
 /* BODY PARSING */
