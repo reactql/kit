@@ -12,9 +12,6 @@ import chalk from 'chalk';
 
 /* Local */
 
-// Local environment
-import { getHost, getPort } from 'kit/lib/env';
-
 // Import console messages
 import { logServerStarted } from 'kit/lib/console';
 
@@ -22,10 +19,6 @@ import { logServerStarted } from 'kit/lib/console';
 import server, { createReactHandler, staticMiddleware } from './server';
 
 // ----------------------
-
-// Host and port -- from the environment
-const HOST = getHost();
-const PORT = getPort();
 
 // Get manifest values
 const css = '/assets/css/style.css';
@@ -48,13 +41,11 @@ const scripts = [
     .use(router.allowedMethods());
 
   // Spawn the server
-  await listen(getPort());
+  listen();
 
   // Log to the terminal that we're ready for action
   logServerStarted({
     type: 'server-side rendering',
-    host: HOST,
-    port: PORT,
     chalk: chalk.bgYellow.black,
   });
 })();

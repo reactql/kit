@@ -72,6 +72,20 @@ export default [
     },
 
     plugins: [
+      new webpack.DefinePlugin({
+        // We ARE running on the server
+        SERVER: true,
+        'process.env': {
+          // Point the server host/port to the production server
+          HOST: JSON.stringify(process.env.HOST || 'localhost'),
+          PORT: JSON.stringify(process.env.PORT || '8081'),
+          SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+
+          NODE_ENV: JSON.stringify('development'),
+          DEBUG: true,
+        },
+      }),
+
       // Start the development server
       new ServerDevPlugin(),
     ],
@@ -94,6 +108,20 @@ export default [
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        // We're not running on the server
+        SERVER: false,
+        'process.env': {
+          // Point the server host/port to the dev server
+          HOST: JSON.stringify(process.env.HOST || 'localhost'),
+          PORT: JSON.stringify(process.env.PORT || '8081'),
+          SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+
+          NODE_ENV: JSON.stringify('development'),
+          DEBUG: true,
+        },
+      }),
+
       // Check for errors, and refuse to emit anything with issues
       new webpack.NoEmitOnErrorsPlugin(),
 

@@ -72,6 +72,11 @@ if (SERVER) {
   // such as Nginx to handle HTTPS traffic, since the TLS handshake will likely
   // be faster, and you can add HTTP/2 and have much finer-grain control over
   // HTTP. But, if you need a fast SSL service, ReactQL has you covered!
+
+  /*
+    Uncomment the next two lines to enable SSL!
+  */
+
   const cert = require('src/cert/self_signed');
   config.enableSSL({ key: cert.key, cert: cert.cert });
 

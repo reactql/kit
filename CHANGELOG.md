@@ -1,3 +1,45 @@
+2.8.0 - 2017-09-04
+-----------------------------------------------
+
+*Breaking changes*.
+
+This release introduces some breaking changes to host environment vars, and SSL work:
+
+**Host and port environment variables**
+
+Until now, changing hosts/ports required setting environment-specific variables, such as `SERVER_DEV_HOST` or `BROWSER_PROD_PORT`. The number of combinations made this somewhat confusing; there's little point setting `SERVER_PROD_HOST` when ReactQL is built in development mode, for example.
+
+In this release, we've simplified config to just:
+
+- `HOST`
+- `PORT`
+
+... which sets both the server endpoints, as well as the default GraphQL URI -- in whichever environment you happen to be running in (i.e. `npm start` = dev, `npm run build-run` = production)
+
+Additionally, you can set the following in 'hot code reload' Webpack browser mode:
+
+- `BROWSER_HOST`
+- `BROWSER_PORT`
+
+... which will specifically override HOST and DEV for that mode.
+
+**SSL**
+
+v2.6.0 introduced SSL. This was implemented as sharing a SINGLE port for both HTTP + HTTPS, which works well for development - but less so for production, where ports 80 and 443 are more typical. The `tcpHandler()` function has been removed, and both servers now run on their own environment-defined ports.
+
+In addition to the new environment variables above, you can set `SSL_PORT` in the environment which will mount the HTTPS server on the correct port. If you fail to pass this, the HTTPS server simply won't start, and options sent to `config.enableSSL()` will be ignored.
+
+**`kit/lib/env.js`**
+
+Since env vars have been simplified, most of the boilerplate in this file was rendered moot. This has now been refactored into an enhanced `getServerURL` function that automatically returns either 'http://' or 'https://' as the URL prefix, the correct host, along with a port number -- (unless the port is 80 or 443, in which case the port is omitted since it's implicit.)
+
+## Kit
+* Fixes #71 - setting `SERVER_DEV_HOST` and `SERVER_PROD_HOST` results in the correct GraphQL and app endpoints
+
+## NPM
+* Removes packages:
+"get-port": "^3.2.0"
+
 2.7.0 - 2017-09-01
 -----------------------------------------------
 

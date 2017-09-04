@@ -4,7 +4,6 @@
 // IMPORTS
 
 /* NPM */
-import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
 // Plugin to allow us to exclude `node_modules` packages from the final
@@ -91,12 +90,6 @@ export default new WebpackConfig().extend({
       },
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      // We're running on the Node.js server, so set `SERVER` to true
-      SERVER: true,
-    }),
-  ],
   // No need to transpile `node_modules` files, since they'll obviously
   // still be available to Node.js when we run the resulting `server.js` entry
   externals: nodeModules({

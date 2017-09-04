@@ -18,9 +18,6 @@ import { readFileSync } from 'fs';
 // so we can serve static files
 import PATHS from 'config/paths';
 
-// Local environment
-import { getHost, getPort } from 'kit/lib/env';
-
 // Import console messages
 import { logServerStarted } from 'kit/lib/console';
 
@@ -28,10 +25,6 @@ import { logServerStarted } from 'kit/lib/console';
 import server, { createReactHandler, staticMiddleware } from './server';
 
 // ----------------------
-
-// Host and port -- from the environment
-const HOST = getHost();
-const PORT = getPort();
 
 // Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest'].map(
@@ -60,12 +53,10 @@ const scripts = [
     .use(router.allowedMethods());
 
   // Spawn the server
-  await listen(getPort());
+  listen();
 
   // Log to the terminal that we're ready for action
   logServerStarted({
     type: 'server',
-    host: HOST,
-    port: PORT,
   });
 })();

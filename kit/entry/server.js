@@ -18,9 +18,7 @@ import { PassThrough } from 'stream';
 
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
-// for building both server types. We'll let our TCP handler (defined later)
-// figure out the request type and pipe to the relevant host
-import net from 'net';
+// for building both server types.
 import http from 'http';
 import https from 'https';
 
@@ -38,10 +36,6 @@ import ReactDOMServer from 'react-dom/server';
 // Koa 2 web server.  Handles incoming HTTP requests, and will serve back
 // the React render, or any of the static assets being compiled
 import Koa from 'koa';
-
-// Get available ports, for creating a separate HTTP + SSL server that
-// can listen for traffic from our common `kit/lib/env.getPort()` call
-import getAvailablePort from 'get-port';
 
 // Apollo tools to connect to a GraphQL server.  We'll grab the
 // `ApolloProvider` HOC component, which will inject any 'listening' React
@@ -390,72 +384,22 @@ if (typeof config.koaAppFunc === 'function') {
 }
 
 // Listener function that will start http(s) server(s) based on userland
-// config and available ports, and create a public-facing proxy that will
-// pipe traffic to the correct http/ssl port -- to enable single port HTTP + SSL
-const listen = async port => {
-  // Create the ports
-  const ports = {};
-
-  // Userland config can disable plain HTTP, so check we need it
-  if (config.enableHTTP) {
-    ports.http = await getAvailablePort();
-  }
-
-  // Do we have an SSL server?
-  if (config.sslOptions) {
-    ports.ssl = await getAvailablePort();
-  }
-
-  // If we have NEITHER, then throw an error!
-  if (!ports.http && !ports.ssl) {
-    throw new Error('You have disabled plain HTTP and not enabled SSL!');
-  }
-
-  // TCP handler.  This will allow us to spawn a Koa server on a common port
-  // and proxy through to HTTP(S) as necessary.
-  const tcpHandler = conn => {
-    conn.once('data', buf => {
-      let address;
-
-      if (!ports.http) {
-        // If HTTP is disabled, *always* use SSL
-        address = ports.ssl;
-      } else if (!ports.ssl) {
-        // If SSL is disabled, *always* use HTTP
-        address = ports.http;
-      } else {
-        // The first byte of a TLS handshake is always byte 22.  If we have
-        // something different, use plain HTTP
-        address = buf[0] === 22 ? ports.ssl : ports.http;
-      }
-
-      // Create a proxy to the underlying port, so we can simply pipe all
-      // data to the right listener
-      const proxy = net.createConnection(address, () => {
-        proxy.write(buf);
-        conn.pipe(proxy).pipe(conn);
-      });
-    });
-  };
-
-  // Spawn the listeners. We'll store them on an array and return them as
-  // the resolved Promise value, in case we need to mess with them somehow
-  // in the calling function
-  const servers = [
-    net.createServer(tcpHandler).listen(port),
-  ];
+// config and available ports
+const listen = () => {
+  // Spawn the listeners.
+  const servers = [];
 
   // Plain HTTP
-  if (ports.http) {
+  if (config.enableHTTP) {
     servers.push(
-      http.createServer(app.callback()).listen(ports.http),
+      http.createServer(app.callback()).listen(process.env.PORT),
     );
   }
 
-  // SSL
-  if (ports.ssl) {
+  // SSL -- only enable this if we have an `SSL_PORT` set on the environment
+  if (process.env.SSL_PORT) {
     servers.push(
-      https.createServer(config.sslOptions, app.callback()).listen(ports.ssl),
+      https.createServer(config.sslOptions, app.callback()).listen(process.env.SSL_PORT),
     );
   }
 

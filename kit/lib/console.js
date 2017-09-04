@@ -15,16 +15,17 @@ import chalk from 'chalk';
 // IP library, for determining the local network interface
 import ip from 'ip';
 
+/* ReactQL */
+import { getServerURL } from './env';
+
 // ----------------------
 
 export function logServerStarted(opt = {}) {
   let message = chalk.green(`Running ${(opt.chalk || chalk.bold)(opt.type)} in ${chalk.bold(process.env.NODE_ENV)} mode\n\n`);
-
-  const localURL = `http://${opt.host}:${opt.port}`;
-  message += `- ${chalk.bold('Local:           ')} ${localURL}`;
+  message += `- ${chalk.bold('Local:           ')} ${getServerURL(opt.host, opt.port, opt.allowSSL)}`;
 
   try {
-    const url = `http://${ip.address()}:${opt.port}`;
+    const url = getServerURL(ip.address(), opt.port, opt.allowSSL);
     message += `\n- ${chalk.bold('On Your Network: ')} ${url}`;
   } catch (err) { /* ignore errors */ }
 
