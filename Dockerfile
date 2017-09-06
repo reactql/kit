@@ -1,6 +1,6 @@
 FROM debian:testing-slim
 
-ENV EPHIMERAL_PACKAGES "build-essential dh-autoreconf curl xz-utils python git"
+ENV EPHIMERAL_PACKAGES "build-essential dh-autoreconf curl xz-utils python"
 ENV PACKAGES "libpng-dev git"
 
 # Install apt packages (and clean up afterwards)
