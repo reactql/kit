@@ -31,8 +31,8 @@ ADD . .
 RUN npm run build
 
 # Set the default host/port
-ENV SERVER_PROD_HOST 0.0.0.0
-ENV SERVER_PROD_PORT 4000
+ENV HOST 0.0.0.0
+ENV PORT 4000
 
 # Start the server by default
 CMD npm run server

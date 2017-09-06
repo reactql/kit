@@ -1,3 +1,20 @@
+2.8.1 - 2017-09-06
+-----------------------------------------------
+
+## Webpack
+* Fixes `process.env.NODE_ENV` in development
+
+## Docker
+* Updates `Dockerfile` to use `HOST` and `PORT` env vars, instead of the previous `SERVER_PROD_*`
+
+## NPM
+* Bumps packages:
+- jest                    ^20.0.4  →  ^21.0.1
+- graphql               ^0.11.2  →  ^0.11.3
+- eslint                 ^4.5.0  →   ^4.6.1
+- image-webpack-loader   ^3.4.0  →   ^3.4.2
+- webpack                ^3.5.5  →   ^3.5.6
+
 2.8.0 - 2017-09-04
 -----------------------------------------------
 

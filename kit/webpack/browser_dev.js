@@ -137,6 +137,10 @@ export default new WebpackConfig().extend({
         HOST: JSON.stringify(process.env.HOST || 'localhost'),
         PORT: JSON.stringify(process.env.PORT || '8081'),
         SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+
+        // Debug development
+        NODE_ENV: JSON.stringify('development'),
+        DEBUG: true,
       },
     }),
   ],
