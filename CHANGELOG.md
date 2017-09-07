@@ -1,3 +1,17 @@
+2.8.2 - 2017-09-07
+-----------------------------------------------
+
+## CSS
+* Fixes 72 - bumps to `cssnano@next` to avoid `@font-face` issues from externally imported packages
+
+## React
+* Bumps to React v16 RC2
+
+## NPM
+* Bumps packages:
+- cssnano": "^4.0.0-rc.2"
+- "react": "^16.0.0-rc.2"
+
 2.8.1 - 2017-09-06
 -----------------------------------------------
 
