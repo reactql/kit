@@ -1,3 +1,9 @@
+2.8.3 - 2017-09-07
+-----------------------------------------------
+
+## React
+* Fixes invalid call to `ReactDOMServer.renderToStream()` -> `renderToNodeStream()` per https://github.com/facebook/react/issues/10294#issuecomment-327903463
+
 2.8.2 - 2017-09-07
 -----------------------------------------------
 

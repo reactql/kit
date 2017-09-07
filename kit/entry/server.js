@@ -211,7 +211,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
     // Create a stream of the React render. We'll pass in the
     // Helmet component to generate the <head> tag, as well as our Redux
     // store state so that the browser can continue from the server
-    const reactStream = ReactDOMServer.renderToStream(
+    const reactStream = ReactDOMServer.renderToNodeStream(
       <Html
         head={Helmet.rewind()}
         window={{
