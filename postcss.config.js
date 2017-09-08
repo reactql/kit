@@ -14,12 +14,6 @@ module.exports = {
   plugins: [
     postcssNested(),
     cssnext(),
-    cssnano({
-      // Disable autoprefixer-- CSSNext already used it
-      autoprefixer: false,
-
-      // Don't mess with url() -- keep paths intact for css-loader
-      normalizeUrl: false,
-    }),
+    cssnano(),
   ],
 };

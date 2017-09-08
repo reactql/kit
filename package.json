@@ -1,6 +1,6 @@
 {
   "name": "reactql-app",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "description": "ReactQL starter kit app",
   "license": "UNLICENSED",
   "private": true,
@@ -38,6 +38,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "cssnano": "^4.0.0-rc.2",
+    "cssnano-preset-default": "^4.0.0-rc.2",
     "eslint": "^4.6.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-import-resolver-webpack": "^0.8.3",
