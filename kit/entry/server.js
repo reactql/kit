@@ -245,7 +245,7 @@ const router = (new KoaRouter())
   // Favicon.ico.  By default, we'll serve this as a 204 No Content.
   // If /favicon.ico is available as a static file, it'll try that first
   .get('/favicon.ico', async ctx => {
-    ctx.res.statusCode = 204;
+    ctx.status = 204;
   });
 
 // Build the app instance, which we'll use to define middleware for Koa
