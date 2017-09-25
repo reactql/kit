@@ -15,7 +15,7 @@ import chalk from 'chalk';
 
 // RegExp for file types
 export const regex = {
-  fonts: /\.(woff|woff2|ttf|eot)$/i,
+  fonts: /\.(woff|woff2|(o|t)tf|eot)$/i,
   images: /\.(jpe?g|png|gif|svg)$/i,
 };
 
