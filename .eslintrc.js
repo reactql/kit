@@ -15,12 +15,14 @@ module.exports = {
   env: {
     node: true,
     browser: true,
+    'jest/globals': true,
   },
   plugins: [
     'babel',
     'import',
     'jsx-a11y',
     'compat',
+    'jest',
   ],
   rules: {
     'arrow-parens': ['error', 'as-needed'],
