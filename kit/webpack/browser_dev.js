@@ -19,7 +19,7 @@ import chalk from 'chalk';
 import { css, stats } from './common';
 import { logServerStarted } from '../lib/console';
 
-// Locla paths
+// Local paths
 import PATHS from '../../config/paths';
 
 // ----------------------
