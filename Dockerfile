@@ -1,6 +1,6 @@
 FROM debian:jessie-slim
 
-ENV EPHIMERAL_PACKAGES "build-essential dh-autoreconf curl xz-utils python"
+ENV EPHIMERAL_PACKAGES "build-essential dh-autoreconf curl xz-utils python binutils"
 ENV PACKAGES "libpng-dev"
 
 # Add `package.json` to build Debian compatible NPM packages
