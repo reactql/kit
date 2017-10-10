@@ -127,6 +127,8 @@ Get the latest updates by following us on Twitter: https://twitter.com/reactql
 
 # New to GraphQL? Need help?
 
+<img src="https://reactql.org/assets/ext/slack_rgb.png" alt="ReactQL" width="278" />
+
 [Join the ReactQL slack channel here.](https://join.slack.com/t/reactql/shared_invite/enQtMjU0MjUzNDEzNzY0LWIyY2MzOGNlYmE1ZjI5ZDZhZTI2ODdiYzM2NjczYzJhZDgxYmJmYzE1NDYzZjRkYmVmNmQ3MzM0NzM3N2M5ODM)
 
 Watch my free [45 minute YouTube video](https://www.youtube.com/watch?v=DNPVqK_woRQ), for a live coding walk-through of putting together a GraphQL server with a database. Learn how to write queries, mutations and handle nested/related data.
