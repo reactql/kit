@@ -213,7 +213,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
     // store state so that the browser can continue from the server
     const reactStream = ReactDOMServer.renderToNodeStream(
       <Html
-        head={Helmet.rewind()}
+        helmet={Helmet.renderStatic()}
         window={{
           webpackManifest: chunkManifest,
           __STATE__: ctx.store.getState(),
@@ -253,9 +253,6 @@ const router = (new KoaRouter())
 const app = new Koa()
   // Adds CORS config
   .use(koaCors(config.corsOptions))
-
-  // Preliminary security for HTTP headers
-  .use(koaHelmet())
 
   // Error wrapper.  If an error manages to slip through the middleware
   // chain, it will be caught and logged back here
@@ -309,6 +306,11 @@ const app = new Koa()
 // Middleware to re-write HTTP requests to SSL, if required.
 if (config.enableForceSSL) {
   app.use(koaSSL(config.enableForceSSL));
+}
+
+// Middleware to add preliminary security for HTTP headers via Koa Helmet
+if (config.enableKoaHelmet) {
+  app.use(koaHelmet(config.koaHelmetOptions));
 }
 
 // Attach custom middleware

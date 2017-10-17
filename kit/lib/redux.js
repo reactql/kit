@@ -35,8 +35,8 @@ function unwind(reducer = true) {
   //
   // If we're not looking for reducers, it'll pull out the `initialState`
   // variable instead, which we'll further process below
-  const r = Object.assign({},
-    ...[].concat([...config.reducers].map(arr => ({
+  const r = Object.assign(
+    {}, ...[].concat([...config.reducers].map(arr => ({
       [arr[0]]: reducer ? function defaultReducer(state, action) {
         // If `state` === undefined, this is Redux sending a sentinel value
         // to check our set-up.  So we'll send back a plain object to prove

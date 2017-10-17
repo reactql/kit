@@ -19,7 +19,7 @@ import chalk from 'chalk';
 import { css, stats } from './common';
 import { logServerStarted } from '../lib/console';
 
-// Locla paths
+// Local paths
 import PATHS from '../../config/paths';
 
 // ----------------------
@@ -95,6 +95,11 @@ export default new WebpackConfig().extend({
     // back to the webpack-dev-server bootstrap HTML
     historyApiFallback: {
       index: '/webpack.html',
+    },
+
+    // Allow any origins, for use with Docker or alternate hosts, etc
+    headers: {
+      'Access-Control-Allow-Origin': '*',
     },
 
     // Format output stats

@@ -1,3 +1,72 @@
+UNVERSIONED - 2017-10-17
+-----------------------------------------------
+
+## Building
+* Fixes static building via `npm run build-static`, by replacing broken `chunk-manifest-webpack-plugin` (closes #55)
+
+## Webpack
+* Fixes stats configuration to work with the latest Webpack versions
+* Adds CORS config to webpack_dev_server, to enable LAN-wide browser hot-code reloading (closes #99)
+
+## ESLint
+* Refactors rules, to be grouped by plugin
+* Adds `jsx-a11y/anchor-is-valid` rule to avoid 'href' on React Router `<Link>` attributes
+* Adds `function-paren-newline` rule to enforce consistent parenthesis
+* Adds `object-curly-newline` rule to allow one-line / multi-line object definitions
+* Fixes various kit and src files to conform to new rules
+
+## React
+* Bumps to React v16 - officially out of RC!
+
+## Config
+* Adds `.disableKoaHelmet()` for disabling [koa-helmet](https://www.npmjs.com/package/koa-helmet) on the server (closes #79)
+* Adds `.setKoaHelmetOptions()` for passing options to Koa Helmet
+* Sets `.koaHelmetOptions` and `.bodyParserOptions` to null by default
+
+## App
+* Disables SSL by default
+
+## General
+* Fixes 'local' typo (merges #89 - thanks @kane-c)
+* Fixes misspelled `browserslist` file (merges #95 - thanks @klarstrup)
+* Adds idiomatic [React Helmet](https://github.com/nfl/react-helmet) `<head>` tags, adds missing html/body attributes, link, style, script and noscript, uses new `Helmet.renderStatic()` call (closes #101 & #94 - thanks @klarstrup)
+
+## NPM
+
+* Bumps packages:
+"babel-eslint": "^8.0.1"
+"copy-webpack-plugin": "^4.1.1",
+"cross-env": "^5.1.0",
+"eslint": "^4.9.0",
+"eslint-config-airbnb": "^16.1.0",
+"eslint-plugin-compat": "^2.0.1",
+"eslint-plugin-jsx-a11y": "^6.0.2",
+"eslint-plugin-react": "^7.4.0",
+"extract-text-webpack-plugin": "^3.0.1",
+"file-loader": "^1.1.5",
+"graphql-tag": "^2.5.0",
+"iltorb": "^2.0.1"
+"jest": "^21.2.1",
+"less": "^3.0.0-alpha.3",
+"postcss-loader": "^2.0.8",
+"resolve-url-loader": "^2.1.1",
+"rimraf": "^2.6.2",
+"serve": "^6.2.0",
+"style-loader": "^0.19.0",
+"webpack": "^3.8.0",
+"webpack-chunk-hash": "^0.5.0",
+"webpack-config": "^7.5.0",
+"webpack-dev-server": "^2.9.2",
+"webpack-manifest-plugin": "^1.3.2",
+"apollo-server-koa": "^1.1.7",
+"graphql": "^0.11.7",
+"koa-send": "^4.1.1",
+"prop-types": "^15.6.0",
+"react": "^16.0.0",
+"react-apollo": "^1.4.16",
+"react-dom": "^16.0.0",
+"react-hot-loader": "^3.1.1"
+
 2.8.5 - 2017-09-07
 -----------------------------------------------
 

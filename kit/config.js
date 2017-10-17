@@ -92,6 +92,10 @@ if (SERVER) {
       // Flag for setting whether plain HTTP should be disabled
       this.enableHTTP = true;
 
+      // Flag for enabling Koa Helmet HTTP hardening. True, by default.
+      this.enableKoaHelmet = true;
+      this.koaHelmetOptions = null;
+
       // Force SSL. Rewrites all non-SSL queries to SSL.  False, by default.
       this.enableForceSSL = false;
 
@@ -110,9 +114,9 @@ if (SERVER) {
       // default to the string value
       this.graphiQL = false;
 
-      // Enable body parsing by default.  Leave `koa-bodyparser` opts as default
+      // Enable body parsing by default.
       this.enableBodyParser = true;
-      this.bodyParserOptions = {};
+      this.bodyParserOptions = null;
 
       // CORS options for `koa-cors`
       this.corsOptions = {};
@@ -157,6 +161,15 @@ if (SERVER) {
 
     setBodyParserOptions(opt = {}) {
       this.bodyParserOptions = opt;
+    }
+
+    // Disable Koa Helmet option, to prevent HTTP hardening by default
+    disableKoaHelmet() {
+      this.enableKoaHelmet = false;
+    }
+
+    setKoaHelmetOptions(opt = {}) {
+      this.koaHelmetOptions = opt;
     }
 
     // 404 handler for the server.  By default, `kit/entry/server.js` will

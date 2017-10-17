@@ -79,7 +79,13 @@ export class Redirect extends React.PureComponent {
   }
 
   render() {
-    const { to, from, push, permanent } = this.props;
+    const {
+      to,
+      from,
+      push,
+      permanent,
+    } = this.props;
+
     const code = permanent ? 301 : 302;
     return (
       <Status code={code}>

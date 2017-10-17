@@ -23,9 +23,22 @@ module.exports = {
     'compat',
   ],
   rules: {
+    // General
     'arrow-parens': ['error', 'as-needed'],
-    'react/forbid-prop-types': [1, { forbid: ['any']} ],
+    'function-paren-newline': ["error", "consistent"],
+    'object-curly-newline': ["error", { consistent: true }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'linebreak-style': 0,
+    'global-require': 0,
+    'no-restricted-syntax': [2,
+      ...restricted.filter(
+        r => !['ForOfStatement'].includes(r.selector)
+      ),
+    ],
+
+    // React
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/forbid-prop-types': [1, { forbid: ['any']} ],
     'react/prefer-stateless-function': [2, { ignorePureComponents: true }],
     'react/no-multi-comp': 0,
     'react/jsx-closing-bracket-location': [1, 'after-props'],
@@ -37,16 +50,18 @@ module.exports = {
         'data',
       ],
     }],
-    'linebreak-style': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    'no-restricted-syntax': [2,
-      ...restricted.filter(
-        r => !['ForOfStatement'].includes(r.selector)
-      ),
-    ],
-    'global-require': 0,
+
+    // Import
     'import/no-unresolved': [2, { commonjs: true }],
-    'compat/compat': 2
+
+    // Compat
+    'compat/compat': 2,
+
+    // JSX-a11y
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "a" ],
+      "aspects": [ "noHref", "invalidHref", "preferButton" ]
+    }],
   },
   settings: {
     'import/resolver': {

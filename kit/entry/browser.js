@@ -80,7 +80,7 @@ const Root = (() => {
   if (module.hot) {
     // <AppContainer> will respond to our Hot Module Reload (HMR) changes
     // back from WebPack, and handle re-rendering the chain as needed
-    const AppContainer = require('react-hot-loader').AppContainer;
+    const { AppContainer } = require('react-hot-loader');
 
     // Start our 'listener' at the root component, so that any changes that
     // occur in the hierarchy can be captured
