@@ -19,6 +19,7 @@ const Html = ({ head, scripts, window, css, children }) => (
       {head.meta.toComponent()}
       <link rel="stylesheet" href={css} />
       {head.title.toComponent()}
+      {head.link.toComponent()}
     </head>
     <body>
       <div id="main">{children}</div>
