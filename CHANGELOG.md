@@ -1,3 +1,14 @@
+2.9.1 - 2017-10-17
+-----------------------------------------------
+
+## Config
+* Adds `.addBeforeMiddleware()`, for adding Koa middleware that runs before Apollo/Redux instantiation
+* Adds `.disableTiming()` to optionally remove the `Response-Time` header / timing middleware
+
+## Server
+* Renames `ctx.apollo` to `ctx.apollo.client`. Now, setting `ctx.apollo.options` in before middleware will merge those settings into Apollo client creation
+* Adds logic to check for the presence of `ctx.apollo.client` and `ctx.store` before using default Apollo/Redux init. This allows overrides in before middleware for completely custom instantiation
+
 2.9.0 - 2017-10-17
 -----------------------------------------------
 

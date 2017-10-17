@@ -182,9 +182,15 @@ if (SERVER) {
   // We can set custom middleware to be processed on the server.  This gives us
   // fine-grain control over headers, requests, responses etc, and even decide
   // if we want to avoid the React handler until certain conditions
+
+  // There are two flavours of middleware -- `before` middleware, which
+  // executes in Koa before the per-request Apollo client / Redux store has
+  // been instantiated... and can be called with `confiig.addBeforeMiddleware`
+
+  // ... and 'after' middleware, which runs after per-request instantiation.
+  // Let's use the latter to add a custom header so we can see middleware in action
   config.addMiddleware(async (ctx, next) => {
-    // Let's add a custom header so we can see middleware in action
-    ctx.set('Powered-By', ctx.engine); // <-- `ctx.engine` srt above!
+    ctx.set('Powered-By', ctx.engine); // <-- `ctx.engine` from `config.getKoaApp()` above!
 
     // For the fun of it, let's demonstrate that we can fire Redux actions
     // and it'll manipulate the state on the server side!  View the SSR version

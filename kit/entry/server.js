@@ -2,11 +2,7 @@
 
 // Server entry point, for Webpack.  This will spawn a Koa web server
 // and listen for HTTP requests.  Clients will get a return render of React
-// or the file they have requested
-//
-// Note:  No HTTP optimisation is performed here (gzip, http/2, etc).  Node.js
-// will nearly always be slower than Nginx or an equivalent, dedicated proxy,
-// so it's usually better to leave that stuff to a faster upstream provider
+// or the file they have requested.
 
 // ----------------------
 // IMPORTS
@@ -163,7 +159,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
     // store it in our empty `route` object
     const components = (
       <StaticRouter location={ctx.request.url} context={routeContext}>
-        <ApolloProvider store={ctx.store} client={ctx.apollo}>
+        <ApolloProvider store={ctx.store} client={ctx.apollo.client}>
           <App />
         </ApolloProvider>
       </StaticRouter>
@@ -269,37 +265,56 @@ const app = new Koa()
         ctx.body = 'There was an error. Please try again later.';
       }
     }
-  })
+  });
 
+if (config.enableTiming) {
   // It's useful to see how long a request takes to respond.  Add the
   // timing to a HTTP Response header
-  .use(async (ctx, next) => {
+  app.use(async (ctx, next) => {
     const start = ms.now();
     await next();
     const end = ms.parse(ms.since(start));
     const total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
     ctx.set('Response-Time', `${total / 1e3}ms`);
-  })
+  });
+}
 
-  // Create a new Apollo client and Redux store per request.  This will be
-  // stored on the `ctx` object, making it available for the React handler or
-  // any subsequent route/middleware
-  .use(async (ctx, next) => {
-    // Create a new server Apollo client for this request
-    ctx.apollo = createClient({
+// Middleware to set the per-request environment, including the Apollo client.
+// These can be overriden/added to in userland with `config.addBeforeMiddleware()`
+app.use(async (ctx, next) => {
+  ctx.apollo = {};
+  return next();
+});
+
+// Add 'before' middleware that needs to be invoked before the per-request
+// Apollo client and Redux store has instantiated
+config.beforeMiddleware.forEach(middlewareFunc => app.use(middlewareFunc));
+
+// Create a new Apollo client and Redux store per request.  This will be
+// stored on the `ctx` object, making it available for the React handler or
+// any subsequent route/middleware
+app.use(async (ctx, next) => {
+  // Create a new server Apollo client for this request, if we don't already
+  // have one
+  if (!ctx.apollo.client) {
+    ctx.apollo.client = createClient({
       ssrMode: true,
       // Create a network request.  If we're running an internal server, this
       // will be a function that accepts the request's context, to feed through
       // to the GraphQL schema
       networkInterface: createNeworkInterface(ctx),
+      ...ctx.apollo.options,
     });
+  }
 
-    // Create a new Redux store for this request
-    ctx.store = createNewStore(ctx.apollo);
+  // Create a new Redux store for this request, if we don't have one
+  if (!ctx.store) {
+    ctx.store = createNewStore(ctx.apollo.client);
+  }
 
-    // Pass to the next middleware in the chain: React, custom middleware, etc
-    return next();
-  });
+  // Pass to the next middleware in the chain: React, custom middleware, etc
+  return next();
+});
 
 /* FORCE SSL */
 
