@@ -18,6 +18,7 @@ RUN apk add --no-cache --virtual .gyp \
     make \
     nasm \
     python \
+    git \
   && npm i \
   && apk del .gyp
 
