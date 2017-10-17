@@ -34,7 +34,6 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Full route-aware [server-side rendering (SSR)](https://reactql.org/docs/ssr) of initial HTML
 - Universal building - both browser + Node.js web server compile down to static files
 - Per-request Redux stores. Store state is dehydrated via SSR, and rehydrated automatically on the client
-- HTTP header hardening with [Helmet for Koa](https://github.com/venables/koa-helmet)
 - Declarative/dynamic `<head>` section, using [react-helmet](https://github.com/nfl/react-helmet)
 - Full page React via built-in `<Html>` component - every byte of your HTML is React!
 - Run plain HTTP and SSL from the same port - just `config.enableSSL(sslOptions)` in your app code
@@ -44,6 +43,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - [Hot code reloading](http://gaearon.github.io/react-hot-loader/); zero refresh, real-time updates in development
 - React + Redux state preservation on hot reloading, to avoid interrupting your dev flow
 - [Development web server](https://reactql.org/docs/setup#development) that automatically rebuilds and restarts on code changes, for on-the-fly SSR testing with full source maps
+- Hot code reload works inside Docker too! Just `docker-compose -f docker-compose.dev.yml`
 
 ### Code optimisation
 
@@ -70,19 +70,22 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Add GET|POST|PUT|PATCH|DELETE routes - auto-injected with Koa context and the per-request Redux store
 - Add a custom 404 handler
 - Enable/disable POST body parsing, along with custom options
+- Enable/disable HTTP hardening
+- Mount your front-end assets anywhere (like a CDN) with a dynamic `<base>` tag handling ([React Helmet](https://github.com/nfl/react-helmet) compatible)
 
 ### Production-ready
 
 - [Production bundling](https://reactql.org/docs/bundling/production), that generates optimised server and client code
 - [Static bundling mode](https://reactql.org/docs/bundling/static) for hosting your full app on any static host -- Github pages, S3, Netlify, etc
 - [Static compression](https://webpack.js.org/plugins/compression-webpack-plugin/) using the [Zopfli Gzip](https://en.wikipedia.org/wiki/Zopfli) and [Brotli](https://opensource.googleblog.com/2015/09/introducing-brotli-new-compression.html) algorithms for the serving of static assets as pre-compressed `.gz` and `.br` files (default `vendor.js.bz` goes from 380kb -> 89kb!)
+- Automatic HTTP hardening against common attack vectors via [Koa Helmet](https://github.com/venables/koa-helmet) (highly configurable)
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files, for modular Webpack tweaks
 - [Docker](https://www.docker.com/) support, with an optimised `Dockerfile` out-the-box
 
 ### Developer support
 
 - [ESLint v3](http://eslint.org/)ing based on a tweaked [Airbnb style guide](https://github.com/airbnb/javascript)
-- [Jest](https://facebook.github.io/jest/) test runner
+- React and Babel compatible [Jest](https://facebook.github.io/jest/) test runner, pre-configured
 - [Node Inspector](https://nodejs.org/en/docs/inspector/) support for SSR in dev mode - remotely debug the server, set breakpoints, inspect the stack from within Chrome
 - Tons of code commentary to fill you in on what's happening under the hood
 - Extensive, up-to-date [online documentation](https://reactql.org/docs/)
@@ -104,7 +107,7 @@ Then run `npm start` in the project root, and away you go!
 
 ## Docker
 
-A [Dockerfile](https://github.com/reactql/kit/blob/master/Dockerfile) is included, that will build, optimise and bundle a production-mode ReactQL web server, your static assets and client-side code -- making it trivial to deploy to production.
+An Alpine-based [Dockerfile](https://github.com/reactql/kit/blob/master/Dockerfile) is included, that will build, optimise and bundle a production-mode ReactQL web server, your static assets and client-side code -- making it trivial to deploy to production.
 
 Build as normal with:
 
@@ -116,6 +119,13 @@ Then run with:
 
 Navigating to http://<docker_host>:4000 will yield the ReactQL project code.
 
+You can also run with Docker Compose:
+
+`docker-compose -f docker-compose.dev.yml up`
+
+This will build and spawn a development environment on ports 8080 and 8081. Just like your local dev environment, both browser hot code reloading and SSR auto-restarting will work on local code changes -- even inside the Docker stack!
+
+(You can also spawn a production-grade environment with `docker-compose up`, using the default [docker-compose.yml](https://github.com/reactql/kit/blob/master/docker-compose.yml))
 
 # Follow @reactql for updates
 
