@@ -25,10 +25,10 @@ export function createClient(opt = {}) {
 }
 
 // Wrap `createNetworkInterface` to attach middleware
-export function getNetworkInterface(uri) {
+export function getNetworkInterface(uri, opt) {
   const networkInterface = createNetworkInterface({
     uri,
-    opts: config.apolloNetworkOptions,
+    opts: Object.assign({}, config.apolloNetworkOptions, opt),
   });
 
   // Attach middleware

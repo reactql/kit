@@ -120,8 +120,8 @@ const createNeworkInterface = (() => {
     );
   }
 
-  function externalInterface() {
-    return getNetworkInterface(config.graphQLEndpoint);
+  function externalInterface(ctx) {
+    return getNetworkInterface(config.graphQLEndpoint, ctx.apollo.networkOptions);
   }
 
   return config.graphQLServer ? localInterface : externalInterface;

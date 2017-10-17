@@ -1,3 +1,9 @@
+2.9.2 - 2017-10-17
+-----------------------------------------------
+
+## Server
+* Setting `ctx.apollo.networkOptions` via a function passed to `config.addBeforeMiddleware()` will now get passed to the call to Apollo's `createNetworkInterface()` when using a third-party GraphQL server, enabling dynamic per-request CORS / authorisation logic, as needed
+
 2.9.1 - 2017-10-17
 -----------------------------------------------
 
