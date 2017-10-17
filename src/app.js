@@ -21,10 +21,10 @@ import config from 'kit/config';
 /* App */
 
 // Example counter reducer.  This simply increments the counter by +1
-import counterReducer from 'src/reducers/counter';
+import counterReducer from 'reducers/counter';
 
 // Main component -- i.e. the 'root' React component in our app
-import Main from 'src/components/main';
+import Main from 'components/main';
 
 // Init global styles.  These will be added to the resulting CSS automatically
 // without any class hashing.  Use this to include default or framework CSS.

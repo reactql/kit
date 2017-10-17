@@ -1,0 +1,16 @@
+# Note: This is intended for use in local development
+version: '3.3'
+services:
+  reactql-dev:
+    build: .
+    volumes:
+      - .:/src
+      - /src/node_modules
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      HOST: "0.0.0.0"
+      BROWSER_HOST: "0.0.0.0"
+      PORT: "8081"
+    command: npm start

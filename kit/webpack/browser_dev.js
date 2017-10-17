@@ -27,7 +27,7 @@ import PATHS from '../../config/paths';
 // Host and port settings to spawn the dev server on
 const HOST = process.env.BROWSER_HOST || 'localhost';
 const PORT = process.env.BROWSER_PORT || 8080;
-const LOCAL = `http://${HOST}:${PORT}`;
+const LOCAL = `http://${HOST}:${PORT}/`;
 
 export default new WebpackConfig().extend({
   '[root]/browser.js': conf => {
@@ -75,7 +75,7 @@ export default new WebpackConfig().extend({
     compress: true,
 
     // Assume app/public is the root of our dev server
-    publicPath: '/',
+    publicPath: '',
 
     // Inline our code, so we wind up with one, giant bundle
     inline: true,
@@ -109,7 +109,7 @@ export default new WebpackConfig().extend({
   // Extra output options, specific to the dev server -- source maps and
   // our public path
   output: {
-    publicPath: `${LOCAL}/`,
+    publicPath: `${LOCAL}`,
   },
 
   plugins: [

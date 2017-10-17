@@ -168,7 +168,7 @@ export default new WebpackConfig().extend({
       // Put this in `dist` rather than `dist/public`
       fileName: '../manifest.json',
       // Prefix assets with '/' so that they can be referenced from any route
-      publicPath: '/',
+      publicPath: '',
       inlineManifest: true,
     }),
 

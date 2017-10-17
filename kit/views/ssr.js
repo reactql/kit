@@ -18,6 +18,7 @@ const Html = ({ helmet, scripts, window, css, children }) => (
       <meta httpEquiv="Content-Language" content="en" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {helmet.meta.toComponent()}
+      {helmet.base.toString() ? helmet.base.toComponent() : <base href="/" />}
       <link rel="stylesheet" href={css} />
       {helmet.link.toComponent()}
       {helmet.style.toComponent()}

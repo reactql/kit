@@ -68,6 +68,7 @@ export default () => (
     <Helmet>
       <title>ReactQL application</title>
       <meta name="description" content="ReactQL starter kit app" />
+      {/* <base href="http://localhost:8081/" /> */}
     </Helmet>
     <div className={css.hello}>
       <img src={logo} alt="ReactQL" className={css.logo} />

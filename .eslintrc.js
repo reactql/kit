@@ -15,12 +15,14 @@ module.exports = {
   env: {
     node: true,
     browser: true,
+    'jest/globals': true,
   },
   plugins: [
     'babel',
     'import',
     'jsx-a11y',
     'compat',
+    'jest',
   ],
   rules: {
     // General
@@ -67,6 +69,7 @@ module.exports = {
     'import/resolver': {
       node: {
         paths: [
+          PATHS.src,
           PATHS.root,
           'node_modules',
         ],

@@ -1,12 +1,14 @@
-UNVERSIONED - 2017-10-17
+2.9.0 - 2017-10-17
 -----------------------------------------------
 
 ## Building
 * Fixes static building via `npm run build-static`, by replacing broken `chunk-manifest-webpack-plugin` (closes #55)
 
 ## Webpack
+* Adds `src` to modules path, to avoid `src/` prefixes at the start of userland imports (closes #69)
 * Fixes stats configuration to work with the latest Webpack versions
 * Adds CORS config to webpack_dev_server, to enable LAN-wide browser hot-code reloading (closes #99)
+* Removes leading `/` in asset output, to allow defining a `<base>` tag in userland via React Helmet (closes #102)
 
 ## ESLint
 * Refactors rules, to be grouped by plugin
@@ -26,13 +28,24 @@ UNVERSIONED - 2017-10-17
 ## App
 * Disables SSL by default
 
+## Server
+* Removes leading `/` in bundled assets (along with Webpack) to allow for a `<base>` tag to define the load path
+
+## Testing (Jest)
+* Fixes Jest testing to be compatible with Babel and React (closes #81, merges #84 - thanks @nate0001)
+
 ## General
 * Fixes 'local' typo (merges #89 - thanks @kane-c)
 * Fixes misspelled `browserslist` file (merges #95 - thanks @klarstrup)
-* Adds idiomatic [React Helmet](https://github.com/nfl/react-helmet) `<head>` tags, adds missing html/body attributes, link, style, script and noscript, uses new `Helmet.renderStatic()` call (closes #101 & #94 - thanks @klarstrup)
+* Adds idiomatic [React Helmet](https://github.com/nfl/react-helmet) `<head>` tags, adds missing html/body attributes, base, link, style, script and noscript, uses new `Helmet.renderStatic()` call (closes #101 & #94 - thanks @klarstrup)
+* Adds default `<base href="/" />` tag, when none is defined with React Helmet
+
+## Docker
+* Adds Alpine-based `Dockerfile` to reduce Docker image size from 943mb -> 323mb (closes #98, merges #97 - thanks @kane-c)
+* Adds `docker-compose.yml` for production (closes #98)
+* Adds `docker-compose.dev.yml` for local development. Removes the local `node_modules` to ensure Alpine-compatible Linux binaries are being referenced by local code changes. Supports hot code reloading in-browser and via SSR
 
 ## NPM
-
 * Bumps packages:
 "babel-eslint": "^8.0.1"
 "copy-webpack-plugin": "^4.1.1",
