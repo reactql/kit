@@ -155,3 +155,5 @@ Special thanks to the following providers, for proving free support:
 **BrowserStack**, for providing cross-browser testing
 
 <a href="https://browserstack.com" target="_blank"><img src="https://reactql.org/assets/ext/browserstack.svg" alt="BrowserStack" width="200" /></a>
+
+... and Facebook, Github, the NFL, Google, Apollo/Meteor, and the hundreds of organisations and open-source contributors that have contributed a lifetime of collective coding to make this stack possible. 
