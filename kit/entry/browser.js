@@ -16,8 +16,10 @@ import 'isomorphic-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Browser routing
-import { BrowserRouter } from 'react-router-dom';
+// React Router, for controlling browser routes.  We'll feed in our custom
+// `history` instance that's imported below, so that we have a single store of
+// truth for routing
+import { Router } from 'react-router-dom';
 
 // Apollo Provider. This HOC will 'wrap' our React component chain
 // and handle injecting data down to any listening component
@@ -30,6 +32,9 @@ import { ApolloProvider } from 'react-apollo';
 // you can start editing to add your own code.  Note:  This first is imported
 // first, since it sets up our app's settings
 import App from 'src/app';
+
+// Get the custom `history` that we'll use to feed down to our `<Router>`
+import { history } from 'kit/lib/routing';
 
 // Grab the shared Apollo Client
 import { browserClient } from 'kit/lib/apollo';
@@ -68,9 +73,9 @@ const Root = (() => {
   // can respond to route changes
   const Chain = () => (
     <ApolloProvider store={store} client={client}>
-      <BrowserRouter>
+      <Router history={history}>
         <App />
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   );
 

@@ -1,6 +1,6 @@
 {
   "name": "reactql-app",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "description": "ReactQL starter kit app",
   "license": "UNLICENSED",
   "private": true,
@@ -87,6 +87,7 @@
     "boxen": "^1.2.1",
     "chalk": "^2.1.0",
     "graphql": "^0.11.7",
+    "history": "^4.7.2",
     "ip": "^1.1.5",
     "isomorphic-fetch": "^2.2.1",
     "kcors": "^2.2.1",

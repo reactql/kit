@@ -40,8 +40,9 @@ import Helmet from 'react-helmet';
 
 /* ReactQL */
 
-// NotFound 404 handler for unknown routes
-import { Redirect } from 'kit/lib/routing';
+// NotFound 404 handler for unknown routes, and the app-wide `history` object
+// we can use to make route changes from anywhere
+import { Redirect, history } from 'kit/lib/routing';
 
 /* App */
 
@@ -63,6 +64,13 @@ import logo from './reactql-logo.svg';
 
 // ----------------------
 
+// Example function to show that the `history` object can be changed from
+// anywhere, simply by importing it-- use this in Redux actions, functions,
+// React `onClick` events, etc.
+function changeRoute() {
+  history.push('/page/about');
+}
+
 export default () => (
   <div>
     <Helmet>
@@ -82,6 +90,7 @@ export default () => (
       <li><Link to="/page/contact">Contact</Link></li>
       <li><Link to="/old/path">Redirect from /old/path &#8594; /new/path</Link></li>
     </ul>
+    Change routes anywhere &mdash; <button onClick={changeRoute}>Like here (About)</button>
     <hr />
     <Switch>
       <Route exact path="/" component={Home} />

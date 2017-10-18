@@ -1,3 +1,10 @@
+2.9.3 - 2017-10-18
+-----------------------------------------------
+
+## Routing
+* Adds app-wide `history` instance to `kit/lib/routing.js`, for controlling routes outside of React directly
+* Replaces React Router's `<BrowserRouter>` with `<Router history={history}>`, to stay in sync with global pushstate
+
 2.9.2 - 2017-10-17
 -----------------------------------------------
 
