@@ -81,6 +81,7 @@ Want to install quickly? Use the [CLI](https://github.com/reactql/cli) - it does
 - Automatic HTTP hardening against common attack vectors via [Koa Helmet](https://github.com/venables/koa-helmet) (highly configurable)
 - Easily extendable [webpack-config](https://fitbit.github.io/webpack-config/) files, for modular Webpack tweaks
 - [Docker](https://www.docker.com/) support, with an optimised `Dockerfile` out-the-box
+- [PM2](http://pm2.keymetrics.io/)-enabled Dockerfile, which auto-clusters over multi-core processes and auto-restarts on failure
 
 ### Developer support
 
@@ -142,3 +143,15 @@ Get the latest updates by following us on Twitter: https://twitter.com/reactql
 [Join the ReactQL slack channel here.](https://join.slack.com/t/reactql/shared_invite/enQtMjU0MjUzNDEzNzY0LWIyY2MzOGNlYmE1ZjI5ZDZhZTI2ODdiYzM2NjczYzJhZDgxYmJmYzE1NDYzZjRkYmVmNmQ3MzM0NzM3N2M5ODM)
 
 Watch my free [45 minute YouTube video](https://www.youtube.com/watch?v=DNPVqK_woRQ), for a live coding walk-through of putting together a GraphQL server with a database. Learn how to write queries, mutations and handle nested/related data.
+
+# Thanks to...
+
+Special thanks to the following providers, for proving free support:
+
+**Netlify**, for hosting the https://reactql.org site
+
+<a href="https://netlify.com" target="_blank"><img src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg" alt="Netlify" width="75" /></a>
+
+**BrowserStack**, for providing cross-browser testing
+
+<a href="https://browserstack.com" target="_blank"><img src="https://reactql.org/assets/ext/browserstack.svg" alt="BrowserStack" width="200" /></a>
