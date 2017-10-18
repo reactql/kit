@@ -1,3 +1,10 @@
+2.9.4 - 2017-10-18
+-----------------------------------------------
+
+## Docker
+* Adds [PM2](http://pm2.keymetrics.io/) to `Dockerfile`, for Docker-compatible process management, clustering and auto-restart policing.
+* Replaces start command with auto-clustering via PM2
+
 2.9.3 - 2017-10-18
 -----------------------------------------------
 
