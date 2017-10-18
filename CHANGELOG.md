@@ -1,3 +1,9 @@
+2.9.5 - 2017-10-18
+-----------------------------------------------
+
+## Webpack
+* Fixes `publicPath` with `extract-text-webpack-plugin`, so that fonts/images are referenced properly in production
+
 2.9.4 - 2017-10-18
 -----------------------------------------------
 

@@ -121,6 +121,7 @@ export const css = {
                 ...loader.use,
               ],
               fallback: 'style-loader',
+              publicPath: '../../',
             }),
           };
         }
