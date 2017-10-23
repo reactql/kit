@@ -16,7 +16,7 @@ import WebpackConfig from 'webpack-config';
 import chalk from 'chalk';
 
 /* Local */
-import { webpackProgress } from './common';
+import { webpackProgress, getEnvVariables } from './common';
 import PATHS from '../../config/paths';
 
 // ----------------------
@@ -60,11 +60,11 @@ export default new WebpackConfig().extend({
     new webpack.DefinePlugin({
       // We ARE running on the server
       SERVER: true,
-      'process.env': {
+      'process.env': Object.assign({
         // Point the server host/port to the dev server
-        HOST: JSON.stringify(process.env.HOST || 'localhost'),
-        PORT: JSON.stringify(process.env.PORT || '4000'),
-        SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+        HOST: JSON.stringify('localhost'),
+        PORT: JSON.stringify('4000'),
+        SSL_PORT: null,
 
         // React constantly checking process.env.NODE_ENV causes massive
         // slowdowns during rendering. Replacing process.env.NODE_ENV
@@ -72,7 +72,7 @@ export default new WebpackConfig().extend({
         // a minifier to remove all of React's warnings in production.
         NODE_ENV: JSON.stringify('production'),
         DEBUG: false,
-      },
+      }, getEnvVariables()),
     }),
   ],
 });

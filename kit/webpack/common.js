@@ -189,3 +189,12 @@ export function webpackProgress(what = chalk.magenta.bold('ReactQL')) {
     format: `${what} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
   });
 }
+
+
+export function getEnvVariables() {
+  const env = {};
+  Object.keys(process.env).forEach(k => {
+    env[k] = JSON.stringify(process.env[k]);
+  });
+  return env;
+}

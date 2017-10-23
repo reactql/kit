@@ -27,7 +27,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 /* Local */
-import { css } from './common';
+import { css, getEnvVariables } from './common';
 import PATHS from '../../config/paths';
 
 // ----------------------
@@ -75,16 +75,17 @@ export default [
       new webpack.DefinePlugin({
         // We ARE running on the server
         SERVER: true,
-        'process.env': {
+        'process.env': Object.assign({
           // Point the server host/port to the production server
-          HOST: JSON.stringify(process.env.HOST || 'localhost'),
-          PORT: JSON.stringify(process.env.PORT || '8081'),
-          SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+          HOST: JSON.stringify('localhost'),
+          PORT: JSON.stringify('8081'),
+          SSL_PORT: null,
 
           // Debug development
           NODE_ENV: JSON.stringify('development'),
           DEBUG: true,
         },
+        getEnvVariables()),
       }),
 
       // Start the development server
@@ -112,16 +113,16 @@ export default [
       new webpack.DefinePlugin({
         // We're not running on the server
         SERVER: false,
-        'process.env': {
+        'process.env': Object.assign({
           // Point the server host/port to the dev server
-          HOST: JSON.stringify(process.env.HOST || 'localhost'),
-          PORT: JSON.stringify(process.env.PORT || '8081'),
-          SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+          HOST: JSON.stringify('localhost'),
+          PORT: JSON.stringify('8080'),
+          SSL_PORT: null,
 
           // Debug development
           NODE_ENV: JSON.stringify('development'),
           DEBUG: true,
-        },
+        }, getEnvVariables(),),
       }),
 
       // Check for errors, and refuse to emit anything with issues
