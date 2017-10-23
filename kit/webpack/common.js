@@ -189,3 +189,14 @@ export function webpackProgress(what = chalk.magenta.bold('ReactQL')) {
     format: `${what} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
   });
 }
+
+
+export function getInscopeEnvVariables() {
+  const env = {};
+  const ENV_VARIABLES = process.env.ENV_VARIABLES;
+  const envVariables = ENV_VARIABLES ? ENV_VARIABLES.split(/[ :]+/) : [];
+  envVariables.forEach(k => {
+    env[k] = JSON.stringify(process.env[k]);
+  });
+  return env;
+}

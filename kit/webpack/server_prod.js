@@ -16,7 +16,7 @@ import WebpackConfig from 'webpack-config';
 import chalk from 'chalk';
 
 /* Local */
-import { webpackProgress } from './common';
+import { webpackProgress, getInscopeEnvVariables } from './common';
 import PATHS from '../../config/paths';
 
 // ----------------------
@@ -60,7 +60,7 @@ export default new WebpackConfig().extend({
     new webpack.DefinePlugin({
       // We ARE running on the server
       SERVER: true,
-      'process.env': {
+      'process.env': Object.assign(getInscopeEnvVariables(), {
         // Point the server host/port to the dev server
         HOST: JSON.stringify(process.env.HOST || 'localhost'),
         PORT: JSON.stringify(process.env.PORT || '4000'),
@@ -72,7 +72,7 @@ export default new WebpackConfig().extend({
         // a minifier to remove all of React's warnings in production.
         NODE_ENV: JSON.stringify('production'),
         DEBUG: false,
-      },
+      }),
     }),
   ],
 });
