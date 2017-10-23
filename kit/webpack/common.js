@@ -191,11 +191,9 @@ export function webpackProgress(what = chalk.magenta.bold('ReactQL')) {
 }
 
 
-export function getInscopeEnvVariables() {
+export function getEnvVariables() {
   const env = {};
-  const ENV_VARIABLES = process.env.ENV_VARIABLES;
-  const envVariables = ENV_VARIABLES ? ENV_VARIABLES.split(/[ :]+/) : [];
-  envVariables.forEach(k => {
+  Object.keys(process.env).forEach(k => {
     env[k] = JSON.stringify(process.env[k]);
   });
   return env;
