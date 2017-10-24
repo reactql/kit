@@ -22,6 +22,9 @@ import { logServerStarted } from '../lib/console';
 // Local paths
 import PATHS from '../../config/paths';
 
+// Webpack DLL
+import manifest from './dll.json';
+
 // ----------------------
 
 // Host and port settings to spawn the dev server on
@@ -44,6 +47,11 @@ export default new WebpackConfig().extend({
       .use.unshift({
         loader: 'react-hot-loader/webpack',
       });
+
+    conf.plugins.push(new webpack.DllReferencePlugin({
+      name: 'dll',
+      manifest,
+    }));
 
     return conf;
   },

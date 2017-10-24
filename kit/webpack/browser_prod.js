@@ -93,6 +93,16 @@ export default new WebpackConfig().extend({
       `${chalk.magenta.bold('ReactQL browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
     ),
 
+    // Separate our third-party/vendor modules into a separate chunk, so that
+    // we can load them independently of our app-specific code changes
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: module => (
+        // this assumes your vendor imports exist in the node_modules directory
+        module.context && module.context.indexOf('node_modules') !== -1
+      ),
+    }),
+
     // Global variables
     new webpack.DefinePlugin({
       // We're not running on the server
