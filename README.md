@@ -157,3 +157,7 @@ Special thanks to the following providers, for proving free support:
 <a href="https://browserstack.com" target="_blank"><img src="https://reactql.org/assets/ext/browserstack.svg" alt="BrowserStack" width="200" /></a>
 
 ... and Facebook, Github, the NFL, Google, Apollo/Meteor, and the hundreds of organisations and open-source contributors that have contributed a lifetime of collective coding to make this stack possible. 
+
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/oxCNqbK23kM1XR2YkLsCK7v7/reactql/kit'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/oxCNqbK23kM1XR2YkLsCK7v7/reactql/kit.svg' />
+</a>
