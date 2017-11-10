@@ -27,6 +27,8 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
   entry: {
     // Client specific source code.  This is the stuff we write.
     browser: [
+      // Add polyfills for older browsers before the "real" source
+      'babel-polyfill',
       // Entry point for the browser
       path.join(PATHS.entry, 'browser.js'),
     ],
