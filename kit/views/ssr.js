@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 
 // ----------------------
 
+const idPrefix = 'REACTQL.';
+
 const Html = ({ helmet, scripts, window, css, children }) => (
   <html lang="en" prefix="og: http://ogp.me/ns#" {...helmet.htmlAttributes.toString()}>
     <head>
@@ -27,10 +29,20 @@ const Html = ({ helmet, scripts, window, css, children }) => (
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
       <div id="main">{children}</div>
+      {Object.keys(window).map(key => (
+        <script
+          key={key}
+          type="application/json"
+          id={`${idPrefix}${key}`}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(window[key]),
+          }} />
+      ))}
       <script
         dangerouslySetInnerHTML={{
           __html: Object.keys(window).reduce(
-            (out, key) => out += `window.${key}=${JSON.stringify(window[key])};`,
+            (out, key) =>
+              (out += `window['${key}'] = JSON.parse(document.getElementById('${idPrefix}${key}').innerHTML);`),
             '',
           ),
         }} />
