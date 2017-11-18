@@ -26,7 +26,7 @@ import allMessages from 'src/graphql/queries/all_messages.gql';
 
 // Since this component needs to 'listen' to GraphQL data, we wrap it in
 // `react-apollo`'s `graphql` HOC/decorator and pass in the query that this
-// component requires.   Note: This is not to be confused with the `graphql`
+// component requires. Note: This is not to be confused with the `graphql`
 // lib, which is used on the server-side to initially define the schema
 @graphql(allMessages)
 export default class GraphQLMessage extends React.PureComponent {

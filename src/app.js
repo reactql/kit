@@ -150,7 +150,7 @@ if (SERVER) {
     // Mimic the default behaviour with an overriden message, so we know it's
     // working
     // eslint-disable-next-line no-console
-    console.log('Error: ', e.message);
+    console.log('Custom error: ', e.message);
     ctx.body = 'Some kind of error. Check your source code.';
   });
 

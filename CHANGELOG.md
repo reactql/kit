@@ -1,3 +1,40 @@
+2.10.0 - 2017-11-18
+-----------------------------------------------
+
+## NPM
+* Adds packages:
+enzyme@^3.0.0
+
+* Bumps packages:
+"babel-eslint": "^8.0.2"
+"babel-plugin-module-resolver": "^3.0.0"
+"babel-preset-env": "^1.6.1"
+"brotli-webpack-plugin": "^0.5.0"
+"copy-webpack-plugin": "^4.2.1"
+"cross-env": "^5.1.1"
+"eslint": "^4.11.0"
+"eslint-plugin-compat": "^2.1.0",
+"eslint-plugin-import": "^2.8.0",
+"eslint-plugin-jest": "^21.3.2",
+"extract-text-webpack-plugin": "^3.0.2"
+"iltorb": "^2.0.2"
+"node-sass": "^4.7.1"
+"npm-run-all": "^4.1.2"
+"react-test-renderer": "^16.1.1"
+"resolve-url-loader": "^2.2.0"
+"serve": "^6.4.1"
+"webpack": "^3.8.1"
+"webpack-bundle-analyzer": "^2.9.1"
+"webpack-dev-server": "^2.9.4"
+"apollo-local-query": "^0.3.1"
+"apollo-server-koa": "^1.2.0"
+"boxen": "^1.2.2"
+"chalk": "^2.3.0"
+"koa": "^2.4.1"
+"react": "^16.1.1"
+"react-dom": "^16.1.1"
+"react-hot-loader": "^3.1.3"
+
 2.9.5 - 2017-10-18
 -----------------------------------------------
 
