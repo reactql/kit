@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 // ----------------------
 
 const Html = ({ helmet, scripts, window, css, children }) => (
-  <html lang="en" prefix="og: http://ogp.me/ns#" {...helmet.htmlAttributes.toString()}>
+  <html lang="en" prefix="og: http://ogp.me/ns#" {...helmet.htmlAttributes.toComponent()}>
     <head>
       {helmet.title.toComponent()}
       <meta charSet="utf-8" />
