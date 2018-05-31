@@ -1,9 +1,10 @@
 module.exports = {
   coverageReporters: ['text'],
+  collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js(x)',
+    'src/**/*.{js,jsx}',
   ],
   transform: {
-    '^.+\\.js(x)$': '<rootDir>/jest.transform.js',
+    '^.+\\.jsx?$': '<rootDir>/jest.transform.js',
   },
 };
