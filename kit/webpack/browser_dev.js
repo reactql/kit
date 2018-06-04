@@ -133,20 +133,20 @@ export default new WebpackConfig().extend({
     // Activate the hot-reloader, so changes can be pushed to the browser
     new webpack.HotModuleReplacementPlugin(),
 
+    // Replace environment variables at compile time.
+    new webpack.EnvironmentPlugin({
+      HOST: 'localhost',
+      PORT: '8081',
+      SSL_PORT: null,
+      // Debug development
+      NODE_ENV: 'development',
+      DEBUG: true,
+    }),
+
     // Global variables
     new webpack.DefinePlugin({
       // We're not running on the server
       SERVER: false,
-      'process.env': {
-        // Point the server host/port to the dev server
-        HOST: JSON.stringify(process.env.HOST || 'localhost'),
-        PORT: JSON.stringify(process.env.PORT || '8081'),
-        SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
-
-        // Debug development
-        NODE_ENV: JSON.stringify('development'),
-        DEBUG: true,
-      },
     }),
   ],
 });
