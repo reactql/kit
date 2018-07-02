@@ -41,3 +41,7 @@ jspm_packages
 
 # Distribution
 dist
+
+# Webpack DLL
+kit/webpack/dll.json
+static/vendor.js

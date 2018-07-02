@@ -5,10 +5,11 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "browser": "cross-env NODE_ENV=development WEBPACK_CONFIG=browser_dev webpack-dev-server --open",
+    "browser": "npm run build-dll && cross-env NODE_ENV=development WEBPACK_CONFIG=browser_dev webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production WEBPACK_CONFIG=browser_prod,server_prod webpack --colors",
     "build-analyze": "cross-env BUNDLE_ANALYZER=1 NODE_ENV=production WEBPACK_CONFIG=browser_prod,server_prod webpack --colors",
     "build-browser": "cross-env NODE_ENV=production WEBPACK_CONFIG=browser_prod webpack --colors",
+    "build-dll": "cross-env NODE_ENV=development WEBPACK_CONFIG=dll webpack --colors",
     "build-run": "npm run build && npm run server",
     "build-static": "cross-env NODE_ENV=production WEBPACK_CONFIG=static webpack --colors",
     "build-static-run": "npm run build-static && npm run static",

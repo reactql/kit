@@ -28,8 +28,6 @@ import PATHS from '../../config/paths';
 
 // ----------------------
 
-// RegExp for image files
-
 
 // Export a new 'base' config, which we can extend/merge from
 export default new WebpackConfig().merge({
