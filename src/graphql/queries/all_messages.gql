@@ -1,7 +1,0 @@
-#import "./message.gql"
-
-query message {
-  message {
-    ...Message
-  }
-}
